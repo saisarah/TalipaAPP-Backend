@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('crops_variant', function (Blueprint $table) {
-            $table->id('crops_id');
+            $table->id('crop_id');
             $table->string('name', 60);
             $table->timestamps();
-            $table->foreign('crops_id')->references('id')->on('crops');
+            $table->foreign('crop_id')->references('id')->on('crops');
         });
     }
 

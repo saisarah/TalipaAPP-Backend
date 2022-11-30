@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('province', 60);
             $table->string('municipality', 60);
             $table->string('baranggay', 60);
-            $table->string('street_house_number', 60);
+            $table->string('street', 60);
+            $table->string('house_number', 60);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
         });

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('vendors', function (Blueprint $table) {
             $table->id('user_id');
             $table->string('authorization')->nullable();
+            $table->string('public_market', 255);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
         });

@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vendor_crops', function (Blueprint $table) {
-            $table->unsignedBigInteger('vendor_id');
-            $table->unsignedBigInteger('crop_id');
+        Schema::create('farmers', function (Blueprint $table) {
+            $table->id('user_id');
+            $table->string('farmer_area', 255);
+            $table->string('farm_type', 60);
+            $table->string('owenership_type', 60);
             $table->timestamps();
-            $table->foreign('vendor_id')->references('user_id')->on('vendors');
-            $table->foreign('crop_id')->references('id')->on('crops');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vendor_crops');
+        Schema::dropIfExists('farmers');
     }
 };
