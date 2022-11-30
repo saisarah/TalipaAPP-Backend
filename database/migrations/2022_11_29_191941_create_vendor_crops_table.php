@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('failed_jobs', function (Blueprint $table) {
-            $table->id();
-            $table->string('uuid')->unique();
-            $table->text('connection');
-            $table->text('queue');
-            $table->longText('payload');
-            $table->longText('exception');
-            $table->timestamp('failed_at')->useCurrent();
+        Schema::create('vendor_crops', function (Blueprint $table) {
+            $table->unsignedBigInteger('vendor_id');
+            $table->unsignedBigInteger('crop_id');
+            $table->timestamps();
+            $table->foreign('vendor_id')->references('user_id')->on('vendors');
+            $table->foreign('crop_id')->references('id')->on('crops');
         });
     }
 
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('failed_jobs');
+        Schema::dropIfExists('vendor_crops');
     }
 };
