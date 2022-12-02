@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vendor_crops', function (Blueprint $table) {
-            $table->unsignedBigInteger('vendor_id');
-            $table->unsignedBigInteger('crop_id');
+        Schema::create('vendors', function (Blueprint $table) {
+            $table->id('user_id');
+            $table->unsignedBigInteger('public_market_id');
+            $table->string('authorization')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('public_market_id')->references('id')->on('public_markets');
             $table->timestamps();
-            $table->foreign('vendor_id')->references('user_id')->on('vendors');
-            $table->foreign('crop_id')->references('id')->on('crops');
         });
     }
 
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vendor_crops');
+        Schema::dropIfExists('vendors');
     }
 };
