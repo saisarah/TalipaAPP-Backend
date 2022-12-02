@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vendors', function (Blueprint $table) {
-            $table->id('user_id');
-            $table->string('authorization')->nullable();
-            $table->string('public_market', 255);
+        Schema::create('attachments', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('post_id');
+            $table->string('source', 255);
+            $table->string('type', 10);
+            $table->foreign('post_id')->references('id')->on('post');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vendors');
+        Schema::dropIfExists('attachments');
     }
 };
