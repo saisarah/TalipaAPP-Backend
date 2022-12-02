@@ -14,6 +14,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const TYPE_FARMER = 'farmer';
+    const TYPE_VENDOR = 'vendor';
+    const TYPE_ADMIN = 'admin';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -50,4 +54,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isFarmer() : bool 
+    {
+        return $this->type === static::TYPE_FARMER;
+    }
+
+    public function isVendor() : bool
+    {
+        return $this->type === static::TYPE_VENDOR;
+    }
+
+    public function isAdmin() : bool
+    {
+        return $this->type === static::TYPE_ADMIN;
+    }
+
 }

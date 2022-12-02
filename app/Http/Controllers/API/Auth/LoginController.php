@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Services\SmsService\SmsOtp\SmsOtp;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -32,8 +31,6 @@ class LoginController extends Controller
         
         $user = User::where('contact_number', $request->contact_number)->firstOrFail();
 
-        Auth::login($user, true);
-
-        return $user;
+        return $user->createToken($request->device_name);
     }
 }

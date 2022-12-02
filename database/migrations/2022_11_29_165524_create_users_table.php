@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('gender', 6)->nullable();
             $table->string('profile_picture');
             $table->string('pin', 4);
+            $table->rememberToken();
             $table->timestamps();
         });
     }

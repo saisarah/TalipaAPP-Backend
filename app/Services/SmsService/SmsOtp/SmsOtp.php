@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class SmsOtp
 {
-    private $ttl = 5 * 60 * 60; //5minutes
+    private $ttl = 10 * 60; //10minutes
 
     protected $message_template = "Hello this is your verification code: OTP_CODE";
 
