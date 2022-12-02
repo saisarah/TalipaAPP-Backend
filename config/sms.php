@@ -1,8 +1,8 @@
 <?php
 
-use App\Services\SmsService\SmsLogAdapter;
-use App\Services\SmsService\SmsMoviderAdapter;
-use App\Services\SmsService\SmsTwilioAdapter;
+use App\Services\SmsService\SmsAdapter\SmsLogAdapter;
+use App\Services\SmsService\SmsAdapter\SmsMoviderAdapter;
+use App\Services\SmsService\SmsAdapter\SmsTwilioAdapter;
 
 return [
     'default' => env("SMS_DRIVER", "log"), //log | movider

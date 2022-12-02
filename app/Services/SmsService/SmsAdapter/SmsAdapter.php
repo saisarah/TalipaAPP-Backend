@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\SmsService;
+namespace App\Services\SmsService\SmsAdapter;
 
 abstract class SmsAdapter
 {
