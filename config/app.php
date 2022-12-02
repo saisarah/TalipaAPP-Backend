@@ -211,6 +211,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'SmsOtp' => App\Services\SmsService\SmsOtp\SmsOtp::class,
     ])->toArray(),
 
 ];
