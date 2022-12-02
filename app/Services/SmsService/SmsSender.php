@@ -2,15 +2,15 @@
 
 namespace App\Services\SmsService;
 
-use Illuminate\Support\Facades\Facade;
 
-/**
- * @method static void sendMessage($to, $message)
- */
-class SmsSender extends Facade
+class SmsSender 
 {
-    protected static function getFacadeAccessor()
+    public static function sendMessage($to, $message)
     {
-        return 'sms';        
+        $country_code = config('sms.country_code');
+        $to = "{$country_code}{$to}";
+        $sms = app()->make('sms');
+        return $sms->sendMessage($to, $message);
     }
+
 }

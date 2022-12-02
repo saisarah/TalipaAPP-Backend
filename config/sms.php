@@ -8,6 +8,8 @@ use App\Services\SmsService\SmsAdapter\SmsVonageAdapter;
 return [
     'default' => env("SMS_DRIVER", "log"), //log | movider
     
+    'country_code' => '+63',
+
     'drivers' => [
         'movider' => [
             'api_key' => env("MOVIDER_API_KEY"),
