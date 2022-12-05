@@ -31,6 +31,11 @@ class LoginController extends Controller
         
         $user = User::where('contact_number', $request->contact_number)->firstOrFail();
 
-        return $user->createToken($request->device_name);
+        $token = $user->createToken($request->device_name);
+
+        return [
+            'user' => $user,
+            'token' => $token->plainTextToken,
+        ];
     }
 }
