@@ -23,23 +23,55 @@ class UserFactory extends Factory
             'lastname' => fake()->lastName(),
             'contact_number' => $this->phNumber(),
             'email' => fake()->unique()->safeEmail(),
-            'user_type' => User::TYPE_FARMER,
+            'gender' => fake()->randomElement(['male', 'female', null]),
+            'user_type' => fake()->randomElement([User::TYPE_FARMER, User::TYPE_VENDOR, User::TYPE_ADMIN]),
             'profile_picture' => 'none',
             'pin' => '0000',
             'remember_token' => Str::random(10),
         ];
     }
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     *
-     * @return static
-     */
-    public function unverified()
+    public function male()
     {
-        return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
-        ]);
+        return $this->state(function (array $attributes) {
+            return [
+                'gender' => 'male',
+            ];
+        });
+    }
+
+    public function female()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'gender' => 'female',
+            ];
+        });
+    }
+
+    public function farmer()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'user_type' => User::TYPE_FARMER,
+            ];
+        });
+    }
+    public function vendor()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'user_type' => User::TYPE_VENDOR,
+            ];
+        });
+    }
+    public function admin()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'user_type' => User::TYPE_ADMIN,
+            ];
+        });
     }
 
     public function phNumber()
