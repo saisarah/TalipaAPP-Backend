@@ -18,8 +18,8 @@ class FarmerFactory extends Factory
     {
         return [
             'farm_area' => fake()->randomNumber(2),
-            'farm_type' => 'low land',
-            'ownership_type' => 'lease',
+            'farm_type' => fake()->randomElement(['Irrigated', 'Rainfed Upland', 'Rainfed Lowland']),
+            'owenership_type' => fake()->randomElement(['Registered Owner', 'Tenant', 'Lessee']),
         ];
     }
 }
