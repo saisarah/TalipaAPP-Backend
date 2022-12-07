@@ -25,7 +25,7 @@ class HumanName implements Rule
      */
     public function passes($attribute, $value)
     {
-        
+        return preg_match("/^[a-z ,.'-]+$/i", $value) && strlen($value) >= 2;
     }
 
     /**
