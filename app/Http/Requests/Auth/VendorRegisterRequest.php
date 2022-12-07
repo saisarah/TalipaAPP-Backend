@@ -27,7 +27,7 @@ class VendorRegisterRequest extends FormRequest
             'firstname' =>
             [
                 'required',
-                'alpha_dash',
+                '',
                 'min:2',
                 'max:60'
             ],
