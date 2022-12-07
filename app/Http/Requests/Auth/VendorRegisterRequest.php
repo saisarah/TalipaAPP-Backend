@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Rules\HumanName;
 use Illuminate\Foundation\Http\FormRequest;
 
 class VendorRegisterRequest extends FormRequest
@@ -27,7 +28,7 @@ class VendorRegisterRequest extends FormRequest
             'firstname' =>
             [
                 'required',
-                '',
+                new HumanName(),
                 'min:2',
                 'max:60'
             ],
@@ -35,7 +36,7 @@ class VendorRegisterRequest extends FormRequest
             'middle' =>
             [
                 'nullable',
-                'alpha_dash',
+                new HumanName(),
                 'min:2',
                 'max:60'
             ],
@@ -43,7 +44,7 @@ class VendorRegisterRequest extends FormRequest
             'lastname' =>
             [
                 'required',
-                'alpha_dash',
+                new HumanName(),
                 'min:2',
                 'max:60'
             ],
