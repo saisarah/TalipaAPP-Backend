@@ -21,7 +21,7 @@ class FarmerFactory extends Factory
             'user_id' => User::factory()->farmer()->create()->id,
             'farm_area' => fake()->randomNumber(2),
             'farm_type' => fake()->randomElement(['Irrigated', 'Rainfed Upland', 'Rainfed Lowland']),
-            'owenership_type' => fake()->randomElement(['Registered Owner', 'Tenant', 'Lessee']),
+            'ownership_type' => fake()->randomElement(['Registered Owner', 'Tenant', 'Lessee']),
         ];
     }
 }
