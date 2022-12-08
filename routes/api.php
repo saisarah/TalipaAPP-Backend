@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\Auth\FarmerRegisterController;
 use App\Http\Controllers\API\AddressController;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Auth\VendorRegisterController;
@@ -25,6 +26,7 @@ Route::post('/login/send-otp', [LoginController::class, 'sendOtp']);
 Route::post('/login/verify-otp', [LoginController::class, 'verifyOtp']);
 
 Route::post('/register/vendor', [VendorRegisterController::class, 'register']);
+Route::post('/register/farmer', [FarmerRegisterController::class, 'register']);
 
 Route::get('/philippine-addresses/regions', [AddressController::class, 'regions']);
 Route::get('/philippine-addresses/provinces', [AddressController::class, 'provinces']);
