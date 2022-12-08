@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\Auth\FarmerRegisterController;
 use App\Http\Controllers\API\Auth\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,3 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/login/send-otp', [LoginController::class, 'sendOtp']);
 Route::post('/login/verify-otp', [LoginController::class, 'verifyOtp']);
+
+Route::post('/register/farmer', [FarmerRegisterController::class, 'register']);

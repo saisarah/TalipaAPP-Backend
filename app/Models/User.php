@@ -70,4 +70,9 @@ class User extends Authenticatable
         return $this->type === static::TYPE_ADMIN;
     }
 
+    public function farmer()
+    {
+        return $this->hasOne(Farmer::class);
+    }
+
 }
