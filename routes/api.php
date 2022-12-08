@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AddressController;
 use App\Http\Controllers\API\Auth\LoginController;
+use App\Http\Controllers\API\Auth\VendorRegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,7 +24,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/login/send-otp', [LoginController::class, 'sendOtp']);
 Route::post('/login/verify-otp', [LoginController::class, 'verifyOtp']);
 
+Route::post('/register/vendor', [VendorRegisterController::class, 'register']);
+
 Route::get('/philippine-addresses/regions', [AddressController::class, 'regions']);
 Route::get('/philippine-addresses/provinces', [AddressController::class, 'provinces']);
 Route::get('/philippine-addresses/cities', [AddressController::class, 'cities']);
 Route::get('/philippine-addresses/barangays', [AddressController::class, 'barangays']);
+
