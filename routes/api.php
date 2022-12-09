@@ -33,7 +33,7 @@ Route::get('/philippine-addresses/regions', [AddressController::class, 'regions'
 Route::get('/philippine-addresses/provinces', [AddressController::class, 'provinces']);
 Route::get('/philippine-addresses/cities', [AddressController::class, 'cities']);
 Route::get('/philippine-addresses/barangays', [AddressController::class, 'barangays']);
-Route::get('/posts', [PostController::class,'index']);
-Route::get('/crops',[CropController::class,'index']);
+Route::get('/posts', [PostController::class,'index'])->middleware('auth:sanctum');
+Route::get('/crops',[CropController::class,'index'])->middleware('auth:sanctum');
 Route::get('/user',[UserController::class,'getCurrentUser'])->middleware('auth:sanctum');
 
