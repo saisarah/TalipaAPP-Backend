@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Crop;
 use App\Models\Farmer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,6 +20,7 @@ class PostFactory extends Factory
     {
         return [
             'author_id' => Farmer::inRandomOrder()->first()->user_id,
+            'crop_id' => Crop::inRandomOrder()->first()->id,
             'author_type' => Farmer::class,
             'caption' => fake()->text(),
             'payment_option' => fake()->randomElement(['Cash', 'Gcash']),
@@ -27,8 +29,6 @@ class PostFactory extends Factory
             'pricing_type' => 'straight',
             'status' => fake()->randomElement(['Available', 'Sold']),
             'min_order' => fake()->numberBetween(10, 999),
-
-
         ];
     }
 }
