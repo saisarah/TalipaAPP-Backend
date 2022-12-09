@@ -9,6 +9,19 @@ class Post extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'author_id',
+        'author_type',
+        'status',
+        'caption',
+        'payment_option',
+        'delivery_option',
+        'unit',
+        'pricing_type',
+        'min_order',
+        'crop_id',
+    ];
+
     public function author()
     {
         return $this->morphTo();

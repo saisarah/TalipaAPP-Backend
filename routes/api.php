@@ -37,3 +37,4 @@ Route::get('/posts', [PostController::class,'index'])->middleware('auth:sanctum'
 Route::get('/crops',[CropController::class,'index'])->middleware('auth:sanctum');
 Route::get('/user',[UserController::class,'getCurrentUser'])->middleware('auth:sanctum');
 
+Route::post('/posts', [PostController::class, 'create'])->middleware('auth:sanctum');
