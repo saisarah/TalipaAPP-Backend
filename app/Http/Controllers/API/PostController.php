@@ -10,9 +10,9 @@ class PostController extends Controller
 {
    public function index(Request $request)
    {
-         
-        return Post::paginate(10);
+      if ($request->crop === null)
+         return Post::paginate(10);
 
-        
+      return Post::where('crop_id', $request->crop)->paginate(10);        
    }
 }
