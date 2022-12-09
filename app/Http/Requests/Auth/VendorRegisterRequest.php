@@ -25,68 +25,21 @@ class VendorRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'firstname' =>
-            [
-                'required',
-                new HumanName(),
-                'min:2',
-                'max:60'
-            ],
-
-            'middle' =>
-            [
-                'nullable',
-                new HumanName(),
-                'min:2',
-                'max:60'
-            ],
-
-            'lastname' =>
-            [
-                'required',
-                new HumanName(),
-                'min:2',
-                'max:60'
-            ],
-
-            'contact_number' =>
-            [
-                'required',
-                'numeric',
-                'digits:10',
-                'unique:users',
-
-            ],
-
-            'email' =>
-            [
-                'nullable',
-                'email:rfc,dns,unique:users'
-            ],
-
-            'gender' =>
-            [
-                'nullable',
-                'in:male,female'
-            ],
-
-            'profile_picture' =>
-            [
-                'nullable',
-            ],
-
-            'public_market_id' =>
-            [
-                'required',
-                'exists:public_markets,id',
-            ],
-
-            'authorization' =>
-            [
-                'required'
-            ]
-
-
+            'firstname' =>['required',new HumanName(),'min:2','max:60'],
+            'middle' =>['nullable',new HumanName(),'min:2','max:60'],
+            'lastname' =>['required',new HumanName(),'min:2','max:60'],
+            'contact_number' =>['required','numeric','digits:10','unique:users',],
+            'email' =>['nullable','email:rfc,dns,unique:users'],
+            'gender' =>['nullable','in:male,female'],
+            'profile_picture' =>['nullable',],
+            'public_market_id' =>['required','exists:public_markets,id',],
+            'authorization' =>['required'],
+            'region' => ['required' ,],
+            'province'=> ['required'],
+            'municipality'=>['required'],
+            'barangay'=>['required'],
+            'street'=>['required'],
+            'house_number'=>['required'],
         ];
     }
 }

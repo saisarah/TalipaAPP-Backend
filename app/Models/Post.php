@@ -21,4 +21,9 @@ class Post extends Model
         'min_order',
         'crop_id',
     ];
+
+    public function author()
+    {
+        return $this->morphTo();
+    }
 }
