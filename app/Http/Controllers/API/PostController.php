@@ -15,6 +15,7 @@ class PostController extends Controller
          ->when($request->crop !== null, function ($query) use ($request) {
             $query->where('crop_id', $request->crop);
            })
+         ->latest()
          ->paginate(10);
    }
 }
