@@ -4,6 +4,7 @@ use App\Http\Controllers\API\Auth\FarmerRegisterController;
 use App\Http\Controllers\API\AddressController;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Auth\VendorRegisterController;
+use App\Http\Controllers\API\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,3 +34,4 @@ Route::get('/philippine-addresses/provinces', [AddressController::class, 'provin
 Route::get('/philippine-addresses/cities', [AddressController::class, 'cities']);
 Route::get('/philippine-addresses/barangays', [AddressController::class, 'barangays']);
 
+Route::post('/posts', [PostController::class, 'create'])->middleware('auth:sanctum');
