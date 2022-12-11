@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('payment_option', 5);
             $table->string('delivery_option', 20);
             $table->string('order_status', 10);
-            $table->foreign('post_id')->references('id')->on('post');
+            $table->foreign('post_id')->references('id')->on('posts');
             $table->timestamps();
         });
     }

@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('post', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('author_id');
+            $table->unsignedBigInteger('crop_id');
             $table->string('author_type', 20);
             $table->string('caption', 255);
             $table->string('payment_option', 5);
@@ -25,9 +26,10 @@ return new class extends Migration
             $table->string('status', 10);
             $table->string('min_order', 20);
             $table->timestamps();
+            $table->foreign('crop_id')->references('id')->on('crops');
         });
     }
-    
+
     /**
      * Reverse the migrations.
      *

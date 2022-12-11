@@ -22,8 +22,7 @@ return new class extends Migration
             $table->string('email', 255)->unique()->nullable();
             $table->string('user_type', 7);
             $table->string('gender', 6)->nullable();
-            $table->string('profile_picture');
-            $table->string('pin', 4);
+            $table->string('profile_picture')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

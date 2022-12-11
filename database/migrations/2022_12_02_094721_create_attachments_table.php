@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('post_id');
             $table->string('source', 255);
             $table->string('type', 10);
-            $table->foreign('post_id')->references('id')->on('post');
+            $table->foreign('post_id')->references('id')->on('posts');
             $table->timestamps();
         });
     }

@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('farmers', function (Blueprint $table) {
             $table->id('user_id');
-            $table->string('farmer_area', 255);
+            $table->string('farm_area', 255);
             $table->string('farm_type', 60);
-            $table->string('owenership_type', 60);
+            $table->string('ownership_type', 60);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
         });

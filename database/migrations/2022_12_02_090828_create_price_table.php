@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('variant', 3);
             $table->unsignedDecimal('value');
             $table->unsignedInteger('stocks');
-            $table->foreign('post_id')->references('id')->on('post');
+            $table->foreign('post_id')->references('id')->on('posts');
             $table->timestamps();
         });
     }
