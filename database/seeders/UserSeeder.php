@@ -15,8 +15,11 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()
-            ->count(100)
-            ->create();
+        User::factory()->farmer()->create([
+            'firstname' => env('USER_FIRSTNAME', 'John'),
+            'lastname' => env('USER_LASTNAME', 'Doe'),
+            'email' => env('USER_EMAIL', 'john@doe.com'),
+            'contact_number' => env('USER_PHONE', '9123456789'),
+        ]);
     }
 }
