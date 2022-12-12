@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('farmer_group', function (Blueprint $table) {
+        Schema::create('farmer_groups', function (Blueprint $table) {
             $table->id();
             $table->string('name', 60);
             $table->string('address', 255);

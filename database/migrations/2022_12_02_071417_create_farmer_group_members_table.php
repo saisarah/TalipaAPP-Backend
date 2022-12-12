@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('farmer_id');
             $table->string('role', 20);
             $table->timestamps();
-            $table->foreign('farmer_group_id')->references('id')->on('farmer_group');
+            $table->foreign('farmer_group_id')->references('id')->on('farmer_groups');
             $table->foreign('farmer_id')->references('user_id')->on('farmers');
         });
     }
