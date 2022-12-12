@@ -25,16 +25,15 @@ class FarmerRegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            'firstname'=> ['required', new HumanName(), 'min:2', 'max:60'],
-            'middlename'=> ['nullable', new HumanName(),'min:2', 'max:60'],
-            'lastname'=> ['required', new HumanName(), 'min:2', 'max:60'],
-            'contact_number'=> ['required', 'numeric', 'digits:10', 'unique:users'],
-            'email'=> ['nullable', 'email:rfc,dns', 'unique:users'],
-            'gender'=> ['nullable', 'in:male,female'],
-            'farm_area'=> ['required', 'numeric', 'min:1'],
-            'farm_type'=> ['required', 'in:irrigated,rainfed upland, rainfed lowland'],
-            'ownership_type'=>['required'],
-
+            'firstname' => ['required', new HumanName(), 'min:2', 'max:60'],
+            'middlename' => ['nullable', new HumanName(), 'min:2', 'max:60'],
+            'lastname' => ['required', new HumanName(), 'min:2', 'max:60'],
+            'contact_number' => ['required', 'numeric', 'digits:10', 'unique:users'],
+            'email' => ['nullable', 'email:rfc,dns', 'unique:users'],
+            'gender' => ['nullable', 'in:male,female'],
+            'farm_area' => ['required', 'numeric', 'min:1'],
+            'farm_type' => ['required', 'in:irrigated,rainfed upland, rainfed lowland'],
+            'ownership_type' => ['required'],
         ];
     }
 }
