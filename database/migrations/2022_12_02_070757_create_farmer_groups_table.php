@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('email');
             $table->unsignedBigInteger('farmer_id');
             $table->string('type', 60);
-            $table->date('year_founded');
+            $table->string('year_founded');
             $table->string('status', 20);
             $table->string('authorization', 255);
             $table->foreign('farmer_id')->references('user_id')->on('farmers');
