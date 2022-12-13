@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('name', 60);
             $table->string('address', 1000);
-            $table->text('group_descrption');
+            $table->text('group_description');
             $table->string('contact_no');
+            $table->string('email');
             $table->unsignedBigInteger('farmer_id');
             $table->string('type', 60);
             $table->date('year_founded');
