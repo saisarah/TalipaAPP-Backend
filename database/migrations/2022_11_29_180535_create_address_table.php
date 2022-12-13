@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('address', function (Blueprint $table) {
             $table->id('user_id');
-            $table->string('region', 10);
-            $table->string('province', 60);
-            $table->string('municipality', 60);
-            $table->string('baranggay', 60);
-            $table->string('street', 60);
-            $table->string('house_number', 60);
+            $table->string('region');
+            $table->string('province');
+            $table->string('municipality');
+            $table->string('barangay');
+            $table->string('street');
+            $table->string('house_number');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
         });

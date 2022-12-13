@@ -15,6 +15,7 @@ class RegisterController extends Controller
 {
     public function registerFarmer(FarmerRegisterRequest $request)
     {
+
         $user = new User();
         $user->firstname = $request->firstname;
         $user->middlename = $request->middlename;
@@ -26,12 +27,22 @@ class RegisterController extends Controller
         $user->save();
 
 
-        $farmer = new Farmer();
-        $farmer->user_id = $user->id;
-        $farmer->farm_area = $request->farm_area;
-        $farmer->farm_type = $request->farm_type;
-        $farmer->ownership_type = $request->ownership_type;
-        $farmer->save();
+        $user->farmer = new Farmer();
+        $user->farmer->user_id = $user->id;
+        $user->farmer->farm_area = $request->farm_area;
+        $user->farmer->farm_type = $request->farm_type;
+        $user->farmer->ownership_type = $request->ownership_type;
+        $user->farmer->save();
+
+        $user->address =  new Address();
+        $user->address->user_id = $user->id;
+        $user->address->region = $request->region;
+        $user->address->province = $request->province;
+        $user->address->municipality = $request->municipality;
+        $user->address->barangay = $request->barangay;
+        $user->address->street = $request->street;
+        $user->address->house_number = $request->house_number;
+        $user->address->save();
 
         return $user;
     }

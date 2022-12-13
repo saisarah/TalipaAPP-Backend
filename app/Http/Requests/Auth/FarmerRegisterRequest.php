@@ -32,8 +32,14 @@ class FarmerRegisterRequest extends FormRequest
             'email' => ['nullable', 'email:rfc,dns', 'unique:users'],
             'gender' => ['nullable', 'in:male,female'],
             'farm_area' => ['required', 'numeric', 'min:1'],
-            'farm_type' => ['required', 'in:irrigated,rainfed upland, rainfed lowland'],
+            'farm_type' => ['required', 'in:Irrigated,Rainfed Upland, Rainfed Lowland'],
             'ownership_type' => ['required'],
+            'region' => ['required',],
+            'province' => ['required'],
+            'municipality' => ['required'],
+            'barangay' => ['required'],
+            'street' => ['required'],
+            'house_number' => ['required'],
         ];
     }
 }
