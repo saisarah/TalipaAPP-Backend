@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('farmer_groups', function (Blueprint $table) {
             $table->id();
             $table->string('name', 60);
-            $table->string('address', 255);
+            $table->string('address', 1000);
+            $table->text('group_descrption');
+            $table->string('contact_no');
             $table->unsignedBigInteger('farmer_id');
             $table->string('type', 60);
             $table->date('year_founded');
