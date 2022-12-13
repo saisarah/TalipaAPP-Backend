@@ -23,7 +23,6 @@ class RegisterController extends Controller
         $user->email = $request->email;
         $user->user_type = User::TYPE_FARMER;
         $user->gender = $request->gender;
-        $user->profile_picture = $request->profile_picture;
         $user->save();
 
 
