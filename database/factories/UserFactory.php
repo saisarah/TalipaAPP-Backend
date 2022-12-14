@@ -26,7 +26,9 @@ class UserFactory extends Factory
             'gender' => fake()->randomElement(['male', 'female', null]),
             'user_type' => fake()->randomElement([User::TYPE_FARMER, User::TYPE_VENDOR, User::TYPE_ADMIN]),
             'profile_picture' => 'none',
+            'password' => bcrypt('Juan23'),
             'remember_token' => Str::random(10),
+
         ];
     }
 

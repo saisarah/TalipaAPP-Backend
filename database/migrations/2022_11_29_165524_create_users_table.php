@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('user_type', 7);
             $table->string('gender', 6)->nullable();
             $table->string('profile_picture')->nullable();
+            $table->string('password', 255);
             $table->rememberToken();
             $table->timestamps();
         });
