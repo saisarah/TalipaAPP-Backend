@@ -83,7 +83,7 @@ class RegisterController extends Controller
     public function validator(Request $request)
     {
         $this->validate($request, [
-            'email' => 'sometimes|email|unique:users',
+            'email' => 'sometimes|nullable|email|unique:users',
             'phone' => 'sometimes|digits:10|numeric|unique:users,contact_number'
         ]);
 
