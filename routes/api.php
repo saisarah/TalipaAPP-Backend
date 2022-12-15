@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login/send-otp', [LoginController::class, 'sendOtp']);
 Route::post('/login/verify-otp', [LoginController::class, 'verifyOtp']);
 Route::post('/login', [LoginController::class, 'login']);
-Route::post('register/send-otp', [RegisterController::class, 'sendOtp']);
+Route::post('/register/send-otp', [RegisterController::class, 'sendOtp']);
 
 Route::post('/register/vendor', [RegisterController::class, 'registerVendor']);
 Route::post('/register/farmer', [RegisterController::class, 'registerFarmer']);
