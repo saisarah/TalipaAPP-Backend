@@ -94,9 +94,11 @@ class RegisterController extends Controller
 
     public function sendOTP(Request $request)
     {
+        $this->validate($request, [
+            'contact_number' => ['required', 'numeric', 'digits:10'],
+        ]);
         $otp = new RegisterOtp($request->contact_number);
         $otp->send();
-
         return response()->noContent();
     }
 }
