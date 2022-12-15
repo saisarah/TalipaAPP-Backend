@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('farmer_group_id');
             $table->unsignedBigInteger('farmer_id');
-            $table->string('content', 200);
+            $table->string('content', 2000);
             $table->foreign('farmer_group_id')->references('id')->on('farmer_groups');
             $table->foreign('farmer_id')->references('user_id')->on('farmers');
 
