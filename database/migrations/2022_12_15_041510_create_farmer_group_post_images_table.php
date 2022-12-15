@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('farmer_group_id');
             $table->string('image');
-            $table->foreign('farmer_group_id')->references('id')->on('farmer_group_posts');
+            $table->foreign('farmer_group_id')->references('id')->on('farmer_groups');
             $table->timestamps();
         });
     }
