@@ -22,6 +22,8 @@ class FarmerFactory extends Factory
             'farm_area' => fake()->randomNumber(2),
             'farm_type' => fake()->randomElement(['Irrigated', 'Rainfed Upland', 'Rainfed Lowland']),
             'ownership_type' => fake()->randomElement(['Registered Owner', 'Tenant', 'Lessee']),
+            'document_type' => 'N/A',
+            'document' => 'N/A',
         ];
     }
 }
