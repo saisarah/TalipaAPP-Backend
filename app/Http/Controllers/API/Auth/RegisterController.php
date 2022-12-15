@@ -9,6 +9,8 @@ use App\Models\Address;
 use App\Models\Farmer;
 use App\Models\User;
 use App\Models\Vendor;
+use App\Services\SmsService\SmsOtp\RegisterOtp;
+use App\Services\SmsService\SmsOtp\SmsOtp;
 use Illuminate\Http\Request;
 
 class RegisterController extends Controller
@@ -88,5 +90,15 @@ class RegisterController extends Controller
         ]);
 
         return true;
+    }
+
+    public function sendOTP(Request $request)
+    {
+        $this->validate($request, [
+            'contact_number' => ['required', 'numeric', 'digits:10'],
+        ]);
+        $otp = new RegisterOtp($request->contact_number);
+        $otp->send();
+        return response()->noContent();
     }
 }
