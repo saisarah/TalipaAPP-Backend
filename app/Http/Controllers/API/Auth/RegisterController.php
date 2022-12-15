@@ -96,6 +96,7 @@ class RegisterController extends Controller
     {
         $otp = new RegisterOtp($request->contact_number);
         $otp->send();
-        
+
+        return response()->noContent();
     }
 }
