@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('farmer_id');
             $table->string('title', 200);
             $table->string('description', 2000);
-            $table->string('tags', 20);
+            $table->string('tags', 255);
             $table->foreign('farmer_id')->references('user_id')->on('farmers');
             $table->timestamps();
         });
