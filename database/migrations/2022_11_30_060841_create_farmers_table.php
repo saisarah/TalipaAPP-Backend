@@ -17,7 +17,10 @@ return new class extends Migration
             $table->id('user_id');
             $table->string('farm_area', 255);
             $table->string('farm_type', 60);
+            $table->string('land_ownership', 60)->nullable();
             $table->string('ownership_type', 60);
+            $table->string('document_type', 60);
+            $table->string('document', 255);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
         });
