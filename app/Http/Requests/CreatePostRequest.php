@@ -26,13 +26,19 @@ class CreatePostRequest extends FormRequest
     public function rules()
     {
         return [
+            'author_id' => 'required|exists:users,id',
+            'crop_id' => ['required', 'exists:crops,id'],
             'caption' => ['required', 'max:2000'],
             'payment_option' => ['required', 'in:cash,gcash'],
-            'delivery_option' => ['required', 'in:pick-up,farmer,third-party'],
-            'unit' => ['required'],
-            'pricing_type' => ['required'],
+            'delivery_option' => ['required', 'in:pick-up,transportify'],
+            'unit' => ['required', 'in:piece,kilogram'],
+            'pricing_type' => ['required', 'in:straight,not-straight'],
+            'stocks'=> ['required'],
+            'price' => ['required'],
+            'size'=> ['required','in:small,medium,large'],
             'min_order' => ['required'],
-            'crop_id' => ['required', 'exists:crops,id'],
+            'attachments' => ['files*','mimes:jpeg,png,jpg,gif'],
+            'status' => ['required', 'in:availble,post-harvest'],    
         ];
     }
 }
