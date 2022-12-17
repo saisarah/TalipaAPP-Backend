@@ -19,8 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('crop_id');
             $table->string('author_type', 20);
             $table->string('caption', 255);
-            $table->string('payment_option', 5);
-            $table->string('delivery_option', 20);
+            $table->string('payment_option', 200);
+            $table->string('delivery_option', 200);
             $table->string('unit', 20);
             $table->string('pricing_type', 20);
             $table->string('status', 10);

@@ -26,4 +26,9 @@ class Post extends Model
     {
         return $this->morphTo();
     }
+
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class);
+    }
 }

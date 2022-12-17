@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FarmerSeeder::class);
 
         //Generate 100 posts for random farmer accounts
-        $this->call(PostSeeder::class);
+        // $this->call(PostSeeder::class);
 
         $this->call(UserSeeder::class);
 
