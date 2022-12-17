@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\FarmerGroup;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -26,5 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PostSeeder::class);
 
         $this->call(UserSeeder::class);
+
+        $this->call(FarmerGroupSeeder::class);
     }
 }

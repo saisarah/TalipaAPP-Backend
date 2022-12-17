@@ -61,6 +61,13 @@ class RegisterController extends Controller
 
     public function registerVendor(VendorRegisterRequest $request)
     {
+
+        $otp = new RegisterOtp($request->contact_number);
+
+        if (!$otp->verify($request->code)) {
+            return abort(422, "Wrong verification code");
+        }
+
         $user = new User();
         $user->firstname = $request->firstname;
         $user->middlename = $request->middlename;
@@ -69,25 +76,33 @@ class RegisterController extends Controller
         $user->email = $request->email;
         $user->user_type = User::TYPE_VENDOR;
         $user->gender = $request->gender;
-        $user->profile_picture = $request->profile_picture;
+        $user->password = bcrypt($request->password);
         $user->save();
 
+        $user->vendor = new Vendor();
+        $user->vendor->user_id = $user->id;
+        $user->vendor->authorization = $request->file('document')->store('vendors/authorization');
+        $user->vendor->save();
 
-        $vendor = new Vendor();
-        $vendor->user_id = $user->id;
-        $vendor->public_market_id = $request->public_market_id;
-        $vendor->authorization = $request->authorization;
-        $vendor->save();
 
-        $address =  new Address();
-        $address->user_id = $user->id;
-        $address->region = $request->region;
-        $address->province = $request->province;
-        $address->municipality = $request->municipality;
-        $address->barangay = $request->barangay;
-        $address->street = $request->street;
-        $address->house_number = $request->house_number;
+        // $user->farmer = new Farmer();
+        // $user->farmer->user_id = $user->id;
+        // $user->farmer->farm_area = $request->farm_area;
+        // $user->farmer->farm_type = $request->farm_type;
+        // $user->farmer->ownership_type = $request->ownership_type;
+        // $user->farmer->document_type = $request->document_type;
+        // $user->farmer->document = $request->file('document')->store('farmers/authorization');
+        // $user->farmer->save();
 
+        $user->address =  new Address();
+        $user->address->user_id = $user->id;
+        $user->address->region = $request->region;
+        $user->address->province = $request->province;
+        $user->address->municipality = $request->municipality;
+        $user->address->barangay = $request->barangay;
+        $user->address->street = $request->street;
+        $user->address->house_number = $request->house_number;
+        $user->address->save();
 
         return $user;
     }
