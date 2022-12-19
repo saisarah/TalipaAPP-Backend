@@ -31,4 +31,9 @@ class Post extends Model
     {
         return $this->hasMany(Attachment::class);
     }
+
+    public function prices()
+    {
+        return $this->hasMany(PriceTable::class);
+    }
 }

@@ -18,33 +18,64 @@ class PostController extends Controller
     {
         // return $request->file('attachments');
         // dd($request->file('attachments'));
+        $this->validate($request, [
+            'crop_id' => 'required|exists:crops,id',
+            'delivery_options' => 'required|array',
+            'payment_options' => 'required|array',
+            'unit' => 'required',
+            'is_straight' => 'required|boolean',
+            'details' => 'required|max:1000',
+            'attachments' => 'required|array',
+            'attachments.*' => 'image',
+            'sizes' => 'required|array',
+            'sizes.*.size' => 'required',
+            'sizes.*.price' => 'required|numeric|min:1',
+            'sizes.*.stock' => 'required|numeric|min:1'
+        ]);
 
         $post = new Post;
         $post->author_id = Auth::id();
         $post->author_type = User::class;
-        $post->crop_id = $request->commodity;
+        $post->crop_id = $request->crop_id;
         $post->caption = $request->details;
-        $post->payment_option = $request->payment_options;
-        $post->delivery_option = $request->delivery_options;
+        $post->payment_option = json_encode($request->payment_options);
+        $post->delivery_option = json_encode($request->delivery_options);
         $post->unit = $request->unit;
         $post->pricing_type = $request->boolean('is_straight') ? "Straight" : "Not Straight";
         $post->status = "Available";
         $post->min_order = 0;
         $post->save();
 
-        $post->price_table = new PriceTable();
-        $post->price_table->post_id = $post->id;
-        $post->price_table->value = $request->prices;
-        $post->price_table->variant = $request->sizes;
-        $post->price_table->stocks = $request->stocks;
-        $post->price_table->save();
+        foreach($request->sizes as $size) {
+            $price = new PriceTable();
+            $price->post_id = $post->id;
+            $price->value = $size["price"];
+            $price->variant = $size["size"];
+            $price->stocks = $size["stock"];
+            $price->save();
+        }
+
+        foreach($request->attachments as $attachment) {
+            $file = new Attachment();
+            $file->post_id = $post->id;
+            $file->source = $attachment->store("farmers/posts/{$post->id}", "public");
+            $file->type = "image";
+            $file->save();
+        }
+
+        // $post->price_table = new PriceTable();
+        // $post->price_table->post_id = $post->id;
+        // $post->price_table->value = $request->prices;
+        // $post->price_table->variant = $request->sizes;
+        // $post->price_table->stocks = $request->stocks;
+        // $post->price_table->save();
 
         // for
-        $post->attachments = new Attachment();
-        $post->attachments->post_id = $post->id;
-        $post->attachments->source = $request->file('attachments')->store("farmers/posts/{$post->id}", "public");
-        $post->attachments->type = "image";
-        $post->attachments->save();
+        // $post->attachments = new Attachment();
+        // $post->attachments->post_id = $post->id;
+        // $post->attachments->source = $request->file('attachments')->store("farmers/posts/{$post->id}", "public");
+        // $post->attachments->type = "image";
+        // $post->attachments->save();
 
         return $post;
         // $post->attachments->
