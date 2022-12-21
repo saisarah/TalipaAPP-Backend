@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -55,6 +57,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = ['fullname'];
+
     public function isFarmer() : bool 
     {
         return $this->type === static::TYPE_FARMER;
@@ -73,6 +77,22 @@ class User extends Authenticatable
     public function farmer()
     {
         return $this->hasOne(Farmer::class);
+    }
+
+    public function fullname() : Attribute
+    {
+        return Attribute::make(
+            get: fn() => "{$this->firstname} {$this->lastname}"
+        );
+    }
+
+    public function profilePicture() : Attribute
+    {
+        $name = strtolower(urlencode($this->fullname));
+
+        return Attribute::make(
+            get: fn($pic) => $pic ?? "https://avatars.dicebear.com/api/initials/$name.svg"
+        );
     }
 
 }
