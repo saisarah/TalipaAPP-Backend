@@ -16,8 +16,6 @@ class PostController extends Controller
 {
     public function create(Request $request)
     {
-        // return $request->file('attachments');
-        // dd($request->file('attachments'));
         $this->validate($request, [
             'crop_id' => 'required|exists:crops,id',
             'delivery_options' => 'required|array',
@@ -63,28 +61,11 @@ class PostController extends Controller
             $file->save();
         }
 
-        // $post->price_table = new PriceTable();
-        // $post->price_table->post_id = $post->id;
-        // $post->price_table->value = $request->prices;
-        // $post->price_table->variant = $request->sizes;
-        // $post->price_table->stocks = $request->stocks;
-        // $post->price_table->save();
-
-        // for
-        // $post->attachments = new Attachment();
-        // $post->attachments->post_id = $post->id;
-        // $post->attachments->source = $request->file('attachments')->store("farmers/posts/{$post->id}", "public");
-        // $post->attachments->type = "image";
-        // $post->attachments->save();
-
-        return $post;
-        // $post->attachments->
-
         return $post;
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        return Post::with('attachments', 'author')->get();
+        return Post::with('attachments', 'author', 'prices')->get()->each->append('display_price');
     }
 }

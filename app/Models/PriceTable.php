@@ -10,4 +10,8 @@ class PriceTable extends Model
     use HasFactory;
 
     protected $table = "price";
+
+    protected $casts = [
+        'value' => 'double'
+    ];
 }
