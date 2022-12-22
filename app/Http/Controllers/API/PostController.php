@@ -68,4 +68,9 @@ class PostController extends Controller
     {
         return Post::with('attachments', 'author', 'prices')->get()->each->append('display_price');
     }
+
+    public function getFromUser(User $user)
+    {
+        return $user->posts()->with('attachments', 'author', 'prices')->get()->each->append('display_price');
+    }
 }

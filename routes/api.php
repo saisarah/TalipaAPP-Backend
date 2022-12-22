@@ -39,3 +39,4 @@ Route::get('/posts', [PostController::class, 'index'])->middleware('auth:sanctum
 Route::get('/user', [UserController::class, 'getCurrentUser'])->middleware('auth:sanctum');
 
 Route::post('/posts', [PostController::class, 'create'])->middleware('auth:sanctum');
+Route::get('/users/{user}/posts', [PostController::class, 'getFromUser'])->middleware('auth:sanctum');
