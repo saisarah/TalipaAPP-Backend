@@ -36,6 +36,7 @@ Route::get('/philippine-addresses/provinces', [AddressController::class, 'provin
 Route::get('/philippine-addresses/cities', [AddressController::class, 'cities']);
 Route::get('/philippine-addresses/barangays', [AddressController::class, 'barangays']);
 Route::get('/posts', [PostController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/posts/{post}', [PostController::class, 'show'])->middleware('auth:sanctum');
 Route::get('/user', [UserController::class, 'getCurrentUser'])->middleware('auth:sanctum');
 
 Route::post('/posts', [PostController::class, 'create'])->middleware('auth:sanctum');
