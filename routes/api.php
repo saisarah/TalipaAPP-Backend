@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AddressController;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\API\CropController;
+use App\Http\Controllers\API\FarmerController;
 use App\Http\Controllers\API\FarmerGroupController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\UserController;
@@ -44,3 +45,4 @@ Route::post('/posts', [PostController::class, 'create'])->middleware('auth:sanct
 Route::get('/users/{user}/posts', [PostController::class, 'getFromUser'])->middleware('auth:sanctum');
 
 Route::get('/farmer-groups', [FarmerGroupController::class, 'index']);
+Route::get('/farmers', [FarmerController::class, 'index']);
