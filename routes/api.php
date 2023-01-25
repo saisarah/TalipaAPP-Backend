@@ -8,6 +8,7 @@ use App\Http\Controllers\API\FarmerController;
 use App\Http\Controllers\API\FarmerGroupController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\VendorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,3 +47,5 @@ Route::get('/users/{user}/posts', [PostController::class, 'getFromUser'])->middl
 
 Route::get('/farmer-groups', [FarmerGroupController::class, 'index']);
 Route::get('/farmers', [FarmerController::class, 'index']);
+
+Route::get('/vendors', [VendorController::class, 'index']);
