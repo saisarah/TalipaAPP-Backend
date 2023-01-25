@@ -43,4 +43,4 @@ Route::get('/user', [UserController::class, 'getCurrentUser'])->middleware('auth
 Route::post('/posts', [PostController::class, 'create'])->middleware('auth:sanctum');
 Route::get('/users/{user}/posts', [PostController::class, 'getFromUser'])->middleware('auth:sanctum');
 
-Route::get('/farmer-group', [FarmerGroupController::class, 'index']);
+Route::get('/farmer-groups', [FarmerGroupController::class, 'index']);
