@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AddressController;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\API\CropController;
+use App\Http\Controllers\API\FarmerGroupController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Support\Facades\Route;
@@ -41,3 +42,5 @@ Route::get('/user', [UserController::class, 'getCurrentUser'])->middleware('auth
 
 Route::post('/posts', [PostController::class, 'create'])->middleware('auth:sanctum');
 Route::get('/users/{user}/posts', [PostController::class, 'getFromUser'])->middleware('auth:sanctum');
+
+Route::get('/farmer-group', [FarmerGroupController::class, 'index']);
