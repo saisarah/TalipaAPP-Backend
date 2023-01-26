@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('author_id');
             $table->unsignedBigInteger('crop_id');
             $table->string('author_type', 20);
+            $table->string('title');
             $table->string('caption', 255);
             $table->string('payment_option', 200);
             $table->string('delivery_option', 200);

@@ -34,6 +34,7 @@ class PostController extends Controller
         $post = new Post;
         $post->author_id = Auth::id();
         $post->author_type = User::class;
+        $post->title = $request->title;
         $post->crop_id = $request->crop_id;
         $post->caption = $request->details;
         $post->payment_option = json_encode($request->payment_options);
