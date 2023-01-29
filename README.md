@@ -10,7 +10,8 @@
 4. Open .env and setup your database
 5. Generate application. run `php artisan key:generate`
 6. Migrate the database. run `php artisan migrate --seed`
-7. Start the application run `php artisan serve`
+7. Link public storage. run `php artisan storage:link`
+8. Start the application run `php artisan serve`
 
 ## Terminologies
 1. 
