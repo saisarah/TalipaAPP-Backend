@@ -99,4 +99,13 @@ class User extends Authenticatable
     {
         return $this->morphMany(Post::class, 'author');
     }
+
+    public static function generateUserName($firstname)
+    {
+        $firstname = explode(" ", $firstname)[0];
+        $digits = 4;
+        $id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+        $result = "$firstname#$id";
+        return $result;
+    }
 }
