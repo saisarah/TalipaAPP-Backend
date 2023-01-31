@@ -48,6 +48,6 @@ Route::get('/users/{user}/posts', [PostController::class, 'getFromUser'])->middl
 
 Route::get('/farmer-groups', [FarmerGroupController::class, 'index']);
 Route::get('/farmers', [FarmerController::class, 'index']);
-Route::get('/farmer-group-posts', [FarmerGroupPostController::class, 'index']);
+Route::get('/farmer-group-posts', [FarmerGroupPostController::class, 'index'])->middleware('auth:sanctum');
 
 Route::get('/vendors', [VendorController::class, 'index']);
