@@ -16,10 +16,12 @@ return new class extends Migration
         Schema::create('farmer_group_posts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('farmer_id');
+            $table->unsignedBigInteger('farmer_group_id');
             $table->string('title', 200);
             $table->string('description', 2000);
             $table->string('tags', 255);
             $table->foreign('farmer_id')->references('user_id')->on('farmers');
+            $table->foreign('farmer_group_id')->references('id')->on('farmer_groups');
             $table->timestamps();
         });
     }
