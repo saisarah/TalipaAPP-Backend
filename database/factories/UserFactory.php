@@ -18,8 +18,9 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $firstname = fake()->firstName();
         return [
-            'firstname' => fake()->firstName(),
+            'firstname' => $firstname,
             'lastname' => fake()->lastName(),
             'contact_number' => $this->phNumber(),
             'email' => fake()->unique()->safeEmail(),
@@ -28,7 +29,7 @@ class UserFactory extends Factory
             'profile_picture' => 'none',
             'password' => bcrypt('Juan23'),
             'remember_token' => Str::random(10),
-
+            'username' => User::generateUserName($firstname),
         ];
     }
 
