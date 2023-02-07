@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AddressController;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\API\CropController;
+use App\Http\Controllers\API\DemandController;
 use App\Http\Controllers\API\FarmerController;
 use App\Http\Controllers\API\FarmerGroupController;
 use App\Http\Controllers\API\FarmerGroupPostController;
@@ -52,3 +53,5 @@ Route::get('/farmers', [FarmerController::class, 'index']);
 Route::get('/farmer-group-posts', [FarmerGroupPostController::class, 'index'])->middleware('auth:sanctum');
 
 Route::get('/vendors', [VendorController::class, 'index']);
+
+Route::get('/demands', [DemandController::class, 'index']);
