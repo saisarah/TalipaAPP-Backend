@@ -10,6 +10,6 @@ class DemandController extends Controller
 {
     public function index()
     {
-        return Demand::all();
+        return Demand::with('author', 'crop')->get();
     }
 }
