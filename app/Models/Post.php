@@ -13,6 +13,7 @@ class Post extends Model
     protected $fillable = [
         'author_id',
         'author_type',
+        'title',
         'status',
         'caption',
         'payment_option',

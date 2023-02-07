@@ -22,6 +22,7 @@ class PostFactory extends Factory
             'author_id' => Farmer::inRandomOrder()->first()->user_id,
             'crop_id' => Crop::inRandomOrder()->first()->id,
             'author_type' => Farmer::class,
+            'title' => fake()->sentence(5),
             'caption' => fake()->text(),
             'payment_option' => fake()->randomElement(['Cash', 'Gcash']),
             'delivery_option' => fake()->randomElement(['Pick-up', 'Third-Party', 'Farmer']),

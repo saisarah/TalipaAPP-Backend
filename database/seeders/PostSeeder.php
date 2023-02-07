@@ -16,6 +16,10 @@ class PostSeeder extends Seeder
     public function run()
     {
         Post::factory()
+            ->hasAttachments(3, [
+                'source' => 'test',
+                'type' => 'url'
+            ])
             ->count(100)
             ->create();
     }
