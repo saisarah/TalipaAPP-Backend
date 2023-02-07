@@ -21,5 +21,12 @@ class UserSeeder extends Seeder
             'email' => env('USER_EMAIL', 'john@doe.com'),
             'contact_number' => env('USER_PHONE', '9123456789'),
         ]);
+
+        User::factory()->vendor()->create([
+            'firstname' => 'Sarah',
+            'lastname' => 'Oben',
+            'email' => 'sarah@email.com',
+            'contact_number' => '9876543210',
+        ]);
     }
 }
