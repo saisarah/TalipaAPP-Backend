@@ -30,7 +30,7 @@ class FarmerGroupController extends Controller
             abort(400, 'Join group first');
         }
         $group_id = $group->farmer_group_id;
-        $curGroup = FarmerGroupMember::where('farmer_group_id', $group_id)->get();
+        $curGroup = FarmerGroupMember::where('farmer_group_id', $group_id)->first();
         return $curGroup;
     }
 }
