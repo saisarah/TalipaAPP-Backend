@@ -17,7 +17,7 @@ class PostSeeder extends Seeder
     {
         Post::factory()
             ->hasAttachments(3, [
-                'source' => 'test',
+                'source' => 'https://via.placeholder.com/300/09f/fff.png',
                 'type' => 'url'
             ])
             ->count(100)
