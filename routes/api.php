@@ -51,6 +51,7 @@ Route::get('/farmer-groups', [FarmerGroupController::class, 'index'])->middlewar
 Route::get('/farmer-groups/{id}', [FarmerGroupController::class, 'show'])->middleware('auth:sanctum');
 Route::get('/farmers', [FarmerController::class, 'index']);
 Route::get('/farmer-group-posts', [FarmerGroupPostController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/farmer-group',[FarmerGroupController::class, 'getCurrentGroup'])->middleware('auth:sanctum');
 
 Route::get('/vendors', [VendorController::class, 'index']);
 
