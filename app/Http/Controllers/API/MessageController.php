@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Message;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +19,9 @@ class MessageController extends Controller
         $result = $second->map(function ($item, $key) {
             return $item['sender_id'];
         });
-        return $result;
+
+        $users = User::whereIn('id', $result)->get();
+        return $users;
     }
 
     public function show($id)
