@@ -59,3 +59,4 @@ Route::get('/vendors', [VendorController::class, 'index']);
 Route::get('/demands', [DemandController::class, 'index']);
 
 Route::get('/messages', [MessageController::class, 'index'])->middleware('auth:sanctum');;
+Route::get('/messages/{id}', [MessageController::class, 'show'])->middleware('auth:sanctum');;
