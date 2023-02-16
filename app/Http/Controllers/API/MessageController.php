@@ -12,29 +12,23 @@ class MessageController extends Controller
     public function index()
     {
         $id = Auth::id();
-        $message = Message::where('receiver_id', $id)->select('sender_id')->get();
-        return $message;
+        $first = Message::select('receiver_id')->where('sender_id', $id)->distinct();
+        $second = Message::select('sender_id')->where('receiver_id', $id)->distinct()->union($first)->get();
+
+        $result = $second->map(function ($item, $key) {
+            return $item['sender_id'];
+        });
+        return $result;
     }
 
     public function show($id)
     {
-        
+        $user_id = Auth::id();
         $message = Message::where('sender_id', $id)
-        ->orwhere('receiver_id', $id)
-            
-        ->orwhere(function ($query){
-            $user_id = Auth::id();
-           
-                $query = Message::orwhere('receiver_id', $user_id);
-
-           })
-        ->get();
-
-        if ($message == null)
-        {
-            abort(400, "Conversation not found");
-        }
+            ->where('receiver_id', $user_id)
+            ->orwhere('sender_id', $user_id)
+            ->where('receiver_id', $id)
+            ->get();
         return $message;
     }
-
 }
