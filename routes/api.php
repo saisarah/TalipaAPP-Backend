@@ -65,3 +65,4 @@ Route::post('/messages/{id}', [MessageController::class, 'create'])->middleware(
 
 
 Route::get('/orders', [OrderController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/orders', [OrderController::class, 'create'])->middleware('auth:sanctum');
