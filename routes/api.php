@@ -9,6 +9,7 @@ use App\Http\Controllers\API\FarmerController;
 use App\Http\Controllers\API\FarmerGroupController;
 use App\Http\Controllers\API\FarmerGroupPostController;
 use App\Http\Controllers\API\MessageController;
+use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\VendorController;
@@ -60,3 +61,5 @@ Route::get('/demands', [DemandController::class, 'index']);
 
 Route::get('/messages', [MessageController::class, 'index'])->middleware('auth:sanctum');;
 Route::get('/messages/{id}', [MessageController::class, 'show'])->middleware('auth:sanctum');;
+
+Route::get('/orders', [OrderController::class, 'index'])->middleware('auth:sanctum');;
