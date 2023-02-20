@@ -34,4 +34,17 @@ class MessageController extends Controller
             ->get();
         return $message;
     }
+    public function create(Request $request, $id)
+    {
+        $this->validate($request, [
+            'content' => 'required'
+        ]);
+
+        $message = Message::create([
+            'receiver_id' => $id,
+            'sender_id' => Auth::id(),
+            'content' => $request->content
+        ]);
+        return $message;
+    }
 }
