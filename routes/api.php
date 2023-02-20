@@ -49,17 +49,17 @@ Route::get('/user', [UserController::class, 'getCurrentUser'])->middleware('auth
 Route::post('/posts', [PostController::class, 'create'])->middleware('auth:sanctum');
 Route::get('/users/{user}/posts', [PostController::class, 'getFromUser'])->middleware('auth:sanctum');
 
-Route::get('/farmer-groups', [FarmerGroupController::class, 'index'])->middleware('auth:sanctum');;
+Route::get('/farmer-groups', [FarmerGroupController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/farmer-groups/{id}', [FarmerGroupController::class, 'show'])->middleware('auth:sanctum');
 Route::get('/farmers', [FarmerController::class, 'index']);
 Route::get('/farmer-group-posts', [FarmerGroupPostController::class, 'index'])->middleware('auth:sanctum');
-Route::get('/farmer-group',[FarmerGroupController::class, 'getCurrentGroup'])->middleware('auth:sanctum');
+Route::get('/farmer-group', [FarmerGroupController::class, 'getCurrentGroup'])->middleware('auth:sanctum');
 
 Route::get('/vendors', [VendorController::class, 'index']);
 
 Route::get('/demands', [DemandController::class, 'index']);
 
-Route::get('/messages', [MessageController::class, 'index'])->middleware('auth:sanctum');;
-Route::get('/messages/{id}', [MessageController::class, 'show'])->middleware('auth:sanctum');;
+Route::get('/messages', [MessageController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/messages/{id}', [MessageController::class, 'show'])->middleware('auth:sanctum');
 
-Route::get('/orders', [OrderController::class, 'index'])->middleware('auth:sanctum');;
+Route::get('/orders', [OrderController::class, 'index'])->middleware('auth:sanctum');
