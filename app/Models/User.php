@@ -59,19 +59,19 @@ class User extends Authenticatable
 
     protected $appends = ['fullname'];
 
-    public function isFarmer() : bool 
+    public function isFarmer(): bool
     {
-        return $this->type === static::TYPE_FARMER;
+        return $this->user_type === static::TYPE_FARMER;
     }
 
-    public function isVendor() : bool
+    public function isVendor(): bool
     {
-        return $this->type === static::TYPE_VENDOR;
+        return $this->user_type === static::TYPE_VENDOR;
     }
 
-    public function isAdmin() : bool
+    public function isAdmin(): bool
     {
-        return $this->type === static::TYPE_ADMIN;
+        return $this->user_type === static::TYPE_ADMIN;
     }
 
     public function farmer()
@@ -79,19 +79,19 @@ class User extends Authenticatable
         return $this->hasOne(Farmer::class);
     }
 
-    public function fullname() : Attribute
+    public function fullname(): Attribute
     {
         return Attribute::make(
-            get: fn() => "{$this->firstname} {$this->lastname}"
+            get: fn () => "{$this->firstname} {$this->lastname}"
         );
     }
 
-    public function profilePicture() : Attribute
+    public function profilePicture(): Attribute
     {
         $name = strtolower(urlencode($this->fullname));
 
         return Attribute::make(
-            get: fn($pic) => $pic ?? "https://avatars.dicebear.com/api/initials/$name.svg"
+            get: fn ($pic) => $pic ?? "https://avatars.dicebear.com/api/initials/$name.svg"
         );
     }
 
@@ -104,7 +104,7 @@ class User extends Authenticatable
     {
         $firstname = explode(" ", $firstname)[0];
         $digits = 4;
-        $id = str_pad(rand(0, pow(10, $digits)-1), $digits, '0', STR_PAD_LEFT);
+        $id = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
         $result = "$firstname#$id";
         return $result;
     }
