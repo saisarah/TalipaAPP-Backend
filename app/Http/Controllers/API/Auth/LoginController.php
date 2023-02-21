@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Services\SmsService\SmsOtp\LoginOtp;
 use App\Services\SmsService\SmsOtp\SmsOtp;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
@@ -57,6 +58,29 @@ class LoginController extends Controller
 
         $token = $user->createToken($request->device_name);
 
+        return [
+            'user' => $user,
+            'token' => $token->plainTextToken,
+        ];
+    }
+
+    public function loginAdmin(Request $request)
+    {
+        $email = $request->email;
+        $password = $request->password;
+        $user = User::where('email', $email)->first();
+
+        if ($user === null) {
+            return abort(400, "The email you entered did not match our record, Please try again");
+        }
+        if (!Hash::check($password, $user->password)) {
+            return abort(400, "The password you've entered is incorrect");
+        }
+        $role = $user->user_type;
+        if ($role != User::TYPE_ADMIN) {
+            return abort(400, "The email or password you entered did not match our record, Please try again");
+        }
+        $token = $user->createToken($request->device_name);
         return [
             'user' => $user,
             'token' => $token->plainTextToken,
