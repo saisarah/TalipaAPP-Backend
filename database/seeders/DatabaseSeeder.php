@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\FarmerGroup;
+use App\Models\PublicMarket;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -19,6 +20,8 @@ class DatabaseSeeder extends Seeder
     {
         //Populate Crops table
         $this->call(CropSeeder::class);
+
+        $this->call(PublicMarketSeeder::class);
 
         //Generate 100 random farmer accounts
         $this->call(FarmerSeeder::class);
