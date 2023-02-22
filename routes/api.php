@@ -31,7 +31,7 @@ Route::post('/login/send-otp', [LoginController::class, 'sendOtp']);
 Route::post('/login/verify-otp', [LoginController::class, 'verifyOtp']);
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register/send-otp', [RegisterController::class, 'sendOtp']);
-Route::post('/admin-login',[LoginController::class, 'loginAdmin']);
+Route::post('/admin-login', [LoginController::class, 'loginAdmin']);
 
 Route::post('/register/vendor', [RegisterController::class, 'registerVendor']);
 Route::post('/register/farmer', [RegisterController::class, 'registerFarmer']);
@@ -46,6 +46,7 @@ Route::get('/philippine-addresses/barangays', [AddressController::class, 'barang
 Route::get('/posts', [PostController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/posts/{post}', [PostController::class, 'show'])->middleware('auth:sanctum');
 Route::get('/user', [UserController::class, 'getCurrentUser'])->middleware('auth:sanctum');
+Route::get('/users/{user}', [UserController::class, 'show'])->middleware('auth:sanctum');
 
 Route::post('/posts', [PostController::class, 'create'])->middleware('auth:sanctum');
 Route::get('/users/{user}/posts', [PostController::class, 'getFromUser'])->middleware('auth:sanctum');
