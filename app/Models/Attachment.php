@@ -11,10 +11,12 @@ class Attachment extends Model
 {
     use HasFactory;
 
-    public function source() : Attribute
+    const TYPE_URL = 'url';
+
+    public function source(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => url(Storage::url($value))
+            get: fn ($value) => $this->type === self::TYPE_URL ? $value : url(Storage::url($value))
         );
     }
 }
