@@ -27,5 +27,8 @@ class ChangePasswordController extends Controller
             abort(400, "Password confirmation does not match.");
         }
 
+        $id = Auth::id();
+        User::where('id', $id)->update(['password' => bcrypt($new_password)]);
+
     }
 }
