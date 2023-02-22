@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AddressController;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Auth\RegisterController;
+use App\Http\Controllers\API\Auth\ChangePasswordController;
 use App\Http\Controllers\API\CropController;
 use App\Http\Controllers\API\DemandController;
 use App\Http\Controllers\API\FarmerController;
@@ -68,3 +69,5 @@ Route::post('/messages/{id}', [MessageController::class, 'create'])->middleware(
 
 Route::get('/orders', [OrderController::class, 'index'])->middleware('auth:sanctum');
 Route::post('/orders', [OrderController::class, 'create'])->middleware('auth:sanctum');
+
+Route::patch('/change-password', [ChangePasswordController::class, 'update'])->middleware('auth:sanctum');
