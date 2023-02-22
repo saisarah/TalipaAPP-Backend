@@ -3,7 +3,7 @@
 use App\Http\Controllers\API\AddressController;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Auth\RegisterController;
-use App\Http\Controllers\API\ChangePasswordController;
+use App\Http\Controllers\API\Auth\ChangePasswordController;
 use App\Http\Controllers\API\CropController;
 use App\Http\Controllers\API\DemandController;
 use App\Http\Controllers\API\FarmerController;
@@ -32,7 +32,7 @@ Route::post('/login/send-otp', [LoginController::class, 'sendOtp']);
 Route::post('/login/verify-otp', [LoginController::class, 'verifyOtp']);
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register/send-otp', [RegisterController::class, 'sendOtp']);
-Route::post('/admin-login',[LoginController::class, 'loginAdmin']);
+Route::post('/admin-login', [LoginController::class, 'loginAdmin']);
 
 Route::post('/register/vendor', [RegisterController::class, 'registerVendor']);
 Route::post('/register/farmer', [RegisterController::class, 'registerFarmer']);
