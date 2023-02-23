@@ -140,5 +140,11 @@ class User extends Authenticatable
         if ($this->user_type !== $receiver->user_type) {
             throw new Exception("Transfer failed");
         }
+
+        $this->wallet->balance = $this->wallet->balance - $amount;
+        $receiver->wallet->balance = $receiver->wallet->balance + $amount;
+
+        $this->wallet->update();
+        $receiver->wallet->update();
     }
 }
