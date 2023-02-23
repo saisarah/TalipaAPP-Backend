@@ -10,8 +10,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-use function PHPSTORM_META\map;
-
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -77,6 +75,11 @@ class User extends Authenticatable
     public function farmer()
     {
         return $this->hasOne(Farmer::class);
+    }
+
+    public function vendor()
+    {
+        return $this->hasOne(Vendor::class);
     }
 
     public function fullname(): Attribute

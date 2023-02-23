@@ -23,13 +23,13 @@ class DatabaseSeeder extends Seeder
 
         $this->call(PublicMarketSeeder::class);
 
+        $this->call(UserSeeder::class);
+
         //Generate 100 random farmer accounts
         $this->call(FarmerSeeder::class);
 
         //Generate 100 posts for random farmer accounts
         $this->call(PostSeeder::class);
-
-        $this->call(UserSeeder::class);
 
         $this->call(FarmerGroupSeeder::class);
 

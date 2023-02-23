@@ -15,12 +15,14 @@ class CropSeeder extends Seeder
      */
     public function run()
     {
-        Crop::create(['name' => 'Mango', 'image' => 'none']);
-        Crop::create(['name' => 'Banana', 'image' => 'none']);
-        Crop::create(['name' => 'Onion', 'image' => 'none']);
-        Crop::create(['name' => 'Pineapple', 'image' => 'none']);
-        Crop::create(['name' => 'Garlic', 'image' => 'none']);
-        Crop::create(['name' => 'Eggplant', 'image' => 'none']);
-        Crop::create(['name' => 'Cabbage', 'image' => 'none']);
+        Crop::insert([
+            ['name' => 'Mango', 'image' => 'none'],
+            ['name' => 'Banana', 'image' => 'none'],
+            ['name' => 'Onion', 'image' => 'none'],
+            ['name' => 'Pineapple', 'image' => 'none'],
+            ['name' => 'Garlic', 'image' => 'none'],
+            ['name' => 'Eggplant', 'image' => 'none'],
+            ['name' => 'Cabbage', 'image' => 'none'],
+        ]);
     }
 }

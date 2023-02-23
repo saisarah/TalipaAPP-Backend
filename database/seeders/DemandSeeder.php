@@ -17,26 +17,11 @@ class DemandSeeder extends Seeder
      */
     public function run()
     {
-        Demand::create([
-            'vendor_id' => Vendor::inRandomOrder()->first()->user_id,
-            'budget' => 100000,
-            'quantity' =>  1000,  
-            'description' => fake()->text(),
-            'crop_id' => Crop::inRandomOrder()->first()->id
-        ]);
-        Demand::create([
-            'vendor_id' => Vendor::inRandomOrder()->first()->user_id,
-            'budget' => 100000,
-            'quantity' =>  1000,  
-            'description' => fake()->text(),
-            'crop_id' => Crop::inRandomOrder()->first()->id
-        ]);
-        Demand::create([
-            'vendor_id' => Vendor::inRandomOrder()->first()->user_id,
-            'budget' => 100000,
-            'quantity' =>  1000,  
-            'description' => fake()->text(),
-            'crop_id' => Crop::inRandomOrder()->first()->id
-        ]);
+        $vendors = Vendor::all();
+
+        Demand::factory()
+            ->recycle($vendors)
+            ->count(100)
+            ->create();
     }
 }
