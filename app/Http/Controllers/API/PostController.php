@@ -45,7 +45,7 @@ class PostController extends Controller
         $post->min_order = 0;
         $post->save();
 
-        foreach($request->sizes as $size) {
+        foreach ($request->sizes as $size) {
             $price = new PriceTable();
             $price->post_id = $post->id;
             $price->value = $size["price"];
@@ -54,7 +54,7 @@ class PostController extends Controller
             $price->save();
         }
 
-        foreach($request->attachments as $attachment) {
+        foreach ($request->attachments as $attachment) {
             $file = new Attachment();
             $file->post_id = $post->id;
             $file->source = $attachment->store("farmers/posts/{$post->id}", "public");
@@ -67,7 +67,7 @@ class PostController extends Controller
 
     public function index()
     {
-        return Post::with('attachments', 'author', 'prices')->get()->each->append('display_price');
+        return Post::with('attachments', 'author', 'prices', 'crop')->get()->each->append('display_price');
     }
 
     public function show(Post $post)

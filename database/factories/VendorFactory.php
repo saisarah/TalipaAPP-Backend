@@ -18,7 +18,7 @@ class VendorFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => User::factory()->vendor()->create()->id,
+            'user_id' => User::factory()->vendor(),
         ];
     }
 }

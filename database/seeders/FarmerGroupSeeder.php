@@ -17,6 +17,8 @@ class FarmerGroupSeeder extends Seeder
      */
     public function run()
     {
+        $farmers = Farmer::all();
+
         FarmerGroup::create([
             'name' => 'Bonena Multi-Purpose Cooperative',
             'Address' => 'Brgy. Curva, Bongabon, Nueva Ecija',
@@ -27,7 +29,7 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-            'farmer_id' => Farmer::inRandomOrder()->first()->user_id,
+            'farmer_id' => $farmers->random()->user_id,
         ]);
         FarmerGroup::create([
             'name' => 'KASAMNE',
@@ -39,7 +41,7 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-            'farmer_id' => Farmer::inRandomOrder()->first()->user_id,
+            'farmer_id' => $farmers->random()->user_id,
         ]);
         FarmerGroup::create([
             'name' => 'Agrizkaya Cooperative Federation (AGCOFED) ',
@@ -52,7 +54,7 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-            'farmer_id' => Farmer::inRandomOrder()->first()->user_id,
+            'farmer_id' => $farmers->random()->user_id,
         ]);
         FarmerGroup::create([
             'name' => 'Kafdeco Kasibu Farmers Development Cooperative',
@@ -65,7 +67,7 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-            'farmer_id' => Farmer::inRandomOrder()->first()->user_id,
+            'farmer_id' => $farmers->random()->user_id,
         ]);
         FarmerGroup::create([
             'name' => 'Sentrong Pamilihan ng Produktong Agrikultura sa Quezon Federation (SPAQ) Inc',
@@ -78,7 +80,7 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-            'farmer_id' => Farmer::inRandomOrder()->first()->user_id,
+            'farmer_id' => $farmers->random()->user_id,
         ]);
 
         FarmerGroup::create([
@@ -91,7 +93,7 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-            'farmer_id' => Farmer::inRandomOrder()->first()->user_id,
+            'farmer_id' => $farmers->random()->user_id,
         ]);
         FarmerGroup::create([
             'name' => 'Talisayon Multi-Purpose Cooperative Tamuco',
@@ -104,7 +106,7 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-            'farmer_id' => Farmer::inRandomOrder()->first()->user_id,
+            'farmer_id' => $farmers->random()->user_id,
         ]);
         FarmerGroup::create([
             'name' => 'Agri-Preneur Farmers and Producers Association, Inc',
@@ -116,7 +118,7 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-            'farmer_id' => Farmer::inRandomOrder()->first()->user_id,
+            'farmer_id' => $farmers->random()->user_id,
         ]);
         FarmerGroup::create([
             'name' => 'Greeners cooperative',
@@ -128,7 +130,7 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-            'farmer_id' => Farmer::inRandomOrder()->first()->user_id,
+            'farmer_id' => $farmers->random()->user_id,
         ]);
         FarmerGroup::create([
             'name' => 'Federation of Free Farmers',
@@ -140,7 +142,7 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-            'farmer_id' => Farmer::inRandomOrder()->first()->user_id,
+            'farmer_id' => $farmers->random()->user_id,
         ]);
     }
 }

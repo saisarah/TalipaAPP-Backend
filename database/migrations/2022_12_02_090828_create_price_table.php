@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('price', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('post_id');
-            $table->string('variant', 100);
+            $table->string('variant', 100)->nullable();
             $table->unsignedDecimal('value');
             $table->unsignedInteger('stocks');
             $table->foreign('post_id')->references('id')->on('posts');
