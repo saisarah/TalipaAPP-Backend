@@ -23,4 +23,9 @@ class UserController extends Controller
     {
         return auth()->user()->checkBalance();
     }
+
+    public function showCompleteAddress()
+    {
+        return auth()->user()->completeAddress();
+    }
 }
