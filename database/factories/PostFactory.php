@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Crop;
 use App\Models\Farmer;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,9 +21,9 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'author_id' => Farmer::factory(),
+            'author_id' => User::factory()->farmer()->has(Farmer::factory()),
             'crop_id' => Crop::getRandomCrop(),
-            'author_type' => Farmer::class,
+            'author_type' => User::class,
             'title' => fake()->sentence(5),
             'caption' => fake()->text(),
             'payment_option' => fake()->randomElement(['Cash', 'Gcash']),

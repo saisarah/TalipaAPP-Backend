@@ -24,6 +24,11 @@ class Post extends Model
         'crop_id',
     ];
 
+    public function crop()
+    {
+        return $this->belongsTo(Crop::class);
+    }
+
     public function author()
     {
         return $this->morphTo();
@@ -42,7 +47,7 @@ class Post extends Model
     public function getDisplayPriceAttribute()
     {
         $prices = $this->prices;
-        if ($prices->count() === 0) 
+        if ($prices->count() === 0)
             return 0;
 
         return $prices->reduce(function ($acm, $price) {
