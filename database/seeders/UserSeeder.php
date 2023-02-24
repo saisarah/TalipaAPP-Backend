@@ -49,5 +49,8 @@ class UserSeeder extends Seeder
             'receiver_id' => $farmer->id,
             'content' => 'Hi'
         ]);
+
+        $farmer->activateWallet()->deposit(10000);
+        $vendor->activateWallet()->deposit(10000);
     }
 }
