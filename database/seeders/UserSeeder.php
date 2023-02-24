@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Farmer;
+use App\Models\Message;
 use App\Models\User;
 use App\Models\Vendor;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -17,7 +18,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()
+        $farmer = User::factory()
             ->farmer()
             ->has(Farmer::factory())
             ->create([
@@ -27,7 +28,7 @@ class UserSeeder extends Seeder
                 'contact_number' => env('USER_PHONE', '9123456789'),
             ]);
 
-        User::factory()
+        $vendor = User::factory()
             ->vendor()
             ->has(Vendor::factory())
             ->create([
@@ -36,5 +37,17 @@ class UserSeeder extends Seeder
                 'email' => 'sarah@email.com',
                 'contact_number' => '9876543210',
             ]);
+
+        Message::create([
+            'sender_id' => $farmer->id,
+            'receiver_id' => $vendor->id,
+            'content' => 'Hello'
+        ]);
+
+        Message::create([
+            'sender_id' => $vendor->id,
+            'receiver_id' => $farmer->id,
+            'content' => 'Hi'
+        ]);
     }
 }
