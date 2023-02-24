@@ -32,7 +32,7 @@ trait HasWallet
         return $this->wallet()->where('balance', '>=', $amount)->exists();
     }
 
-    public function transferMoney(User $receiver, float $amount): void
+    public function transferMoney(User $receiver, float $amount)
     {
         if (!$this->hasWallet()) throw new NoWalletException($this);
         if (!$receiver->hasWallet()) throw new NoWalletException($receiver);
@@ -42,6 +42,8 @@ trait HasWallet
             $this->wallet()->decrement('balance', $amount);
             $receiver->wallet()->increment('balance', $amount);
         });
+
+        return $this;
     }
 
     public function checkBalance(): float
@@ -49,14 +51,18 @@ trait HasWallet
         return $this->wallet()->first()?->balance ?: 0;
     }
 
-    public function deposit(float $amount): void
+    public function deposit(float $amount)
     {
+        if (!$this->hasWallet()) throw new NoWalletException($this);
         $this->wallet()->increment('balance', $amount);
+        return $this;
     }
 
-    public function withdraw(float $amount): void
+    public function withdraw(float $amount)
     {
+        if (!$this->hasWallet()) throw new NoWalletException($this);
         if (!$this->hasSufficientBalance($amount)) throw new InsufficientBalanceException($this);
         $this->wallet()->decrement('balance', $amount);
+        return $this;
     }
 }
