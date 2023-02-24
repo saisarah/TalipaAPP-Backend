@@ -18,4 +18,9 @@ class UserController extends Controller
     {
         return $user;
     }
+
+    public function showBalance()
+    {
+        return auth()->user()->checkBalance();
+    }
 }
