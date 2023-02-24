@@ -15,11 +15,13 @@ trait HasWallet
         return $this->hasOne(Wallet::class);
     }
 
-    public function activateWallet(): void
+    public function activateWallet()
     {
         if (!$this->hasWallet()) {
             $this->wallet()->create();
         }
+
+        return $this;
     }
 
     public function hasWallet(): bool
