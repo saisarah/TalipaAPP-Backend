@@ -14,8 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('wallets', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->id('user_id');
             $table->decimal('balance', 9, 3)->default(0);
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

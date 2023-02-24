@@ -2,19 +2,17 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 
-use Exception;
+use App\Services\Wallet\HasWallet;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasWallet;
 
     const TYPE_FARMER = 'farmer';
     const TYPE_VENDOR = 'vendor';
@@ -117,42 +115,5 @@ class User extends Authenticatable
         $id = str_pad(rand(0, pow(10, $digits) - 1), $digits, '0', STR_PAD_LEFT);
         $result = "$firstname#$id";
         return $result;
-    }
-
-    public function wallet()
-    {
-        return $this->hasOne(Wallet::class);
-    }
-
-    public function activateWallet()
-    {
-        if ($this->wallet === null) {
-            $this->wallet = $this->wallet()->create();
-        }
-    }
-
-    public function transferMoney($receiver, $amount)
-    {
-        if ($this->wallet === null) {
-            throw new Exception("Activate your wallet first");
-        }
-
-        if ($receiver->wallet === null) {
-            throw new Exception("Invalid user");
-        }
-
-        if ($this->wallet->balance < $amount) {
-            throw new Exception("Insufficient Balance");
-        }
-
-        if ($this->user_type !== $receiver->user_type) {
-            throw new Exception("Transfer failed");
-        }
-
-        $this->wallet->balance = $this->wallet->balance - $amount;
-        $receiver->wallet->balance = $receiver->wallet->balance + $amount;
-
-        $this->wallet->update();
-        $receiver->wallet->update();
     }
 }
