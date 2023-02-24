@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Services\AddressService;
+use App\Services\Address\AddressService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
