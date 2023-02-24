@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Address;
 use App\Models\User;
+use App\Services\Address\Address;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 

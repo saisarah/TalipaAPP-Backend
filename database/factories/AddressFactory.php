@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Services\Address\Address;
 use App\Services\Address\AddressService;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class AddressFactory extends Factory
 {
-
+    protected $model = Address::class;
     /**
      * Define the model's default state.
      *

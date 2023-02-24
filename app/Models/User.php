@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-
+use App\Services\Address\HasAddress;
 use App\Services\Wallet\HasWallet;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasWallet;
+    use HasApiTokens, HasFactory, Notifiable, HasWallet, HasAddress;
 
     const TYPE_FARMER = 'farmer';
     const TYPE_VENDOR = 'vendor';
@@ -87,11 +87,6 @@ class User extends Authenticatable
         return Attribute::make(
             get: fn () => "{$this->firstname} {$this->lastname}"
         );
-    }
-
-    public function address()
-    {
-        return $this->hasOne(Address::class);
     }
 
     public function profilePicture(): Attribute
