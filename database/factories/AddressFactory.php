@@ -11,11 +11,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class AddressFactory extends Factory
 {
 
-    public function __construct(
-        private AddressService $address
-    ) {
-    }
-
     /**
      * Define the model's default state.
      *
@@ -23,16 +18,17 @@ class AddressFactory extends Factory
      */
     public function definition()
     {
-        $region = $this->address->getRegions()->random();
-        $province = $this->address->getProvinces($region->region_name)->random();
-        $municipality = $this->address->getCities($region->region_name, $province->province_name)->random();
-        $barangay = $this->address->getBarangays($region->region_name, $province->province_name, $municipality->city_name)->random();
+        $address = app()->make(AddressService::class);
+        $region = $address->getRegions()->random();
+        $province = $address->getProvinces($region->region_name)->random();
+        $municipality = $address->getCities($region->region_name, $province->province_name)->random();
+        $barangay = $address->getBarangays($region->region_name, $province->province_name, $municipality->city_name)->random();
 
         return [
             'region' => $region->region_name,
             'province' => $province->province_name,
             'municipality' => $municipality->city_name,
-            'barangay' => $barangay,
+            'barangay' => $barangay->brgy_name,
             'street' => fake()->streetName(),
             'house_number' => fake()->streetAddress(),
         ];

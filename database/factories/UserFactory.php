@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Address;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
@@ -78,5 +79,12 @@ class UserFactory extends Factory
     public function phNumber()
     {
         return Str::of(fake()->randomNumber(9, true))->prepend("9");
+    }
+
+    public function configure(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            Address::factory()->for($user)->create();
+        });
     }
 }

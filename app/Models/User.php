@@ -91,6 +91,11 @@ class User extends Authenticatable
         );
     }
 
+    public function address()
+    {
+        return $this->hasOne(Address::class);
+    }
+
     public function profilePicture(): Attribute
     {
         $name = strtolower(urlencode($this->fullname));
