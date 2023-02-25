@@ -57,6 +57,11 @@ return [
             'ignore_exceptions' => false,
         ],
 
+        'wallet' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/wallet.log')
+        ],
+
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),

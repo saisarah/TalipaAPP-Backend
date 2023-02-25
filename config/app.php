@@ -212,6 +212,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'SmsOtp' => App\Services\SmsService\SmsOtp\SmsOtp::class,
+        'Paymongo' => Luigel\Paymongo\Facades\Paymongo::class,
     ])->toArray(),
 
 ];
