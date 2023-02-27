@@ -55,6 +55,7 @@ Route::get('/user/balance', [UserController::class, 'showBalance'])->middleware(
 Route::get('/user/address/complete', [UserController::class, 'showCompleteAddress'])->middleware('auth:sanctum');
 Route::get('/users/{user}', [UserController::class, 'show'])->middleware('auth:sanctum');
 Route::get('/user/address', [AddressController::class, 'index'])->middleware('auth:sanctum');
+Route::put('/user/address', [AddressController::class, 'update'])->middleware('auth:sanctum');
 
 Route::post('/posts', [PostController::class, 'create'])->middleware('auth:sanctum');
 Route::get('/users/{user}/posts', [PostController::class, 'getFromUser'])->middleware('auth:sanctum');
