@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('post_id');
             $table->string('variant', 100)->nullable();
-            $table->unsignedDecimal('value');
+            $table->unsignedDecimal('value', 9,3);
             $table->unsignedInteger('stocks');
             $table->foreign('post_id')->references('id')->on('posts');
             $table->timestamps();
