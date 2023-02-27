@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AddressController;
+use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\API\Auth\ChangePasswordController;
@@ -79,3 +80,5 @@ Route::patch('/change-password', [ChangePasswordController::class, 'update'])->m
 Route::post('/wallet/cash-in', CashInController::class)->middleware('auth:sanctum');
 Route::any('/wallet/payment-received', PaymentReceivedController::class);
 Route::get('/payment/{transaction}', VerifyPaymentController::class)->middleware('auth:sanctum');
+
+Route::post('/admins', [AdminController::class, 'createAdmin']);
