@@ -18,6 +18,7 @@ use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\VendorController;
 use Illuminate\Support\Facades\Route;
+use Twilio\Rest\Api\V2010\Account\AddressContext;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,7 @@ Route::get('/user', [UserController::class, 'getCurrentUser'])->middleware('auth
 Route::get('/user/balance', [UserController::class, 'showBalance'])->middleware('auth:sanctum');
 Route::get('/user/address/complete', [UserController::class, 'showCompleteAddress'])->middleware('auth:sanctum');
 Route::get('/users/{user}', [UserController::class, 'show'])->middleware('auth:sanctum');
+Route::get('/user/address', [AddressController::class, 'index'])->middleware('auth:sanctum');
 
 Route::post('/posts', [PostController::class, 'create'])->middleware('auth:sanctum');
 Route::get('/users/{user}/posts', [PostController::class, 'getFromUser'])->middleware('auth:sanctum');
