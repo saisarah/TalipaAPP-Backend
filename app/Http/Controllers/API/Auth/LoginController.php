@@ -44,19 +44,19 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $contact_number = $request->contact_number;
-        $password = $request->password;
-        $user = User::where('contact_number', $contact_number)->first();
-        if ($user === null) {
-            return abort(400, "The contact number is not registed on Talipaapp");
-        }
+        $this->validate($request, [
+            'contact_number' => 'required|exists:users',
+            'password' => 'required',
+        ], [
+            'contact_number.exists' => "The contact number is not registed on Talipaapp"
+        ]);
 
+        $user = User::where('contact_number', $request->contact_number)->first();
 
-        if (!Hash::check($password, $user->password)) {
-            return abort(400, "The password is incorrect");
-        }
+        if (!Hash::check($request->password, $user->password)) 
+            return abort(422, "The password is incorrect");
 
-        $token = $user->createToken($request->device_name);
+        $token = $user->createToken($request->server->get('HTTP_USER_AGENT'));
 
         return [
             'user' => $user,
