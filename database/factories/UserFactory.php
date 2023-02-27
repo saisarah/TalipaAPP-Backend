@@ -29,7 +29,6 @@ class UserFactory extends Factory
             'user_type' => fake()->randomElement([User::TYPE_FARMER, User::TYPE_VENDOR, User::TYPE_ADMIN]),
             'password' => '$2y$10$Oe5z.q8KJrGXLkPPhSuaTuLNSvQdh07k5DizCU3QmhZ9aHDpkI/5u', //bcrypt('Juan23'),
             'remember_token' => Str::random(10),
-            'username' => User::generateUserName($firstname),
         ];
     }
 
