@@ -77,6 +77,17 @@ class AddressController extends Controller
         $newStreet = $request->newStreet;
         $newHouseNumber = $request->newHouseNumber;
 
-       
+        $user = Auth::user();
+        Address::where('user_id', $user->id)
+            ->update([
+                'region' => $newRegion,
+                'province' => $newProvince,
+                'municipality' => $newMunicipality,
+                'barangay' => $newBarangay,
+                'street' => $newStreet,
+                'house_number' => $newHouseNumber
+            ]);
+
+        return "Address updated successfully!";
     }
 }
