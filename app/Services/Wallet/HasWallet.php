@@ -53,6 +53,12 @@ trait HasWallet
         return $this->wallet()->first()?->balance ?: 0;
     }
 
+    public function usableBalance(): float
+    {
+        $wallet = $this->wallet()->first();
+        return $wallet->balance - $wallet->locked;
+    }
+
     public function deposit(float $amount)
     {
         if (!$this->hasWallet()) throw new NoWalletException($this);

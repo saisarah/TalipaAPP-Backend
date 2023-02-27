@@ -21,7 +21,7 @@ class UserController extends Controller
 
     public function showBalance()
     {
-        return auth()->user()->checkBalance();
+        return auth()->user()->usableBalance();
     }
 
     public function showCompleteAddress()

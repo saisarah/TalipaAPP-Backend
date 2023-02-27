@@ -55,4 +55,11 @@ class Post extends Model
             return $acm;
         }, INF);
     }
+
+    public function calculateTotalPrice($quantities) {
+        return $this->prices->reduce(function($acm, $price) use ($quantities) {
+            $quantity = $quantities->firstWhere('variant', $price->variant);
+            return $acm + ($price->value * $quantity['quantity']);
+        }, 0);
+    }
 }

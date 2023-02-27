@@ -73,7 +73,7 @@ Route::post('/messages/{id}', [MessageController::class, 'create'])->middleware(
 
 
 Route::get('/orders', [OrderController::class, 'index'])->middleware('auth:sanctum');
-Route::post('/orders', [OrderController::class, 'create'])->middleware('auth:sanctum');
+Route::post('/posts/{post}/order', [OrderController::class, 'create'])->middleware('auth:sanctum');
 
 Route::patch('/change-password', [ChangePasswordController::class, 'update'])->middleware('auth:sanctum');
 Route::post('/wallet/cash-in', CashInController::class)->middleware('auth:sanctum');

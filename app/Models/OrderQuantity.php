@@ -12,6 +12,11 @@ class OrderQuantity extends Model
     protected $table = 'order_quantity';
     protected $fillable = [
         'quantity',
-        'variant'
+        'variant',
+        'price'
+    ];
+
+    protected $casts = [
+        'price' => 'decimal:3'
     ];
 }
