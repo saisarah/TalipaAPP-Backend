@@ -26,9 +26,13 @@ class OrderController extends Controller
             return  $orders;
         } else {
             $id = Auth::id();
-            $orders = Order::where('buyer_id', $id)
+            $orders = Order::with('post','post.author', 'post.crop', 'quantities')->where('buyer_id', $id)
                 ->where('order_status', $request->status)
-                ->get();
+                ->get()
+                ->each(function (Order $order) {
+                    $order->append('total');
+                    $order->post->append('location');
+                });
             return  $orders;
         }
     }
