@@ -89,4 +89,5 @@ Route::post('/admins', [AdminController::class, 'createAdmin'])->middleware('aut
 
 Route::get('/questions',[QuestionController::class, 'index']);
 Route::post('/questions',[QuestionController::class, 'create'])->middleware('auth:sanctum', 'admin');
+Route::put('/questions/{id}',[QuestionController::class, 'update'])->middleware('auth:sanctum', 'admin');
 
