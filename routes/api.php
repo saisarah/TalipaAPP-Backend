@@ -88,3 +88,5 @@ Route::get('/payment/{transaction}', VerifyPaymentController::class)->middleware
 Route::post('/admins', [AdminController::class, 'createAdmin'])->middleware('auth:sanctum', 'admin');
 
 Route::get('/questions',[QuestionController::class, 'index']);
+Route::post('/questions',[QuestionController::class, 'create'])->middleware('auth:sanctum', 'admin');
+
