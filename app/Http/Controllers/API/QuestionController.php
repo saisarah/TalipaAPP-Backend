@@ -36,18 +36,16 @@ class QuestionController extends Controller
             'question' => 'required',
             'answer' => 'required'
         ]);
-        
+
         $faqs = Question::where('id', $id);
 
-        if ($faqs->exists()) 
-        {
+        if ($faqs->exists()) {
             $faqs->update([
-                'question' => $request->question, 
-                'answer' => $request->answer]);
+                'question' => $request->question,
+                'answer' => $request->answer
+            ]);
             return $faqs->first();
-        } 
-        else 
-        {
+        } else {
             return abort(404, "Record not found");
         }
     }
