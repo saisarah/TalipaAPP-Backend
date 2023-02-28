@@ -52,7 +52,7 @@ class QuestionController extends Controller
 
     public function show($id)
     {
-        return Question::where('id', $id)->first();
+        return Question::findOrFail($id)->first();
     }
 
     public function delete($id)
