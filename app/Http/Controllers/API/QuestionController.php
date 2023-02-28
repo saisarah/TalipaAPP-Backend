@@ -54,4 +54,10 @@ class QuestionController extends Controller
     {
         return Question::where('id', $id)->first();
     }
+
+    public function delete($id)
+    {
+        $faq = Question::where('id', $id)->delete();
+        return response()->noContent();
+    }
 }
