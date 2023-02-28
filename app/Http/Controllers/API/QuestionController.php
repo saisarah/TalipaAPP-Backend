@@ -13,7 +13,7 @@ class QuestionController extends Controller
     {
         return Question::all();
     }
-    
+
     public function create(Request $request)
     {
         $this->validate($request, [
@@ -22,11 +22,32 @@ class QuestionController extends Controller
         ]);
 
         $faqs = new Question();
-        $faqs->user_id = Auth::id(); 
+        $faqs->user_id = Auth::id();
         $faqs->question = $request->question;
         $faqs->answer = $request->answer;
         $faqs->save();
 
         return $faqs;
+    }
+
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'question' => 'required',
+            'answer' => 'required'
+        ]);
+        $faqs = Question::where('id', $id);
+
+        if ($faqs->exists()) 
+        {
+            $faqs->update([
+                'question' => $request->question, 
+                'answer' => $request->answer]);
+            return $faqs->first();
+        } 
+        else 
+        {
+            return abort(404, "Record not found");
+        }
     }
 }
