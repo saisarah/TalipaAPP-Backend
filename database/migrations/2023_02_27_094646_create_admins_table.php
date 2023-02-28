@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('admin', function (Blueprint $table) {
+        Schema::create('admins', function (Blueprint $table) {
             $table->id('user_id');
             $table->string('role', 10);
             $table->foreign('user_id')->references('id')->on('users');
