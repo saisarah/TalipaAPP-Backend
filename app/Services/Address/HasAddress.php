@@ -8,7 +8,8 @@ trait HasAddress
 {
     public function address(): HasOne
     {
-        return $this->hasOne(Address::class);
+        $foreign_key = $this->addressKey ?? $this->primaryKey ?? 'id';
+        return $this->hasOne(Address::class, 'user_id', $foreign_key);
     }
 
     public function completeAddress()
