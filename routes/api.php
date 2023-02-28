@@ -91,4 +91,4 @@ Route::get('/questions',[QuestionController::class, 'index']);
 Route::post('/questions',[QuestionController::class, 'create'])->middleware('auth:sanctum', 'admin');
 Route::put('/questions/{id}',[QuestionController::class, 'update'])->middleware('auth:sanctum', 'admin');
 Route::post('/questions/{id}',[QuestionController::class, 'show']);
-
+Route::delete('/questions/{id}',[QuestionController::class, 'delete'])->middleware('auth:sanctum', 'admin');
