@@ -16,6 +16,7 @@ use App\Http\Controllers\API\Payment\CashInController;
 use App\Http\Controllers\API\Payment\PaymentReceivedController;
 use App\Http\Controllers\API\Payment\VerifyPaymentController;
 use App\Http\Controllers\API\PostController;
+use App\Http\Controllers\API\QuestionController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\VendorController;
 use Illuminate\Support\Facades\Route;
@@ -85,3 +86,5 @@ Route::any('/wallet/payment-received', PaymentReceivedController::class);
 Route::get('/payment/{transaction}', VerifyPaymentController::class)->middleware('auth:sanctum');
 
 Route::post('/admins', [AdminController::class, 'createAdmin'])->middleware('auth:sanctum', 'admin');
+
+Route::get('/questions',[QuestionController::class, 'index']);
