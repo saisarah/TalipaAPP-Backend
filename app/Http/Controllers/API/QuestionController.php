@@ -37,7 +37,7 @@ class QuestionController extends Controller
             'answer' => 'required'
         ]);
 
-        $faqs = Question::where('id', $id);
+        $faqs = Question::findOrFail($id);
 
         if ($faqs->exists()) {
             $faqs->update([
@@ -45,8 +45,6 @@ class QuestionController extends Controller
                 'answer' => $request->answer
             ]);
             return $faqs->first();
-        } else {
-            return abort(404, "Record not found");
         }
     }
 
