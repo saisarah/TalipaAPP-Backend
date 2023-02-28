@@ -84,4 +84,4 @@ Route::post('/wallet/cash-in', CashInController::class)->middleware('auth:sanctu
 Route::any('/wallet/payment-received', PaymentReceivedController::class);
 Route::get('/payment/{transaction}', VerifyPaymentController::class)->middleware('auth:sanctum');
 
-Route::post('/admins', [AdminController::class, 'createAdmin']);
+Route::post('/admins', [AdminController::class, 'createAdmin'])->middleware('auth:sanctum', 'admin');
