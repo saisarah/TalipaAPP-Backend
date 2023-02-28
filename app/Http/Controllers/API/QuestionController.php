@@ -36,6 +36,7 @@ class QuestionController extends Controller
             'question' => 'required',
             'answer' => 'required'
         ]);
+        
         $faqs = Question::where('id', $id);
 
         if ($faqs->exists()) 
