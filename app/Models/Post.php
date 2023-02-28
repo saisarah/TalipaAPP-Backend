@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\Services\Address\HasAddress;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, HasAddress;
+    
+    protected $addressKey = 'author_id';
 
     protected $fillable = [
         'author_id',
@@ -61,5 +64,12 @@ class Post extends Model
             $quantity = $quantities->firstWhere('variant', $price->variant);
             return $acm + ($price->value * $quantity['quantity']);
         }, 0);
+    }
+
+    public function location(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => "{$this->address->municipality}, {$this->address->province}"
+        );
     }
 }
