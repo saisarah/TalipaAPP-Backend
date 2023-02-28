@@ -57,7 +57,6 @@ class QuestionController extends Controller
 
     public function delete($id)
     {
-        $faq = Question::where('id', $id)->delete();
-        return response()->noContent();
+        return Question::findOrFail($id)->delete();
     }
 }
