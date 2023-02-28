@@ -39,13 +39,11 @@ class QuestionController extends Controller
 
         $faqs = Question::findOrFail($id);
 
-        if ($faqs->exists()) {
-            $faqs->update([
-                'question' => $request->question,
-                'answer' => $request->answer
-            ]);
-            return $faqs->first();
-        }
+        $faqs->update([
+            'question' => $request->question,
+            'answer' => $request->answer
+        ]);
+        return $faqs;
     }
 
     public function show($id)
