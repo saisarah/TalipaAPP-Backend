@@ -51,4 +51,9 @@ class QuestionController extends Controller
             return abort(404, "Record not found");
         }
     }
+
+    public function show($id)
+    {
+        return Question::where('id', $id)->first();
+    }
 }
