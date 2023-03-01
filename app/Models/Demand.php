@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Demand extends Model
 {
     use HasFactory;
+    
+    protected $fillable = [
+        'question',
+        'answer'
+    ];
 
     public function author()
     {
