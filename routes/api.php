@@ -72,6 +72,8 @@ Route::get('/vendors', [VendorController::class, 'index']);
 
 Route::get('/demands', [DemandController::class, 'index']);
 Route::post('/demands', [DemandController::class, 'create'])->middleware('auth:sanctum', 'vendor');
+Route::post('/demands/{id}',[DemandController::class, 'show'])->middleware('auth:sanctum');
+
 
 
 Route::get('/messages', [MessageController::class, 'index'])->middleware('auth:sanctum');
