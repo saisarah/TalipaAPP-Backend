@@ -23,7 +23,7 @@ class DemandController extends Controller
             'description' => 'required',
             'crop_id' => 'required|exists:crops,id'
         ]);
-        
+
         $demand = new Demand();
         $demand->vendor_id = Auth::id();
         $demand->budget = $request->budget;
@@ -34,5 +34,9 @@ class DemandController extends Controller
 
         return $demand;
     }
-    
+
+    public function show($id)
+    {
+        return Demand::findOrFail($id);
+    }
 }
