@@ -71,7 +71,7 @@ Route::get('/farmer-group', [FarmerGroupController::class, 'getCurrentGroup'])->
 Route::get('/vendors', [VendorController::class, 'index']);
 
 Route::get('/demands', [DemandController::class, 'index']);
-Route::get('/demands', [DemandController::class, 'create'])->middleware('auth:sanctum');
+Route::post('/demands', [DemandController::class, 'create'])->middleware('auth:sanctum', 'vendor');
 
 
 Route::get('/messages', [MessageController::class, 'index'])->middleware('auth:sanctum');
