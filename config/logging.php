@@ -62,6 +62,11 @@ return [
             'path' => storage_path('logs/wallet.log')
         ],
 
+        'sms' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/sms.log')
+        ],
+
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),

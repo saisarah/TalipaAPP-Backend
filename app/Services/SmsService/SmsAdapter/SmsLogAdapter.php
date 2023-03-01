@@ -8,6 +8,6 @@ class SmsLogAdapter extends SmsAdapter
 {
     public function sendMessage($to, $message)
     {
-        Log::info("Outgoing SMS Message", compact('to', 'message'));
+        Log::channel('sms')->info("Outgoing SMS Message", compact('to', 'message'));
     }
 }
