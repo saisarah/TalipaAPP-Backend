@@ -48,7 +48,7 @@ class QuestionController extends Controller
 
     public function show($id)
     {
-        return Question::findOrFail($id)->first();
+        return Question::findOrFail($id);
     }
 
     public function delete($id)
