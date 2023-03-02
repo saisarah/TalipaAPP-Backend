@@ -31,6 +31,7 @@ class MessageController extends Controller
             ->where('receiver_id', $user_id)
             ->orwhere('sender_id', $user_id)
             ->where('receiver_id', $id)
+            ->oldest()
             ->get();
         return $message;
     }
