@@ -69,7 +69,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => EnsureUserIsAdmin::class,
         'vendor' => EnsureUserIsVendor::class,
-        'member' => EnsureFarmerHasGroup::class,
+        'has_group' => EnsureFarmerHasGroup::class,
 
     ];
 }
