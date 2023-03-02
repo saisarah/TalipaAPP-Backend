@@ -47,6 +47,6 @@ class FarmerGroupPostController extends Controller
             return $discussion;
         }
 
-        return response()->noContent();
+        return abort (400, "Join Group first to add Discussion");
     }
 }
