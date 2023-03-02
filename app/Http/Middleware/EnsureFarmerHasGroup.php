@@ -19,8 +19,8 @@ class EnsureFarmerHasGroup
     public function handle(Request $request, Closure $next)
     {
         $id = Auth::id();
-        $has_group = FarmerGroupMember::where('farmer_id', $id)->exists();
-        if ($has_group) {
+        $has_group = FarmerGroupMember::where('farmer_id', $id)->first();
+        if ($has_group && $has_group->isApproved()) {
             return $next($request);
         }
 
