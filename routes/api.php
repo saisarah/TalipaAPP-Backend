@@ -9,6 +9,7 @@ use App\Http\Controllers\API\CropController;
 use App\Http\Controllers\API\DemandController;
 use App\Http\Controllers\API\FarmerController;
 use App\Http\Controllers\API\FarmerGroupController;
+use App\Http\Controllers\API\FarmerGroupMemberController;
 use App\Http\Controllers\API\FarmerGroupPostController;
 use App\Http\Controllers\API\MessageController;
 use App\Http\Controllers\API\OrderController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\QuestionController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\VendorController;
+use App\Models\FarmerGroupMember;
 use Illuminate\Support\Facades\Route;
 use Twilio\Rest\Api\V2010\Account\AddressContext;
 
@@ -68,6 +70,8 @@ Route::get('/farmers', [FarmerController::class, 'index']);
 Route::get('/farmer-group-posts', [FarmerGroupPostController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/farmer-group', [FarmerGroupController::class, 'getCurrentGroup'])->middleware('auth:sanctum');
 Route::post('/farmer-group-posts', [FarmerGroupPostController::class, 'create'])->middleware('auth:sanctum');
+Route::post('/farmer-groups/{id}/join', [FarmerGroupMemberController::class, 'create'])->middleware('auth:sanctum');
+
 
 Route::get('/vendors', [VendorController::class, 'index']);
 
