@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class EnsureFarmerIsMember
+class EnsureFarmerHasGroup
 {
     /**
      * Handle an incoming request.
@@ -19,8 +19,8 @@ class EnsureFarmerIsMember
     public function handle(Request $request, Closure $next)
     {
         $id = Auth::id();
-        $group = FarmerGroupMember::where('farmer_id', $id)->first();
-        if ($group !== null) {
+        $has_group = FarmerGroupMember::where('farmer_id', $id)->exists();
+        if ($has_group) {
             return $next($request);
         }
 

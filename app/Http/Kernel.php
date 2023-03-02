@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\EnsureFarmerHasGroup;
 use App\Http\Middleware\EnsureFarmerIsMember;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\EnsureUserIsVendor;
@@ -68,7 +69,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => EnsureUserIsAdmin::class,
         'vendor' => EnsureUserIsVendor::class,
-        'member' => EnsureFarmerIsMember::class,
+        'member' => EnsureFarmerHasGroup::class,
 
     ];
 }
