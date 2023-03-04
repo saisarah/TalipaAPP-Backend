@@ -34,7 +34,7 @@ class PostController extends Controller
             $post->save();
 
             //save prices
-            $post->prices()->saveMany(array_map(fn ($price) => ([
+            $post->prices()->createMany(array_map(fn ($price) => ([
                 'variant' => @$price['variant'],
                 'stocks' => $price['stock'],
                 'value' => $price['price'],
