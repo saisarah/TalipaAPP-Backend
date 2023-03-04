@@ -14,4 +14,11 @@ class PriceTable extends Model
     protected $casts = [
         'value' => 'double'
     ];
+
+    protected $guarded = [];
+
+    public function post()
+    {
+        return $this->belongsTo(Post::class);
+    }
 }

@@ -13,19 +13,7 @@ class Post extends Model
     
     protected $addressKey = 'author_id';
 
-    protected $fillable = [
-        'author_id',
-        'author_type',
-        'title',
-        'status',
-        'caption',
-        'payment_option',
-        'delivery_option',
-        'unit',
-        'pricing_type',
-        'min_order',
-        'crop_id',
-    ];
+    protected $guarded = [];
 
     public function crop()
     {

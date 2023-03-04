@@ -11,58 +11,43 @@ use App\Models\Farmer;
 use App\Models\PriceTable;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
-    public function create(Request $request)
+    public function create(CreatePostRequest $request)
     {
-        $this->validate($request, [
-            'crop_id' => 'required|exists:crops,id',
-            'delivery_options' => 'required|array',
-            'payment_options' => 'required|array',
-            'unit' => 'required',
-            'is_straight' => 'required|boolean',
-            'details' => 'required|max:1000',
-            'attachments' => 'required|array',
-            'attachments.*' => 'image',
-            'sizes' => 'required|array',
-            'sizes.*.size' => 'required',
-            'sizes.*.price' => 'required|numeric|min:1',
-            'sizes.*.stock' => 'required|numeric|min:1'
-        ]);
+        return DB::transaction(function () use ($request) {
+            $author = Auth::user();
+            $post = new Post($request->only('crop_id', 'title', 'caption', 'unit', 'is_straight'));
 
-        $post = new Post;
-        $post->author_id = Auth::id();
-        $post->author_type = User::class;
-        $post->title = $request->title;
-        $post->crop_id = $request->crop_id;
-        $post->caption = $request->details;
-        $post->payment_option = json_encode($request->payment_options);
-        $post->delivery_option = json_encode($request->delivery_options);
-        $post->unit = $request->unit;
-        $post->pricing_type = $request->boolean('is_straight') ? "Straight" : "Not Straight";
-        $post->status = "Available";
-        $post->min_order = 0;
-        $post->save();
+            //temp
+            $post->min_order = 0;
 
-        foreach ($request->sizes as $size) {
-            $price = new PriceTable();
-            $price->post_id = $post->id;
-            $price->value = $size["price"];
-            $price->variant = $size["size"];
-            $price->stocks = $size["stock"];
-            $price->save();
-        }
 
-        foreach ($request->attachments as $attachment) {
-            $file = new Attachment();
-            $file->post_id = $post->id;
-            $file->source = $attachment->store("farmers/posts/{$post->id}", "public");
-            $file->type = "image";
-            $file->save();
-        }
+            $post->status = 'available';
 
-        return $post;
+            //associate author
+            $post->author()->associate($author);
+
+            //Save Post
+            $post->save();
+
+            //save prices
+            $post->prices()->saveMany(array_map(fn ($price) => ([
+                'variant' => @$price['variant'],
+                'stocks' => $price['stock'],
+                'value' => $price['price'],
+            ]), $request->prices));
+
+            //save attachments
+            $post->attachments()->createMany(array_map(fn ($attachment) => ([
+                'source' => $attachment->store("farmers/posts/" . auth()->id() . "", "public"),
+                'type' => 'upload'
+            ]), $request->attachments));
+
+            return $post;
+        });
     }
 
     public function index()
