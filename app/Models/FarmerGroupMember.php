@@ -11,10 +11,14 @@ class FarmerGroupMember extends Model
 
     const STATUS_APPROVED = 'approved';
     const STATUS_PENDING = 'pending';
+    const STATUS_INVITED = 'invited';
     const ROLE_MEMBER = 'member';
     const ROLE_PRESIDENT = 'president';
 
-
+    public function group()
+    {
+        return $this->belongsTo(FarmerGroup::class);
+    }
 
     public function isApproved(): bool
     {
@@ -24,6 +28,11 @@ class FarmerGroupMember extends Model
     public function isPending(): bool
     {
         return $this->membership_status === static::STATUS_PENDING;
+    }
+
+    public function isInvited(): bool
+    {
+        return $this->membership_status === static::STATUS_INVITED;
     }
 
     public function isMember(): bool
