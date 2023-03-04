@@ -28,4 +28,30 @@ class FarmerGroupMemberController extends Controller
 
         return $joinGroup;
     }
+
+    public function invite(Request $request, $id)
+    {
+        $user = Auth::user();
+        $group = FarmerGroupMember::where('farmer_id', $user->id)->first();
+        $member = FarmerGroupMember::where('farmer_id', $id)->first();
+
+        if (!$member->isPresident() && $group == null) {
+
+            return abort(403, "Bawal mag invite ang di President");
+        }
+
+        if ($member->isPending() || $member->isInvited() || $member->isPresident()) {
+
+            return abort(400, "Invitation failed: User is already a part of different group");
+        }
+
+        $invite = new FarmerGroupMember();
+        $invite->farmer_group_id = $id;
+        $invite->farmer_id = $request->farmer_id;
+        $invite->role = FarmerGroupMember::ROLE_MEMBER;
+        $invite->membership_status = FarmerGroupMember::STATUS_INVITED;
+        $invite->save();
+
+        return "Invitation sent sucessfully";
+    }
 }
