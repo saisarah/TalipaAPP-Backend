@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\SmsService\SmsAdapter\SmsGatewayAdapter;
 use App\Services\SmsService\SmsAdapter\SmsLogAdapter;
 use App\Services\SmsService\SmsAdapter\SmsMoviderAdapter;
 use App\Services\SmsService\SmsAdapter\SmsTwilioAdapter;
@@ -19,6 +20,10 @@ return [
         ],
         'log' => [
             'adapter' => SmsLogAdapter::class,
+        ],
+        'sms_gateway' => [
+            'host' => env('SMSGATEWAY_HOST'),
+            'adapter' => SmsGatewayAdapter::class,
         ],
         'twilio' => [
             'adapter' => SmsTwilioAdapter::class,
