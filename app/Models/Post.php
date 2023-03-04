@@ -25,6 +25,11 @@ class Post extends Model
         return $this->morphTo();
     }
 
+    public function thumbnail()
+    {
+        return $this->hasOne(Attachment::class);
+    }
+
     public function attachments()
     {
         return $this->hasMany(Attachment::class);

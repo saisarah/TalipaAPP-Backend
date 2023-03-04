@@ -52,7 +52,7 @@ class PostController extends Controller
 
     public function index()
     {
-        return Post::with('attachments', 'author', 'prices', 'crop')->get()->each->append('display_price');
+        return Post::with('thumbnail', 'author', 'prices', 'crop')->get()->each->append('display_price', 'location');
     }
 
     public function show(Post $post)
@@ -62,6 +62,6 @@ class PostController extends Controller
 
     public function getFromUser(User $user)
     {
-        return $user->posts()->with('attachments', 'author', 'prices')->get()->each->append('display_price');
+        return $user->posts()->with('thumbnail', 'author', 'prices')->get()->each->append('display_price', 'location');
     }
 }
