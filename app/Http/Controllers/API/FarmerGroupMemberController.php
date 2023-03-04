@@ -26,8 +26,6 @@ class FarmerGroupMemberController extends Controller
 
             return $joinGroup;
         }
-        if ($group->isApproved() || $group->isPending()) {
-            return abort(400, "You have reached the maximum number of joining group");
-        }
+        return abort(400, "You have reached the maximum number of joining group");
     }
 }
