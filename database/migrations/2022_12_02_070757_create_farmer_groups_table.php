@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('farmer_groups', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('farmer_id');
             $table->string('name', 255);
             $table->string('address', 1000);
             $table->text('group_description');
@@ -26,7 +25,6 @@ return new class extends Migration
             $table->string('status', 20);
             $table->string('display_picture')->nullable();
             $table->string('authorization', 255);
-            $table->foreign('farmer_id')->references('user_id')->on('farmers');
             $table->timestamps();
         });
     }
