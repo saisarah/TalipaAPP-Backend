@@ -26,10 +26,8 @@ class PostFactory extends Factory
             'author_type' => User::class,
             'title' => fake()->sentence(5),
             'caption' => fake()->text(),
-            'payment_option' => fake()->randomElement(['Cash', 'Gcash']),
-            'delivery_option' => fake()->randomElement(['Pick-up', 'Third-Party', 'Farmer']),
             'unit' => 'kg',
-            'pricing_type' => 'straight',
+            'is_straight' => true,
             'status' => fake()->randomElement(['Available', 'Sold']),
             'min_order' => fake()->numberBetween(10, 999),
         ];

@@ -13,10 +13,13 @@ class Attachment extends Model
 
     const TYPE_URL = 'url';
 
+    protected $guarded = [];
+
     public function source(): Attribute
     {
         return Attribute::make(
             get: fn ($value) => $this->type === self::TYPE_URL ? $value : url(Storage::url($value))
         );
     }
+
 }

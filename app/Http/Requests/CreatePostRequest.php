@@ -15,7 +15,7 @@ class CreatePostRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->user_type == User::TYPE_FARMER;
+        return Auth::user()->isFarmer();
     }
 
     /**
@@ -26,13 +26,15 @@ class CreatePostRequest extends FormRequest
     public function rules()
     {
         return [
-            'caption' => ['required', 'max:2000'],
-            'payment_option' => ['required', 'in:cash,gcash'],
-            'delivery_option' => ['required', 'in:pick-up,farmer,third-party'],
-            'unit' => ['required'],
-            'pricing_type' => ['required'],
-            'min_order' => ['required'],
-            'crop_id' => ['required', 'exists:crops,id'],
+            'crop_id' => 'required|exists:crops,id',
+            'unit' => 'required',
+            'is_straight' => 'required|boolean',
+            'caption' => 'required|max:1000',
+            'attachments' => 'required|array|min:1',
+            'attachments.*' => 'image',
+            'prices' => 'required|array',
+            'prices.*.price' => 'required|numeric|min:1',
+            'prices.*.stock' => 'required|numeric|min:1'
         ];
     }
 }
