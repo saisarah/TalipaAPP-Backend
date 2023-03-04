@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class FarmerGroup extends Model
 {
     use HasFactory;
+
+    public function members()
+    {
+        return $this->hasMany(FarmerGroupMember::class);
+    }
 }
