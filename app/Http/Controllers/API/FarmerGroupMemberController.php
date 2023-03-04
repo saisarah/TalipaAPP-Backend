@@ -14,12 +14,8 @@ class FarmerGroupMemberController extends Controller
     {
         $user = Auth::user();
         $group = FarmerGroupMember::where('farmer_id', $user->id)->first();
-        
-        if($group->isApproved()|| $group->isPending())
-        {
-            return abort(400, "You have reached the maximum number of joining group");
 
-        }
+        if ($group == null) {
 
             $joinGroup = new FarmerGroupMember();
             $joinGroup->farmer_group_id = $id;
@@ -29,6 +25,9 @@ class FarmerGroupMemberController extends Controller
             $joinGroup->save();
 
             return $joinGroup;
-        
+        }
+        if ($group->isApproved() || $group->isPending()) {
+            return abort(400, "You have reached the maximum number of joining group");
+        }
     }
 }
