@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\MessageReceived;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
 use App\Models\User;
@@ -46,6 +47,9 @@ class MessageController extends Controller
             'sender_id' => Auth::id(),
             'content' => $request->content
         ]);
+
+        MessageReceived::dispatch($message);
+
         return $message;
     }
 }
