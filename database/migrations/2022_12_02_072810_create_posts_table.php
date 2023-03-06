@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('crop_id');
             $table->string('author_type', 20);
             $table->string('title');
-            $table->string('caption', 255);
+            $table->string('caption', 255)->nullable();
             $table->string('unit', 20);
             $table->boolean('is_straight');
             $table->string('status', 10);
