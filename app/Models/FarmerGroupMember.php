@@ -9,6 +9,10 @@ class FarmerGroupMember extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'membership_status'
+    ];
+
     const STATUS_APPROVED = 'approved';
     const STATUS_PENDING = 'pending';
     const STATUS_INVITED = 'invited';
