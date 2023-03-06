@@ -37,7 +37,7 @@ class FarmerGroupMemberController extends Controller
 
         if (!$member->isPresident() && $group == null) {
 
-            return abort(403, "Bawal mag invite ang di President");
+            return abort(403, "Access to the requested resource has been denied.");
         }
 
         if ($member->isPending() || $member->isInvited() || $member->isPresident()) {
