@@ -32,15 +32,28 @@ class FarmerGroupMemberController extends Controller
     public function invite(Request $request, $id)
     {
         $user = Auth::user();
-        $group = FarmerGroupMember::where('farmer_id', $user->id)->first();
-        $member = FarmerGroupMember::where('farmer_id', $id)->first();
+        $president = FarmerGroupMember::where('farmer_id', $user->id)
+            ->where('farmer_group_id', $id)
+            ->where('role', FarmerGroupMember::ROLE_PRESIDENT)
+            ->first();
+        $group = FarmerGroupMember::where('farmer_id', $request->farmer_id)
+            ->where('farmer_group_id', $id)
+            ->first();
+        $status = FarmerGroupMember::where('farmer_id', $request->farmer_id)
+            ->first();
 
-        if (!$member->isPresident() && $group == null) {
-
+        if ($president == null) {
             return abort(403, "Access to the requested resource has been denied.");
         }
 
-        if ($member->isPending() || $member->isInvited() || $member->isPresident()) {
+        if (($group !== null && $group->isPending()) || ($group !== null && $group->isInvited())) {
+            $group->update([
+                'membership_status' => FarmerGroupMember::STATUS_APPROVED
+            ]);
+            return  $group;
+        }
+
+        if (($status !== null && $status->isPending()) || ($status !== null && $status->isApproved())) {
 
             return abort(400, "Invitation failed: User is already a part of different group");
         }
