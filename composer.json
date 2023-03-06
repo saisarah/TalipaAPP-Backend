@@ -12,6 +12,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "luigel/laravel-paymongo": "^2.3",
+        "pusher/pusher-php-server": "^7.2",
         "twilio/sdk": "^6.43"
     },
     "require-dev": {
