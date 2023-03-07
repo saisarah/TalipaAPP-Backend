@@ -4,7 +4,9 @@ namespace App\Http;
 
 use App\Http\Middleware\EnsureFarmerHasGroup;
 use App\Http\Middleware\EnsureFarmerIsMember;
+use App\Http\Middleware\EnsureFarmerIsPresident;
 use App\Http\Middleware\EnsureUserIsAdmin;
+use App\Http\Middleware\EnsureUserIsFarmer;
 use App\Http\Middleware\EnsureUserIsVendor;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -70,6 +72,8 @@ class Kernel extends HttpKernel
         'admin' => EnsureUserIsAdmin::class,
         'vendor' => EnsureUserIsVendor::class,
         'has_group' => EnsureFarmerHasGroup::class,
+        'farmer' => EnsureUserIsFarmer::class,
+        'president' => EnsureFarmerIsPresident::class,
 
     ];
 }
