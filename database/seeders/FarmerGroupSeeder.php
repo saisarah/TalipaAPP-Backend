@@ -30,7 +30,7 @@ class FarmerGroupSeeder extends Seeder
             'authorization' => 'NA',
         ])->members()->create([
             'farmer_id' => '1',
-            'role' => 'President',
+            'role' => 'president',
             'membership_status' => 'approved'
 
         ]);
@@ -46,7 +46,7 @@ class FarmerGroupSeeder extends Seeder
             'authorization' => 'NA',
         ])->members()->create([
             'farmer_id' => '11',
-            'role' => 'President',
+            'role' => 'president',
             'membership_status' => 'approved'
 
         ]);
@@ -63,7 +63,7 @@ class FarmerGroupSeeder extends Seeder
             'authorization' => 'NA',
         ])->members()->create([
             'farmer_id' => '3',
-            'role' => 'President',
+            'role' => 'president',
             'membership_status' => 'approved'
 
         ]);
@@ -80,7 +80,7 @@ class FarmerGroupSeeder extends Seeder
             'authorization' => 'NA',
         ])->members()->create([
             'farmer_id' => '4',
-            'role' => 'President',
+            'role' => 'president',
             'membership_status' => 'approved'
 
         ]);
@@ -97,7 +97,7 @@ class FarmerGroupSeeder extends Seeder
             'authorization' => 'NA',
         ])->members()->create([
             'farmer_id' => '5',
-            'role' => 'President',
+            'role' => 'president',
             'membership_status' => 'approved'
 
         ]);
@@ -113,7 +113,7 @@ class FarmerGroupSeeder extends Seeder
             'authorization' => 'NA',
         ])->members()->create([
             'farmer_id' => '6',
-            'role' => 'President',
+            'role' => 'president',
             'membership_status' => 'approved'
 
         ]);
@@ -130,7 +130,7 @@ class FarmerGroupSeeder extends Seeder
             'authorization' => 'NA',
         ])->members()->create([
             'farmer_id' => '7',
-            'role' => 'President',
+            'role' => 'president',
             'membership_status' => 'approved'
 
         ]);
@@ -146,7 +146,7 @@ class FarmerGroupSeeder extends Seeder
             'authorization' => 'NA',
         ])->members()->create([
             'farmer_id' => '8',
-            'role' => 'President',
+            'role' => 'president',
             'membership_status' => 'approved'
 
         ]);
@@ -162,7 +162,7 @@ class FarmerGroupSeeder extends Seeder
             'authorization' => 'NA',
         ])->members()->create([
             'farmer_id' => '9',
-            'role' => 'President',
+            'role' => 'president',
             'membership_status' => 'approved'
 
         ]);
@@ -178,7 +178,7 @@ class FarmerGroupSeeder extends Seeder
             'authorization' => 'NA',
         ])->members()->create([
             'farmer_id' => '10',
-            'role' => 'President',
+            'role' => 'president',
             'membership_status' => 'approved'
 
         ]);
