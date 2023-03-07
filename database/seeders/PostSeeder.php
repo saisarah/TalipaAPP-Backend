@@ -20,7 +20,7 @@ class PostSeeder extends Seeder
         $farmers = User::where('user_type', User::TYPE_FARMER)->get();
 
         Post::factory()
-            ->count(100)
+            ->count(25)
             ->recycle($farmers)
             ->create();
     }
