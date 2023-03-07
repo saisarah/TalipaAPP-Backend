@@ -24,6 +24,6 @@ class EnsureFarmerIsPresident
             return $next($request);
         }
         
-        return abort(403, "You don't have permission to access this resource.");
+        return abort(403, "Only farmer group president can access this resource.");
     }
 }
