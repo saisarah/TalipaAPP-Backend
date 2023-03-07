@@ -11,6 +11,7 @@ class FarmerGroup extends Model
 
     public function members()
     {
-        return $this->hasMany(FarmerGroupMember::class);
+        return $this->hasMany(FarmerGroupMember::class)->where('membership_status', 'approved');
     }
 }
+
