@@ -17,7 +17,6 @@ class FarmerGroupSeeder extends Seeder
      */
     public function run()
     {
-        $farmers = Farmer::all();
 
         FarmerGroup::create([
             'name' => 'Bonena Multi-Purpose Cooperative',
@@ -29,7 +28,11 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-            'farmer_id' => $farmers->random()->user_id,
+        ])->members()->create([
+            'farmer_id' => '1',
+            'role' => 'president',
+            'membership_status' => 'approved'
+
         ]);
         FarmerGroup::create([
             'name' => 'KASAMNE',
@@ -41,7 +44,11 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-            'farmer_id' => $farmers->random()->user_id,
+        ])->members()->create([
+            'farmer_id' => '11',
+            'role' => 'president',
+            'membership_status' => 'approved'
+
         ]);
         FarmerGroup::create([
             'name' => 'Agrizkaya Cooperative Federation (AGCOFED) ',
@@ -54,7 +61,11 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-            'farmer_id' => $farmers->random()->user_id,
+        ])->members()->create([
+            'farmer_id' => '3',
+            'role' => 'president',
+            'membership_status' => 'approved'
+
         ]);
         FarmerGroup::create([
             'name' => 'Kafdeco Kasibu Farmers Development Cooperative',
@@ -67,7 +78,11 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-            'farmer_id' => $farmers->random()->user_id,
+        ])->members()->create([
+            'farmer_id' => '4',
+            'role' => 'president',
+            'membership_status' => 'approved'
+
         ]);
         FarmerGroup::create([
             'name' => 'Sentrong Pamilihan ng Produktong Agrikultura sa Quezon Federation (SPAQ) Inc',
@@ -80,9 +95,12 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-            'farmer_id' => $farmers->random()->user_id,
-        ]);
+        ])->members()->create([
+            'farmer_id' => '5',
+            'role' => 'president',
+            'membership_status' => 'approved'
 
+        ]);
         FarmerGroup::create([
             'name' => 'Bikolanas Agriculture Cooperative',
             'Address' => 'Block 11 Lot 50-51, Mahogany Street, Villa Karangahan Subdivision, San Felipe, Naga City, Naga City, Philippines',
@@ -93,7 +111,11 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-            'farmer_id' => $farmers->random()->user_id,
+        ])->members()->create([
+            'farmer_id' => '6',
+            'role' => 'president',
+            'membership_status' => 'approved'
+
         ]);
         FarmerGroup::create([
             'name' => 'Talisayon Multi-Purpose Cooperative Tamuco',
@@ -106,7 +128,11 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-            'farmer_id' => $farmers->random()->user_id,
+        ])->members()->create([
+            'farmer_id' => '7',
+            'role' => 'president',
+            'membership_status' => 'approved'
+
         ]);
         FarmerGroup::create([
             'name' => 'Agri-Preneur Farmers and Producers Association, Inc',
@@ -118,7 +144,11 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-            'farmer_id' => $farmers->random()->user_id,
+        ])->members()->create([
+            'farmer_id' => '8',
+            'role' => 'president',
+            'membership_status' => 'approved'
+
         ]);
         FarmerGroup::create([
             'name' => 'Greeners cooperative',
@@ -130,7 +160,11 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-            'farmer_id' => $farmers->random()->user_id,
+        ])->members()->create([
+            'farmer_id' => '9',
+            'role' => 'president',
+            'membership_status' => 'approved'
+
         ]);
         FarmerGroup::create([
             'name' => 'Federation of Free Farmers',
@@ -142,7 +176,11 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-            'farmer_id' => $farmers->random()->user_id,
+        ])->members()->create([
+            'farmer_id' => '10',
+            'role' => 'president',
+            'membership_status' => 'approved'
+
         ]);
     }
 }
