@@ -55,7 +55,7 @@ Route::get('/philippine-addresses/barangays', [AddressController::class, 'barang
 Route::get('/posts', [PostController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/posts/{post}', [PostController::class, 'show'])->middleware('auth:sanctum');
 Route::get('/user', [UserController::class, 'getCurrentUser'])->middleware('auth:sanctum');
-Route::get('/user/balance', [UserController::class, 'showBalance'])->middleware('auth:sanctum');
+Route::get('/user/balance', [UserController::class, 'showBalance'])->middleware('auth:sanctum', 'has_wallet');
 Route::get('/user/address/complete', [UserController::class, 'showCompleteAddress'])->middleware('auth:sanctum');
 Route::get('/users/{user}', [UserController::class, 'show'])->middleware('auth:sanctum');
 Route::get('/user/address', [AddressController::class, 'index'])->middleware('auth:sanctum');
@@ -91,9 +91,9 @@ Route::get('/orders', [OrderController::class, 'index'])->middleware('auth:sanct
 Route::post('/posts/{post}/order', [OrderController::class, 'create'])->middleware('auth:sanctum');
 
 Route::patch('/change-password', [ChangePasswordController::class, 'update'])->middleware('auth:sanctum');
-Route::post('/wallet/cash-in', CashInController::class)->middleware('auth:sanctum');
+Route::post('/wallet/cash-in', CashInController::class)->middleware('auth:sanctum', 'has_wallet');
 Route::any('/wallet/payment-received', PaymentReceivedController::class);
-Route::get('/payment/{transaction}', VerifyPaymentController::class)->middleware('auth:sanctum');
+Route::get('/payment/{transaction}', VerifyPaymentController::class)->middleware('auth:sanctum', 'has_wallet');
 
 Route::post('/admins', [AdminController::class, 'createAdmin'])->middleware('auth:sanctum', 'admin');
 
