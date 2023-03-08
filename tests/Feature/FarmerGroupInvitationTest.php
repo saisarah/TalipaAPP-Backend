@@ -53,7 +53,7 @@ class FarmerGroupInvitationTest extends TestCase
         $this->actingAs($user)
             ->postJson("/api/farmer-groups/members/invite")
             ->assertStatus(403)
-            ->assertJson(['message' => "Only the president can invite members"]);
+            ->assertJson(['message' => "Only farmer group president can access this resource."]);
     }
 
     public function test_farmer_id_is_required()
@@ -68,9 +68,10 @@ class FarmerGroupInvitationTest extends TestCase
     public function test_farmer_must_not_belong_to_other_group()
     {
         $president = User::find(self::PRESIDENT_ID);
+        $farmer_group_id = $president->farmer->member->farmer_group_id;
         $farmer = Farmer::factory()->create();
 
-        $other_group = FarmerGroup::where('farmer_id', '!=', $president->id)->first();
+        $other_group = FarmerGroup::where('id', '!=', $farmer_group_id)->first();
         
         FarmerGroupMember::insert([
             'farmer_id' => $farmer->user_id,
@@ -80,8 +81,8 @@ class FarmerGroupInvitationTest extends TestCase
         ]);
 
         $this->actingAs($president)
-            ->postJson("/api/farmer-groups/members/invite", ['farmer_group_id' => $farmer->id])
-            ->assertStatus('422')
-            ->assertJson(['message' => "This farmer already belongs to a group"]);
+            ->postJson("/api/farmer-groups/members/invite", ['farmer_id' => $farmer->user_id])
+            ->assertStatus(400)
+            ->assertJson(['message' => "Invitation failed: User is already a part of different group"]);
     }
 }
