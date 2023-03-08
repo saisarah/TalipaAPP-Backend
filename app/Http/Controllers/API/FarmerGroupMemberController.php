@@ -34,7 +34,6 @@ class FarmerGroupMemberController extends Controller
         $user = Auth::user();
         $president = FarmerGroupMember::where('farmer_id', $user->id)
             ->where('farmer_group_id', $id)
-            ->where('role', FarmerGroupMember::ROLE_PRESIDENT)
             ->first();
         $group = FarmerGroupMember::where('farmer_id', $request->farmer_id)
             ->where('farmer_group_id', $id)

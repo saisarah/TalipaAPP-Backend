@@ -11,6 +11,22 @@ class FarmerGroup extends Model
 
     public function members()
     {
-        return $this->hasMany(FarmerGroupMember::class);
+        return $this->hasMany(FarmerGroupMember::class)->where('membership_status', 'approved');
+    }
+
+    public function pendings()
+    {
+        return $this->hasMany(FarmerGroupMember::class)->where('membership_status', 'pending');
+    }
+
+    public function invites()
+    {
+        return $this->hasMany(FarmerGroupMember::class)->where('membership_status', 'invited');
+    }
+
+    public function president()
+    {
+        return $this->hasOne(FarmerGroupMember::class)->where('role', 'president');
     }
 }
+
