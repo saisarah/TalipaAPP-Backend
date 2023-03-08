@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Farmer;
 use App\Models\FarmerGroup;
 use App\Models\FarmerGroupMember;
 use Illuminate\Http\Request;
@@ -29,23 +30,23 @@ class FarmerGroupMemberController extends Controller
         return $joinGroup;
     }
 
-    public function invite(Request $request, $id)
+    public function invite(Request $request)
     {
-        $user = Auth::user();
-        $president = FarmerGroupMember::where('farmer_id', $user->id)
-            ->where('farmer_group_id', $id)
-            ->first();
+        $this->validate($request, [
+            'farmer_id' => 'required|exists:farmers,user_id'
+        ]);
+        
+        $user = Auth::user();   
+        $id = $user->farmer->member->farmer_group_id;
+
+
         $group = FarmerGroupMember::where('farmer_id', $request->farmer_id)
             ->where('farmer_group_id', $id)
             ->first();
         $status = FarmerGroupMember::where('farmer_id', $request->farmer_id)
             ->first();
 
-        if ($president == null) {
-            return abort(403, "Access to the requested resource has been denied.");
-        }
-
-        if (($group !== null && $group->isPending()) || ($group !== null && $group->isInvited())) {
+        if ($group !== null && $group->isPending()) {
             $group->update([
                 'membership_status' => FarmerGroupMember::STATUS_APPROVED
             ]);
