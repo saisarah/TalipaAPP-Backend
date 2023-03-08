@@ -15,4 +15,9 @@ class Farmer extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    public function member()
+    {
+        return $this->hasOne(FarmerGroupMember::class, 'farmer_id', 'user_id')->where('membership_status', FarmerGroupMember::STATUS_APPROVED);
+    }
 }
