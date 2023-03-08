@@ -71,7 +71,7 @@ Route::get('/farmer-group-posts', [FarmerGroupPostController::class, 'index'])->
 Route::get('/farmer-group', [FarmerGroupController::class, 'getCurrentGroup'])->middleware('auth:sanctum');
 Route::post('/farmer-group-posts', [FarmerGroupPostController::class, 'create'])->middleware('auth:sanctum', 'has_group');
 Route::post('/farmer-groups/{id}/join', [FarmerGroupMemberController::class, 'join'])->middleware('auth:sanctum');
-Route::post('/farmer-groups/members/{id}/invite', [FarmerGroupMemberController::class, 'invite'])->middleware('auth:sanctum','farmer', 'has_group', 'president');
+Route::post('/farmer-groups/members/invite', [FarmerGroupMemberController::class, 'invite'])->middleware('auth:sanctum','farmer', 'has_group', 'president');
 
 
 Route::get('/vendors', [VendorController::class, 'index']);
