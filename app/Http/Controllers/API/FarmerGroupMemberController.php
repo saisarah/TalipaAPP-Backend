@@ -35,8 +35,8 @@ class FarmerGroupMemberController extends Controller
         $this->validate($request, [
             'farmer_id' => 'required|exists:farmers,user_id'
         ]);
-        
-        $user = Auth::user();   
+
+        $user = Auth::user();
         $id = $user->farmer->member->farmer_group_id;
 
 
@@ -66,5 +66,29 @@ class FarmerGroupMemberController extends Controller
         $invite->save();
 
         return "Invitation sent sucessfully";
+    }
+
+    public function acceptInvitation($id)
+    {
+        $user = Auth::user();
+
+        $group = FarmerGroupMember::where('farmer_group_id', $id)
+            ->where('farmer_id', $user->id)
+            ->where('membership_status', FarmerGroupMember::STATUS_INVITED)
+            ->first();
+
+        if ($group == null) {
+            return abort(404, "The requested resource could not be located on our server. Please try again later or contact us if you believe this is a mistake");
+        }
+
+        $group->update([
+            'membership_status' => FarmerGroupMember::STATUS_APPROVED
+        ]);
+
+        $invite = $user->farmer->invites;
+        $farmerGroupIds = $invite->pluck('farmer_group_id')->toArray();
+        FarmerGroupMember::whereIn('farmer_group_id', $farmerGroupIds)->delete();
+        
+        return $group;
     }
 }
