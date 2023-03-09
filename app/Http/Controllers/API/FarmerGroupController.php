@@ -33,4 +33,55 @@ class FarmerGroupController extends Controller
         $curGroup = FarmerGroupMember::where('farmer_group_id', $group_id)->first();
         return $curGroup;
     }
+
+    public function create(Request $request)
+    {
+        $user = Auth::user();
+        $this->validate($request, [
+            'name' => 'required',
+            'address' =>  'required',
+            'year_founded' =>  'required|integer|digits:4',
+            'type' => 'required',
+            'authorization' => 'required',
+            'contact_no' => 'required',
+            'email' => 'required|email:rfc,dns'
+
+        ]);
+
+        $member = FarmerGroupMember::where('farmer_id', Auth::id())->firstOrFail();
+
+        if ($member->exists())
+        {
+            return abort(400, "The requested action cannot be completed");
+        }
+        $group = new FarmerGroup();
+        $group->name = $request->name;
+        $group->address = $request->address;
+        $group->year_founded = $request->year_founded;
+        $group->type = $request->type;
+        $group->authorization = $request->authorization;
+        $group->group_description = $request->group_description;
+        $group->contact_no = $request->contact_no;
+        $group->email = $request->email;
+        $group->status = FarmerGroup::STATUS_PENDING;
+
+        if ($group->group_description == null)
+        {
+            $group->group_description = "No description available";
+        }
+
+        $group->save();
+
+
+
+        $member = new FarmerGroupMember();
+        $member->farmer_group_id = $group->id;
+        $member->farmer_id = Auth::id();
+        $member->role = FarmerGroupMember::ROLE_PRESIDENT;
+        $member->membership_status = FarmerGroupMember::STATUS_APPROVED;
+        $member->save();
+        
+      //  return $group;
+
+    }
 }
