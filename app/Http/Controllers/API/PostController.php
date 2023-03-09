@@ -62,6 +62,6 @@ class PostController extends Controller
 
     public function getFromUser(User $user)
     {
-        return $user->posts()->with('thumbnail', 'author', 'prices')->get()->each->append('display_price', 'location');
+        return $user->posts()->with('thumbnail', 'author', 'prices', 'crop')->get()->each->append('display_price', 'location');
     }
 }
