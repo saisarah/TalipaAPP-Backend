@@ -52,7 +52,7 @@ class PostController extends Controller
 
     public function index()
     {
-        return Post::with('thumbnail', 'author', 'prices', 'crop')->get()->each->append('display_price', 'location');
+        return Post::with('thumbnail', 'author', 'prices', 'crop')->latest()->get()->each->append('display_price', 'location');
     }
 
     public function show(Post $post)
