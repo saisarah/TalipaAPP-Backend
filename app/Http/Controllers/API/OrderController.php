@@ -26,7 +26,7 @@ class OrderController extends Controller
             return  $orders;
         } else {
             $id = Auth::id();
-            $orders = Order::with('post','post.author', 'post.crop', 'quantities')->where('buyer_id', $id)
+            $orders = Order::with('post','post.author', 'post.crop', 'post.thumbnail', 'quantities')->where('buyer_id', $id)
                 ->where('order_status', $request->status)
                 ->get()
                 ->each(function (Order $order) {
@@ -36,6 +36,12 @@ class OrderController extends Controller
             return  $orders;
         }
     }
+
+    public function show(Order $order)
+    {
+        return $order->load('post.author', 'post.thumbnail')->append('total');
+    }
+
     public function create(Request $request, Post $post)
     {
         $this->validate($request, [
@@ -54,9 +60,7 @@ class OrderController extends Controller
             abort(400, "You don't have enough balance");
         }
 
-        DB::beginTransaction();
-        
-        try {
+        $order = DB::transaction(function() use ($user, $total, $post, $quantities) {
             $user->wallet()->increment('locked', $total);
 
             $order = Order::create([
@@ -76,12 +80,9 @@ class OrderController extends Controller
 
             OrderQuantity::insert($quantities);
 
-            DB::commit();
+            return $order;            
+        });
 
-            return $order;
-        } catch (Exception $ex) {
-            DB::rollBack();
-            throw $ex;
-        }
+        return $order;
     }
 }
