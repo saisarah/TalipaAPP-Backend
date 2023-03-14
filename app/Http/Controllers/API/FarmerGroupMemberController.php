@@ -78,7 +78,7 @@ class FarmerGroupMemberController extends Controller
             ->first();
 
         if ($group == null) {
-            return abort(404, "The requested resource could not be located on our server. Please try again later or contact us if you believe this is a mistake");
+            return abort(404, "Sorry, you are not invited to join this FarmerGroup.");
         }
 
         $group->update([
