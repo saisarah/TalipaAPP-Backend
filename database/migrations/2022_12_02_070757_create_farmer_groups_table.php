@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 255);
             $table->string('address', 1000);
-            $table->text('group_description');
+            $table->text('group_description')->default("No description available");
             $table->string('contact_no');
             $table->string('email');
             $table->string('type', 60);
