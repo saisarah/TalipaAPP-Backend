@@ -92,4 +92,16 @@ class FarmerGroupController extends Controller
 
         return abort(400, "Invalid farmer");
     }
+
+    public function invitation()
+    {
+        $id = Auth::id();
+        $groups = FarmerGroupMember::where('farmer_id', $id)
+            ->where('membership_status', FarmerGroupMember::STATUS_INVITED)->get();
+        if ($groups->isEmpty()) {
+            return abort(400, "There are no invitations for this user");
+        }
+
+        return $groups;
+    }
 }
