@@ -53,7 +53,7 @@ class FarmerGroupController extends Controller
         {
             return abort(400, "Sorry, you have reached the maximum limit of groups allowed per user");
         }
-        
+
         $group = new FarmerGroup();
         $group->name = $request->name;
         $group->address = $request->address;
@@ -64,15 +64,7 @@ class FarmerGroupController extends Controller
         $group->contact_no = $request->contact_no;
         $group->email = $request->email;
         $group->status = FarmerGroup::STATUS_PENDING;
-
-        if ($group->group_description == null)
-        {
-            $group->group_description = "No description available";
-        }
-
         $group->save();
-
-
 
         $member = new FarmerGroupMember();
         $member->farmer_group_id = $group->id;
