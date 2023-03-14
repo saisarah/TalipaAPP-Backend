@@ -2,9 +2,11 @@
 
 namespace App\Services\Wallet;
 
+use App\Models\Transaction;
 use App\Models\User;
 use App\Services\Wallet\Exceptions\InsufficientBalanceException;
 use App\Services\Wallet\Exceptions\NoWalletException;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
 
@@ -13,6 +15,11 @@ trait HasWallet
     public function wallet(): HasOne
     {
         return $this->hasOne(Wallet::class);
+    }
+
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class)->latest();
     }
 
     public function activateWallet()
@@ -52,6 +59,7 @@ trait HasWallet
     {
         return $this->wallet()->first()?->balance ?: 0;
     }
+    
 
     public function usableBalance(): float
     {
@@ -63,6 +71,10 @@ trait HasWallet
     {
         if (!$this->hasWallet()) throw new NoWalletException($this);
         $this->wallet()->increment('balance', $amount);
+        $this->transactions()->create([
+            'amount' => $amount,
+            'type' => Transaction::TYPE_CASH_IN,
+        ]);
         return $this;
     }
 

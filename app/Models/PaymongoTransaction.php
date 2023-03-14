@@ -42,7 +42,7 @@ class PaymongoTransaction extends Model
 
         if (!$this->checkStatus("succeeded")) {
             Log::channel("wallet")->error("Payment Intent is still pending", [$this]);
-            throw new Exception("Payment Intent is still pending");
+            return;
         }
 
         DB::transaction(function() {
@@ -58,7 +58,7 @@ class PaymongoTransaction extends Model
     public function checkStatus($status)
     {
         $paymentIntent = Paymongo::paymentIntent()->find($this->id);
-    
+        Log::info("status",[$paymentIntent->status]);
         return $paymentIntent->status === $status;
     }
 

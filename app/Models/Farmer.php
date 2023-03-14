@@ -20,4 +20,9 @@ class Farmer extends Model
     {
         return $this->hasOne(FarmerGroupMember::class, 'farmer_id', 'user_id')->where('membership_status', FarmerGroupMember::STATUS_APPROVED);
     }
+
+    public function invites()
+    {
+        return $this->hasMany(FarmerGroupMember::class, 'farmer_id', 'user_id')->where('membership_status', FarmerGroupMember::STATUS_INVITED);
+    }
 }

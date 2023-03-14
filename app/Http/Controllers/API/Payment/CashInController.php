@@ -38,7 +38,7 @@ class CashInController extends Controller
         PaymongoTransaction::create([
             'id' => $paymentIntent->id,
             'user_id' => auth()->id(),
-            'amount' => $request->amount,
+            'amount' => $request->amount * .975,
         ]);
 
         Log::channel('wallet')->info('Transaction Created', [$paymentIntent->id]);

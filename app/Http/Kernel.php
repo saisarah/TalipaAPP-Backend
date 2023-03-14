@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\EnsureFarmerHasGroup;
 use App\Http\Middleware\EnsureFarmerIsMember;
 use App\Http\Middleware\EnsureFarmerIsPresident;
+use App\Http\Middleware\EnsureUserHasWallet;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\EnsureUserIsFarmer;
 use App\Http\Middleware\EnsureUserIsVendor;
@@ -74,6 +75,6 @@ class Kernel extends HttpKernel
         'has_group' => EnsureFarmerHasGroup::class,
         'farmer' => EnsureUserIsFarmer::class,
         'president' => EnsureFarmerIsPresident::class,
-
+        'has_wallet' => EnsureUserHasWallet::class,
     ];
 }
