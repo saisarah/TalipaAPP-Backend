@@ -5,6 +5,7 @@ use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\Auth\LoginController;
 use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\API\Auth\ChangePasswordController;
+use App\Http\Controllers\API\Auth\ForgotPasswordController;
 use App\Http\Controllers\API\CropController;
 use App\Http\Controllers\API\DemandController;
 use App\Http\Controllers\API\FarmerController;
@@ -42,6 +43,9 @@ Route::post('/login/verify-otp', [LoginController::class, 'verifyOtp']);
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register/send-otp', [RegisterController::class, 'sendOtp']);
 Route::post('/admin-login', [LoginController::class, 'loginAdmin']);
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendOtp']);
+Route::post('/forgot-password/verify', [ForgotPasswordController::class, 'verifyOtp']);
+Route::patch('/forgot-password/reset', [ForgotPasswordController::class, 'resetPassword']);
 
 Route::post('/register/vendor', [RegisterController::class, 'registerVendor']);
 Route::post('/register/farmer', [RegisterController::class, 'registerFarmer']);
