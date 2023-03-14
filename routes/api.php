@@ -20,6 +20,7 @@ use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\QuestionController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\VendorController;
+use App\Models\FarmerGroup;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 use Twilio\Rest\Api\V2010\Account\AddressContext;
@@ -75,6 +76,7 @@ Route::post('/farmer-groups/{id}/join', [FarmerGroupMemberController::class, 'jo
 Route::post('/farmer-groups/members/invite', [FarmerGroupMemberController::class, 'invite'])->middleware('auth:sanctum','farmer', 'has_group', 'president');
 Route::post('/farmer-groups', [FarmerGroupController::class, 'create'])->middleware('auth:sanctum','farmer');
 Route::post('/farmer-groups/{id}/accept', [FarmerGroupMemberController::class, 'acceptInvitation'])->middleware('auth:sanctum','farmer');
+Route::post('/farmer-groups/members/{id}/accept', [FarmerGroupController::class, 'approved'])->middleware('auth:sanctum','farmer', 'has_group', 'president');
 
 Route::get('/vendors', [VendorController::class, 'index']);
 
