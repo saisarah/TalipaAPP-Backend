@@ -18,15 +18,14 @@ class FarmerGroupController extends Controller
 
     public function show($id)
     {
-       return FarmerGroup::where('id', $id)->first();
+        return FarmerGroup::find($id);
     }
-    
+
     public function getCurrentGroup()
     {
         $id = Auth::id();
         $group = FarmerGroupMember::where('farmer_id', $id)->first();
-        if ($group == null)
-        {
+        if ($group == null) {
             abort(400, 'Join group first');
         }
         $group_id = $group->farmer_group_id;
@@ -49,8 +48,7 @@ class FarmerGroupController extends Controller
 
         $member = FarmerGroupMember::where('farmer_id', Auth::id())->first();
 
-        if ($member !== null)
-        {
+        if ($member !== null) {
             return abort(400, "Sorry, you have reached the maximum limit of groups allowed per user");
         }
 
@@ -72,8 +70,26 @@ class FarmerGroupController extends Controller
         $member->role = FarmerGroupMember::ROLE_PRESIDENT;
         $member->membership_status = FarmerGroupMember::STATUS_APPROVED;
         $member->save();
-        
-        return $group;
 
+        return $group;
+    }
+
+    public function approved($id)
+    {
+        $user = Auth::user();
+        $group = $user->farmer->member->farmer_group_id;
+        $member = FarmerGroupMember::where('farmer_id', $id)
+            ->where('farmer_group_id', $group)
+            ->where('membership_status', FarmerGroupMember::STATUS_PENDING)
+            ->first();
+
+        if ($member !== null) {
+            $member->update([
+                'membership_status' => FarmerGroupMember::STATUS_APPROVED
+            ]);
+            return  $member;
+        }
+
+        return abort(400, "Invalid farmer");
     }
 }
