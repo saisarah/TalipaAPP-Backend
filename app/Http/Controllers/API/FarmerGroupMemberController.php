@@ -78,7 +78,7 @@ class FarmerGroupMemberController extends Controller
             ->first();
 
         if ($group == null) {
-            return abort(404, "Sorry, you are not invited to join this FarmerGroup.");
+            return abort(403, "Sorry, you are not invited to join this FarmerGroup.");
         }
 
         $group->update([
@@ -86,8 +86,8 @@ class FarmerGroupMemberController extends Controller
         ]);
 
         $invite = $user->farmer->invites;
-        $farmerGroupIds = $invite->pluck('farmer_group_id')->toArray();
-        FarmerGroupMember::whereIn('farmer_group_id', $farmerGroupIds)->delete();
+        $farmerGroupIds = $invite->pluck('id')->toArray();
+        FarmerGroupMember::whereIn('id', $farmerGroupIds)->delete();
         
         return $group;
     }
