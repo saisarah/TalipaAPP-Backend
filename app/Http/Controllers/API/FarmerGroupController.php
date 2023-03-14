@@ -49,10 +49,11 @@ class FarmerGroupController extends Controller
 
         $member = FarmerGroupMember::where('farmer_id', Auth::id())->first();
 
-        if ($member !== null && $member->exists())
+        if ($member !== null)
         {
             return abort(400, "Sorry, you have reached the maximum limit of groups allowed per user");
         }
+        
         $group = new FarmerGroup();
         $group->name = $request->name;
         $group->address = $request->address;
