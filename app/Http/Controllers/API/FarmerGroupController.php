@@ -18,7 +18,7 @@ class FarmerGroupController extends Controller
 
     public function show($id)
     {
-        return FarmerGroup::where('id', $id)->first();
+        return FarmerGroup::find($id);
     }
 
     public function getCurrentGroup()
@@ -80,7 +80,7 @@ class FarmerGroupController extends Controller
         $group = $user->farmer->member->farmer_group_id;
         $member = FarmerGroupMember::where('farmer_id', $id)
             ->where('farmer_group_id', $group)
-            ->where('membership_status', FarmerGroupMember::STATUS_INVITED)
+            ->where('membership_status', FarmerGroupMember::STATUS_PENDING)
             ->first();
 
         if ($member !== null) {
