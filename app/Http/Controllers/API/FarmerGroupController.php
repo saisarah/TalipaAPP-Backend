@@ -98,9 +98,6 @@ class FarmerGroupController extends Controller
         $id = Auth::id();
         $groups = FarmerGroupMember::where('farmer_id', $id)
             ->where('membership_status', FarmerGroupMember::STATUS_INVITED)->get();
-        if ($groups->isEmpty()) {
-            return abort(400, "There are no invitations for this user");
-        }
 
         return $groups;
     }
@@ -112,9 +109,6 @@ class FarmerGroupController extends Controller
         $id = $user->farmer->member->farmer_group_id;
         $group = FarmerGroupMember::where('farmer_group_id', $id)
             ->where('membership_status', FarmerGroupMember::STATUS_PENDING)->get();
-        if ($group->isEmpty()) {
-            return abort(400, "There are no pending members for this group");
-        }
 
         return $group;
     }
@@ -125,9 +119,6 @@ class FarmerGroupController extends Controller
         $id = $user->farmer->member->farmer_group_id;
         $group = FarmerGroupMember::where('farmer_group_id', $id)
             ->where('membership_status', FarmerGroupMember::STATUS_INVITED)->get();
-        if ($group->isEmpty()) {
-            return abort(400, "There are no invited members for this group");
-        }
 
         return $group;
     }
