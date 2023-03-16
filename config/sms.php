@@ -3,6 +3,7 @@
 use App\Services\SmsService\SmsAdapter\SmsGatewayAdapter;
 use App\Services\SmsService\SmsAdapter\SmsLogAdapter;
 use App\Services\SmsService\SmsAdapter\SmsMoviderAdapter;
+use App\Services\SmsService\SmsAdapter\SmsSemaphoreAdapter;
 use App\Services\SmsService\SmsAdapter\SmsTwilioAdapter;
 use App\Services\SmsService\SmsAdapter\SmsVonageAdapter;
 
@@ -35,6 +36,10 @@ return [
             'adapter' => SmsVonageAdapter::class,
             'key' => env('VONAGE_KEY'),
             'secret' => env('VONAGE_SECRET')
+        ],
+        'semaphore' => [
+            'adapter' => SmsSemaphoreAdapter::class,
+            'apikey' => env('SEMAPHORE_API_KEY')
         ]
     ]
 ];
