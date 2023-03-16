@@ -118,4 +118,17 @@ class FarmerGroupController extends Controller
 
         return $group;
     }
+
+    public function invitedMembers()
+    {
+        $user = Auth::user();
+        $id = $user->farmer->member->farmer_group_id;
+        $group = FarmerGroupMember::where('farmer_group_id', $id)
+            ->where('membership_status', FarmerGroupMember::STATUS_INVITED)->get();
+        if ($group->isEmpty()) {
+            return abort(400, "There are no invited members for this group");
+        }
+
+        return $group;
+    }
 }
