@@ -104,4 +104,18 @@ class FarmerGroupController extends Controller
 
         return $groups;
     }
+
+    public function pendingRequest()
+
+    {
+        $user = Auth::user();
+        $id = $user->farmer->member->farmer_group_id;
+        $group = FarmerGroupMember::where('farmer_group_id', $id)
+            ->where('membership_status', FarmerGroupMember::STATUS_PENDING)->get();
+        if ($group->isEmpty()) {
+            return abort(400, "There are no pending members for this group");
+        }
+
+        return $group;
+    }
 }
