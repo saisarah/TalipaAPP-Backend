@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderQuantity;
 use App\Models\Post;
-use App\Models\User;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,14 +17,22 @@ class OrderController extends Controller
         $user = Auth::user();
 
         if ($user->isFarmer()) {
-            $orders = Order::whereHas('post', function ($q) {
-                $id = Auth::id();
-                $q->where('author_id', $id);
-            })->where('order_status', $request->status)->get();
+            $orders = Order::with('post','post.author', 'post.crop', 'post.thumbnail', 'quantities')
+                ->whereHas('post', function ($q) {
+                    $id = Auth::id();
+                    $q->where('author_id', $id);
+                })
+                ->where('order_status', $request->status)
+                ->get()
+                ->each(function (Order $order) {
+                    $order->append('total');
+                    $order->post->append('location');
+                });
             return  $orders;
         } else {
             $id = Auth::id();
-            $orders = Order::with('post','post.author', 'post.crop', 'post.thumbnail', 'quantities')->where('buyer_id', $id)
+            $orders = Order::with('post','post.author', 'post.crop', 'post.thumbnail', 'quantities')
+                ->where('buyer_id', $id)
                 ->where('order_status', $request->status)
                 ->get()
                 ->each(function (Order $order) {
@@ -39,7 +45,7 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        return $order->load('post.author', 'post.thumbnail')->append('total');
+        return $order->load('post', 'buyer', 'post.author', 'post.thumbnail')->append('total');
     }
 
     public function create(Request $request, Post $post)
