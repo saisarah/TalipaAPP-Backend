@@ -27,6 +27,11 @@ class Order extends Model
         return $this->hasMany(OrderQuantity::class);
     }
 
+    public function buyer()
+    {
+        return $this->belongsTo(User::class, 'buyer_id');
+    }
+
     public function total(): Attribute
     {
         $total = $this->quantities->reduce(function ($acm, $quantity) {
