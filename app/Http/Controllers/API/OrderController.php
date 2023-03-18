@@ -23,6 +23,7 @@ class OrderController extends Controller
                     $q->where('author_id', $id);
                 })
                 ->where('order_status', $request->status)
+                ->latest()
                 ->get()
                 ->each(function (Order $order) {
                     $order->append('total');
@@ -34,6 +35,7 @@ class OrderController extends Controller
             $orders = Order::with('post','post.author', 'post.crop', 'post.thumbnail', 'quantities')
                 ->where('buyer_id', $id)
                 ->where('order_status', $request->status)
+                ->latest()
                 ->get()
                 ->each(function (Order $order) {
                     $order->append('total');
