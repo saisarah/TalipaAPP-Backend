@@ -29,6 +29,8 @@ class FarmerGroupPostController extends Controller
             'title' => 'required',
             'description' => 'required',
             'tags' => 'required',
+            'images' => 'nullable|array',
+            'images.*' => 'image',
         ]);
 
         $id = Auth::id();
@@ -41,6 +43,10 @@ class FarmerGroupPostController extends Controller
         $discussion->description = $request->description;
         $discussion->tags = $request->tags;
         $discussion->save();
+
+        $discussion->images()->createMany(array_map(fn ($image) => ([
+            'image' => $image->store("farmers/" . auth()->id() . "/group-posts", "public"),
+        ]), $request->images));
 
         return $discussion;
     }

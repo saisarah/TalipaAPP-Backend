@@ -14,4 +14,9 @@ class FarmerGroupPost extends Model
         'description',
         'tags'
     ];
+
+    public function images()
+    {
+        return $this->hasMany(FarmerGroupPostImage::class);
+    }
 }
