@@ -22,6 +22,8 @@ class Order extends Model
     const STATUS_SHIPPED = 'shipped';
     const STATUS_CANCELLED = 'cancelled';
     const STATUS_COMPLETED = 'completed';
+    const TRANSACTION_FEE = 0.08;
+    const DELIVERY_FEE = 200;
 
     public function isPending()
     {

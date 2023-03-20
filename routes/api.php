@@ -103,7 +103,7 @@ Route::get('/orders', [OrderController::class, 'index'])->middleware('auth:sanct
 Route::get('/orders/{order}', [OrderController::class, 'show'])->middleware('auth:sanctum');
 Route::post('/posts/{post}/order', [OrderController::class, 'create'])->middleware('auth:sanctum');
 Route::delete('/orders/{id}', [OrderController::class, 'cancel'])->middleware('auth:sanctum');
-
+Route::post('/orders/{id}', [OrderController::class, 'handleOrder'])->middleware('auth:sanctum', 'farmer');
 
 Route::patch('/change-password', [ChangePasswordController::class, 'update'])->middleware('auth:sanctum');
 Route::post('/wallet/cash-in', CashInController::class)->middleware('auth:sanctum', 'has_wallet');
