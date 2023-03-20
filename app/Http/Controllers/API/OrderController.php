@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderQuantity;
 use App\Models\Post;
+use App\Services\Wallet\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -107,6 +108,33 @@ class OrderController extends Controller
         $seller = $order->post->author_id;
         if ($seller == $user || $user == $order->buyer_id) {
             $order->order_status = Order::STATUS_CANCELLED;
+            $order->save();
+            return $order;
+        }
+
+        return abort(401, "Unauthorized Access");
+    }
+
+    public function handleOrder($id)
+    {
+        $user = Auth::id();
+        $order = Order::where('id', $id)
+            ->where('order_status', Order::STATUS_PENDING)
+            ->first();
+        if (!$order) {
+            return abort(400, "Invalid order id");
+        }
+        $seller_id = $order->post->author_id;
+        $amount = $order->total['price'];
+
+        if ($seller_id == $user) {
+            $seller = $order->post->author;
+            $buyer = $order->buyer;
+            $order->order_status = Order::STATUS_PROCESSING;
+            $new_amount = Order::DELIVERY_FEE + $amount * (1 + Order::TRANSACTION_FEE);
+            $buyer->wallet()->decrement('locked', $new_amount);
+            $buyer->transferMoney($seller, $new_amount);
+            $seller->wallet()->increment('locked', $new_amount);
             $order->save();
             return $order;
         }
