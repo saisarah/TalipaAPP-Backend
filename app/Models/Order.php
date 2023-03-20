@@ -17,6 +17,37 @@ class Order extends Model
         'order_status'
     ];
 
+    const STATUS_PENDING = 'pending';
+    const STATUS_CONFIRMED = 'confirmed';
+    const STATUS_SHIPPED = 'shipped';
+    const STATUS_CANCELLED = 'cancelled';
+    const STATUS_COMPLETED = 'completed';
+
+    public function isPending()
+    {
+        return $this->order_status === static::STATUS_PENDING;
+    }
+
+    public function isConfirmed()
+    {
+        return $this->order_status === static::STATUS_CONFIRMED;
+    }
+
+    public function isShipped()
+    {
+        return $this->order_status === static::STATUS_SHIPPED;
+    }
+
+    public function isCancelled()
+    {
+        return $this->order_status === static::STATUS_CANCELLED;
+    }
+
+    public function isCompleted()
+    {
+        return $this->order_status === static::STATUS_COMPLETED;
+    }
+
     public function post()
     {
         return $this->belongsTo(Post::class);
