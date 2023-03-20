@@ -98,14 +98,21 @@ class OrderController extends Controller
     {
         $user = Auth::id();
         $order = Order::where('id', $id)
-            ->where('buyer_id', $user)
             ->where('order_status', Order::STATUS_PENDING)
             ->first();
 
-        if ($order !== null) {
-            $order->update([
-                'order_status' => Order::STATUS_CANCELLED
-            ]);
+        if (!$order) {
+            return abort(400, "Invalid order id");
+        }
+        $author = $order->post->author_id;
+        if ($author) {
+            $order->order_status = Order::STATUS_CANCELLED;
+            $order->save();
+            return $order;
+        }
+        if (!$author) {
+            $order->order_status = Order::STATUS_CANCELLED;
+            $order->save();
             return $order;
         }
     }
