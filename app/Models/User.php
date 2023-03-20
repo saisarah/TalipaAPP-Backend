@@ -114,6 +114,11 @@ class User extends Authenticatable
     }
     protected static function booted(): void
     {
+
+        static::creating(function (User $user) {
+            $user->profile_picture = $user->profile_picture;
+        });
+
         static::created(function (User $user) {
             $user->update(['username' => User::generateUserName($user->firstname)]);
         });
