@@ -16,7 +16,7 @@ class Demand extends Model
 
     public function author()
     {
-        return $this->belongsTo(Vendor::class, 'vendor_id', 'user_id'); 
+        return $this->belongsTo(User::class, 'vendor_id'); 
     }
 
     public function crop()
