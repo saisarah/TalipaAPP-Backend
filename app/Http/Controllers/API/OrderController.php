@@ -17,7 +17,7 @@ class OrderController extends Controller
         $user = Auth::user();
 
         if ($user->isFarmer()) {
-            $orders = Order::with('post','post.author', 'post.crop', 'post.thumbnail', 'quantities')
+            $orders = Order::with('post', 'post.author', 'post.crop', 'post.thumbnail', 'quantities')
                 ->whereHas('post', function ($q) {
                     $id = Auth::id();
                     $q->where('author_id', $id);
@@ -32,7 +32,7 @@ class OrderController extends Controller
             return  $orders;
         } else {
             $id = Auth::id();
-            $orders = Order::with('post','post.author', 'post.crop', 'post.thumbnail', 'quantities')
+            $orders = Order::with('post', 'post.author', 'post.crop', 'post.thumbnail', 'quantities')
                 ->where('buyer_id', $id)
                 ->where('order_status', $request->status)
                 ->latest()
@@ -60,7 +60,7 @@ class OrderController extends Controller
 
         $quantities = collect($request->quantities);
         $subtotal = $post->calculateTotalPrice($quantities);
-        $fee = $subtotal*.08;
+        $fee = $subtotal * .08;
         $delivery_fee = 200;
         $total = $subtotal + $fee + $delivery_fee;
 
@@ -68,7 +68,7 @@ class OrderController extends Controller
             abort(400, "You don't have enough balance");
         }
 
-        $order = DB::transaction(function() use ($user, $total, $post, $quantities) {
+        $order = DB::transaction(function () use ($user, $total, $post, $quantities) {
             $user->wallet()->increment('locked', $total);
 
             $order = Order::create([
@@ -79,7 +79,7 @@ class OrderController extends Controller
                 'order_status' => 'pending'
             ]);
 
-            $quantities = $quantities->map(function ($quantity) use ($order, $post){
+            $quantities = $quantities->map(function ($quantity) use ($order, $post) {
                 return $quantity + [
                     'order_id' => $order->id,
                     'price' => $post->prices->firstWhere('variant', $quantity['variant'])->value
@@ -88,9 +88,25 @@ class OrderController extends Controller
 
             OrderQuantity::insert($quantities);
 
-            return $order;            
+            return $order;
         });
 
         return $order;
+    }
+
+    public function cancel($id)
+    {
+        $user = Auth::id();
+        $order = Order::where('id', $id)
+            ->where('buyer_id', $user)
+            ->where('order_status', Order::STATUS_PENDING)
+            ->first();
+
+        if ($order !== null) {
+            $order->update([
+                'order_status' => Order::STATUS_CANCELLED
+            ]);
+            return $order;
+        }
     }
 }
