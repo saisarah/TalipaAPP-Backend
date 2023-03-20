@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedDecimal('budget');
             $table->unsignedBigInteger('quantity');
             $table->string('description', 2000);
+            $table->string('status', 10)->default("open");
             $table->unsignedBigInteger('crop_id');
             $table->foreign('vendor_id')->references('user_id')->on('vendors');
             $table->foreign('crop_id')->references('id')->on('crops');
