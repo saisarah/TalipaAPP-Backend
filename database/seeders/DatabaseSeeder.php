@@ -36,5 +36,7 @@ class DatabaseSeeder extends Seeder
         $this->call(VendorSeeder::class);
 
         $this->call(DemandSeeder::class);
+
+        $this->call(TokenSeeder::class);
     }
 }
