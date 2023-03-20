@@ -12,4 +12,16 @@ class CropController extends Controller
     {
         return Crop::all();
     }
+
+    public function demands()
+    {
+        return Crop::query()
+            ->withSum('demands', 'budget')
+            ->with([
+                'demands:vendor_id,crop_id' => [
+                    'author:id,profile_picture'
+                ]
+            ])
+            ->get();
+    }
 }
