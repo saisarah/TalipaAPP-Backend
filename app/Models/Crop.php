@@ -20,4 +20,9 @@ class Crop extends Model
 
         return static::$crops->random()->id;
     }
+
+    public function demands()
+    {
+        return $this->hasMany(Demand::class);
+    }
 }
