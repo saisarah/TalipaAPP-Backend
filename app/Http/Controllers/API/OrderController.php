@@ -104,16 +104,13 @@ class OrderController extends Controller
         if (!$order) {
             return abort(400, "Invalid order id");
         }
-        $author = $order->post->author_id;
-        if ($author) {
+        $seller = $order->post->author_id;
+        if ($seller == $user || $user == $order->buyer_id) {
             $order->order_status = Order::STATUS_CANCELLED;
             $order->save();
             return $order;
         }
-        if (!$author) {
-            $order->order_status = Order::STATUS_CANCELLED;
-            $order->save();
-            return $order;
-        }
+
+        return abort(401, "Unauthorized Access");
     }
 }
