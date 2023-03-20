@@ -18,7 +18,7 @@ class Order extends Model
     ];
 
     const STATUS_PENDING = 'pending';
-    const STATUS_CONFIRMED = 'confirmed';
+    const STATUS_PROCESSING = 'processing';
     const STATUS_SHIPPED = 'shipped';
     const STATUS_CANCELLED = 'cancelled';
     const STATUS_COMPLETED = 'completed';
@@ -28,9 +28,9 @@ class Order extends Model
         return $this->order_status === static::STATUS_PENDING;
     }
 
-    public function isConfirmed()
+    public function isProcessing()
     {
-        return $this->order_status === static::STATUS_CONFIRMED;
+        return $this->order_status === static::STATUS_PROCESSING;
     }
 
     public function isShipped()
