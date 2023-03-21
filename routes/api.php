@@ -22,6 +22,7 @@ use App\Http\Controllers\API\QuestionController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\VendorController;
 use App\Models\FarmerGroup;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 use Twilio\Rest\Api\V2010\Account\AddressContext;
@@ -39,83 +40,142 @@ use Twilio\Rest\Api\V2010\Account\AddressContext;
 
 Broadcast::routes(['middleware' => 'auth:sanctum']);
 
-Route::post('/login/send-otp', [LoginController::class, 'sendOtp']);
-Route::post('/login/verify-otp', [LoginController::class, 'verifyOtp']);
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/register/send-otp', [RegisterController::class, 'sendOtp']);
-Route::post('/admin-login', [LoginController::class, 'loginAdmin']);
-Route::post('/forgot-password', [ForgotPasswordController::class, 'sendOtp']);
-Route::post('/forgot-password/verify', [ForgotPasswordController::class, 'verifyOtp']);
-Route::patch('/forgot-password/reset', [ForgotPasswordController::class, 'resetPassword']);
+Route::controller(LoginController::class)->group(function () {
+    Route::post('/login/send-otp', 'sendOtp');
+    Route::post('/login/verify-otp', 'verifyOtp');
+    Route::post('/login', 'login');
+    Route::post('/register/send-otp', 'sendOtp');
+    Route::post('/admin-login', 'loginAdmin');
+});
 
-Route::post('/register/vendor', [RegisterController::class, 'registerVendor']);
-Route::post('/register/farmer', [RegisterController::class, 'registerFarmer']);
-Route::post('/register/validator', [RegisterController::class, 'validator']);
+Route::controller(ForgotPasswordController::class)->group(function () {
+    Route::post('/forgot-password', 'sendOtp');
+    Route::post('/forgot-password/verify', 'verifyOtp');
+    Route::patch('/forgot-password/reset', 'resetPassword');
+});
 
-Route::get('/crops', [CropController::class, 'index']);
-Route::get('/crops/demands', [CropController::class, 'demands']);
+Route::controller(RegisterController::class)->group(function () {
+    Route::post('/register/vendor', 'registerVendor');
+    Route::post('/register/farmer', 'registerFarmer');
+    Route::post('/register/validator', 'validator');
+});
 
-Route::get('/philippine-addresses/regions', [AddressController::class, 'regions']);
-Route::get('/philippine-addresses/provinces', [AddressController::class, 'provinces']);
-Route::get('/philippine-addresses/cities', [AddressController::class, 'cities']);
-Route::get('/philippine-addresses/barangays', [AddressController::class, 'barangays']);
-Route::get('/posts', [PostController::class, 'index'])->middleware('auth:sanctum');
-Route::get('/posts/{post}', [PostController::class, 'show'])->middleware('auth:sanctum');
-Route::get('/user', [UserController::class, 'getCurrentUser'])->middleware('auth:sanctum');
-Route::get('/user/transactions', [UserController::class, 'transactions'])->middleware('auth:sanctum');
-Route::get('/user/balance', [UserController::class, 'showBalance'])->middleware('auth:sanctum', 'has_wallet');
-Route::get('/user/address/complete', [UserController::class, 'showCompleteAddress'])->middleware('auth:sanctum');
-Route::get('/users/{user}', [UserController::class, 'show'])->middleware('auth:sanctum');
-Route::get('/user/address', [AddressController::class, 'index'])->middleware('auth:sanctum');
-Route::put('/user/address', [AddressController::class, 'update'])->middleware('auth:sanctum');
+Route::controller(CropController::class)->group(function () {
+    Route::get('/crops', 'index');
+    Route::get('/crops/demands', 'demands');
+});
 
-Route::post('/posts', [PostController::class, 'create'])->middleware('auth:sanctum');
-Route::get('/users/{user}/posts', [PostController::class, 'getFromUser'])->middleware('auth:sanctum');
+Route::controller(AddressController::class)->group(function () {
+    Route::get('/philippine-addresses/regions', 'regions');
+    Route::get('/philippine-addresses/provinces', 'provinces');
+    Route::get('/philippine-addresses/cities', 'cities');
+    Route::get('/philippine-addresses/barangays', 'barangays');
+});
 
-Route::get('/farmer-groups', [FarmerGroupController::class, 'index'])->middleware('auth:sanctum');
-Route::get('/farmer-groups/{id}', [FarmerGroupController::class, 'show'])->middleware('auth:sanctum');
-Route::get('/farmers', [FarmerController::class, 'index']);
-Route::get('/farmer-group-posts', [FarmerGroupPostController::class, 'index'])->middleware('auth:sanctum');
-Route::get('/farmer-group', [FarmerGroupController::class, 'getCurrentGroup'])->middleware('auth:sanctum');
-Route::post('/farmer-group-posts', [FarmerGroupPostController::class, 'create'])->middleware('auth:sanctum', 'has_group');
-Route::post('/farmer-groups/{id}/join', [FarmerGroupMemberController::class, 'join'])->middleware('auth:sanctum');
-Route::post('/farmer-groups/members/invite', [FarmerGroupMemberController::class, 'invite'])->middleware('auth:sanctum', 'farmer', 'has_group', 'president');
-Route::post('/farmer-groups', [FarmerGroupController::class, 'create'])->middleware('auth:sanctum', 'farmer');
-Route::post('/farmer-groups/{id}/accept', [FarmerGroupMemberController::class, 'acceptInvitation'])->middleware('auth:sanctum', 'farmer');
-Route::post('/farmer-groups/members/{id}/accept', [FarmerGroupController::class, 'approved'])->middleware('auth:sanctum', 'farmer', 'has_group', 'president');
-Route::get('/farmer-groups/invitations', [FarmerGroupController::class, 'invitation'])->middleware('auth:sanctum', 'farmer');
-Route::get('/farmer-groups/pending-members', [FarmerGroupController::class, 'pendingRequest'])->middleware('auth:sanctum', 'farmer', 'has_group', 'president');
-Route::get('/farmer-groups/invited-members', [FarmerGroupController::class, 'invitedMembers'])->middleware('auth:sanctum', 'farmer', 'has_group', 'president');
+Route::controller(FarmerController::class)->group(function () {
+    Route::get('/farmers', 'index');
+});
+
+Route::controller(VendorController::class)->group(function () {
+    Route::get('/vendors', 'index');
+});
+
+Route::controller(DemandController::class)->group(function () {
+    Route::get('/demands', 'index');
+});
+
+Route::controller(QuestionController::class)->group(function () {
+    Route::get('/questions', 'index');
+    Route::post('/questions/{id}', 'show');
+});
+
+Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::controller(PostController::class)->group(function () {
+        Route::get('/posts', 'index');
+        Route::get('/posts/{post}', 'show');
+        Route::post('/posts', 'create');
+        Route::get('/users/{user}/posts', 'getFromUser');
+    });
+
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/user', 'getCurrentUser');
+        Route::get('/user/transactions', 'transactions');
+        Route::get('/user/balance', 'showBalance')->middleware('has_wallet');
+        Route::get('/user/address/complete', 'showCompleteAddress');
+        Route::get('/users/{user}', 'show');
+    });
+
+    Route::controller(AddressController::class)->group(function () {
+        Route::get('/user/address', 'index');
+        Route::put('/user/address', 'update');
+    });
+
+    Route::controller(FarmerGroupController::class)->group(function () {
+        Route::get('/farmer-groups', 'index');
+        Route::get('/farmer-groups/{id}', 'show');
+        Route::get('/farmer-group', 'getCurrentGroup');
+        Route::post('/farmer-groups', 'create')->middleware('farmer');
+        Route::post('/farmer-groups/members/{id}/accept', 'approved')->middleware('farmer', 'has_group', 'president');
+        Route::get('/farmer-groups/invitations', 'invitation')->middleware('farmer');
+        Route::get('/farmer-groups/pending-members', 'pendingRequest')->middleware('farmer', 'has_group', 'president');
+        Route::get('/farmer-groups/invited-members', 'invitedMembers')->middleware('farmer', 'has_group', 'president');
+    });
 
 
-Route::get('/vendors', [VendorController::class, 'index']);
+    Route::controller(FarmerGroupController::class)->group(function () {
+        Route::get('/farmer-group-posts', 'index');
+        Route::post('/farmer-group-posts', 'create')->middleware('has_group');
+    });
 
-Route::get('/demands', [DemandController::class, 'index']);
-Route::post('/demands', [DemandController::class, 'create'])->middleware('auth:sanctum', 'vendor');
-Route::post('/demands/{id}', [DemandController::class, 'show'])->middleware('auth:sanctum');
+    Route::controller(FarmerGroupMemberController::class)->group(function () {
+        Route::post('/farmer-groups/{id}/join', 'join');
+        Route::post('/farmer-groups/members/invite', 'invite')->middleware('farmer', 'has_group', 'president');
+        Route::post('/farmer-groups/{id}/accept', 'acceptInvitation')->middleware('farmer');
+    });
 
+    Route::controller(DemandController::class)->group(function () {
+        Route::post('/demands', 'create')->middleware('vendor');
+        Route::post('/demands/{id}', 'show');
+    });
 
+    Route::controller(MessageController::class)->group(function () {
+        Route::get('/messages', 'index');
+        Route::get('/messages/{id}', 'show');
+        Route::post('/messages/{id}', 'create');
+    });
 
-Route::get('/messages', [MessageController::class, 'index'])->middleware('auth:sanctum');
-Route::get('/messages/{id}', [MessageController::class, 'show'])->middleware('auth:sanctum');
-Route::post('/messages/{id}', [MessageController::class, 'create'])->middleware('auth:sanctum');
+    Route::controller(OrderController::class)->group(function () {
+        Route::get('/orders', 'index');
+        Route::get('/orders/{order}', 'show');
+        Route::post('/posts/{post}/order', 'create');
+        Route::delete('/orders/{id}', 'cancel');
+        Route::post('/orders/{id}', 'handleOrder')->middleware('farmer');
+    });
 
+    Route::controller(ChangePasswordController::class)->group(function () {
+        Route::patch('/change-password', 'update');
+    });
 
-Route::get('/orders', [OrderController::class, 'index'])->middleware('auth:sanctum');
-Route::get('/orders/{order}', [OrderController::class, 'show'])->middleware('auth:sanctum');
-Route::post('/posts/{post}/order', [OrderController::class, 'create'])->middleware('auth:sanctum');
-Route::delete('/orders/{id}', [OrderController::class, 'cancel'])->middleware('auth:sanctum');
-Route::post('/orders/{id}', [OrderController::class, 'handleOrder'])->middleware('auth:sanctum', 'farmer');
+    Route::controller(CashInController::class)->group(function () {
+        Route::post('/wallet/cash-in', CashInController::class)->middleware('has_wallet');
+    });
 
-Route::patch('/change-password', [ChangePasswordController::class, 'update'])->middleware('auth:sanctum');
-Route::post('/wallet/cash-in', CashInController::class)->middleware('auth:sanctum', 'has_wallet');
-Route::any('/wallet/payment-received', PaymentReceivedController::class);
-Route::get('/payment/{transaction}', VerifyPaymentController::class)->middleware('auth:sanctum', 'has_wallet');
+    Route::controller(PaymentReceivedController::class)->group(function () {
+        Route::any('/wallet/payment-received');
+    });
 
-Route::post('/admins', [AdminController::class, 'createAdmin'])->middleware('auth:sanctum', 'admin');
+    Route::controller(VerifyPaymentController::class)->group(function () {
+        Route::get('/payment/{transaction}')->middleware('has_wallet');
+    });
 
-Route::get('/questions', [QuestionController::class, 'index']);
-Route::post('/questions', [QuestionController::class, 'create'])->middleware('auth:sanctum', 'admin');
-Route::put('/questions/{id}', [QuestionController::class, 'update'])->middleware('auth:sanctum', 'admin');
-Route::post('/questions/{id}', [QuestionController::class, 'show']);
-Route::delete('/questions/{id}', [QuestionController::class, 'delete'])->middleware('auth:sanctum', 'admin');
+    Route::controller(AdminController::class)->group(function () {
+        Route::post('/admins', 'createAdmin')->middleware('admin');
+    });
+
+    Route::controller(QuestionController::class)->group(function () {
+        Route::post('/questions', 'create')->middleware('admin');
+        Route::put('/questions/{id}', 'update')->middleware('admin');
+        Route::delete('/questions/{id}', 'delete')->middleware('admin');
+    });
+});
