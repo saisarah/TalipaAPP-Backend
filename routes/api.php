@@ -21,8 +21,6 @@ use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\QuestionController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\VendorController;
-use App\Models\FarmerGroup;
-use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 use Twilio\Rest\Api\V2010\Account\AddressContext;
@@ -123,7 +121,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 
 
-    Route::controller(FarmerGroupController::class)->group(function () {
+    Route::controller(FarmerGroupPostController::class)->group(function () {
         Route::get('/farmer-group-posts', 'index');
         Route::post('/farmer-group-posts', 'create')->middleware('has_group');
     });
