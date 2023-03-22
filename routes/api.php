@@ -13,6 +13,7 @@ use App\Http\Controllers\API\FarmerGroupController;
 use App\Http\Controllers\API\FarmerGroupMemberController;
 use App\Http\Controllers\API\FarmerGroupPostController;
 use App\Http\Controllers\API\MessageController;
+use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\Payment\CashInController;
 use App\Http\Controllers\API\Payment\PaymentReceivedController;
@@ -88,6 +89,10 @@ Route::controller(QuestionController::class)->group(function () {
 });
 
 Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::controller(NotificationController::class)->group(function () {
+        Route::get('/notifications', 'index');
+    });
 
     Route::controller(PostController::class)->group(function () {
         Route::get('/posts', 'index');

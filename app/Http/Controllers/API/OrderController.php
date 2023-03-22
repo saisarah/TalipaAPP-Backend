@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderQuantity;
 use App\Models\Post;
+use App\Notifications\OrderPlaced;
 use App\Services\Wallet\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 
 class OrderController extends Controller
 {
@@ -88,6 +90,9 @@ class OrderController extends Controller
             })->toArray();
 
             OrderQuantity::insert($quantities);
+
+            //Send Notification to buyer and seller
+            Notification::send([$user, $post->author], new OrderPlaced($order));
 
             return $order;
         });
