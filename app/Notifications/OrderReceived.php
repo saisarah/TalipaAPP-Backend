@@ -45,6 +45,7 @@ class OrderReceived extends Notification
     public function toArray($notifiable)
     {
         return [
+            'order_id' => $this->order->id,
             'buyer' => $this->order->buyer,
             'post' => $this->order->post
         ];
