@@ -13,13 +13,13 @@ class DemandController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        if ($user->isFarmer()) {
-            $crop_id = $request->input('crop_id');
-            $demand = Demand::where('crop_id', $crop_id)->with('author', 'crop')->get();
-            return $demand;
-        } else {
+        if ($user->isVendor()) {
             return  Demand::where('vendor_id', $user->id)->with('author', 'crop')->get();
         }
+        $crop_id = $request->input('crop_id');
+        $demand = Demand::where('crop_id', $crop_id)->with('author', 'crop')->get();
+
+        return $demand;
     }
 
     public function create(Request $request)
