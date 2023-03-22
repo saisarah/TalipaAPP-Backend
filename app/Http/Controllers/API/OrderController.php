@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderQuantity;
 use App\Models\Post;
 use App\Notifications\OrderPlaced;
+use App\Notifications\OrderReceived;
 use App\Services\Wallet\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -59,7 +60,8 @@ class OrderController extends Controller
             'quantities.*.quantity' => 'required|numeric',
         ]);
 
-        $user = auth()->user();
+        $buyer = auth()->user();
+        $seller = $post->author;
 
         $quantities = collect($request->quantities);
         $subtotal = $post->calculateTotalPrice($quantities);
@@ -67,17 +69,17 @@ class OrderController extends Controller
         $delivery_fee = 200;
         $total = $subtotal + $fee + $delivery_fee;
 
-        if ($user->usableBalance() < $total) {
+        if ($buyer->usableBalance() < $total) {
             abort(400, "You don't have enough balance");
         }
 
-        $order = DB::transaction(function () use ($user, $total, $post, $quantities) {
-            $user->wallet()->increment('locked', $total);
+        $order = DB::transaction(function () use ($buyer, $seller, $total, $post, $quantities) {
+            $buyer->wallet()->increment('locked', $total);
 
             $order = Order::create([
                 'post_id' => $post->id,
                 'payment_option' => 'TalipaAPP Wallet',
-                'buyer_id' => $user->id,
+                'buyer_id' => $buyer->id,
                 'delivery_option' => 'Tranportify',
                 'order_status' => 'pending'
             ]);
@@ -91,8 +93,7 @@ class OrderController extends Controller
 
             OrderQuantity::insert($quantities);
 
-            //Send Notification to buyer and seller
-            Notification::send([$user, $post->author], new OrderPlaced($order));
+            $seller->notify(new OrderReceived($order));
 
             return $order;
         });
