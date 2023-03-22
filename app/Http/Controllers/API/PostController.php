@@ -50,9 +50,11 @@ class PostController extends Controller
         });
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return Post::with('thumbnail', 'author', 'prices', 'crop')->latest()->get()->each->append('display_price', 'location');
+
+        $crop_id = explode(',', $request->input('crop_ids'));
+        return Post::whereIn('crop_id', $crop_id)->with('thumbnail', 'author', 'prices', 'crop')->latest()->get()->each->append('display_price', 'location');
     }
 
     public function show(Post $post)
