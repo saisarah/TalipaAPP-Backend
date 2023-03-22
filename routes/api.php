@@ -139,7 +139,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::controller(DemandController::class)->group(function () {
         Route::post('/demands', 'create')->middleware('vendor');
-        Route::post('/demands/{id}', 'show');
+        Route::get('/demands/{id}', 'show');
     });
 
     Route::controller(MessageController::class)->group(function () {
