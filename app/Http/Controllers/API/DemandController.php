@@ -10,9 +10,16 @@ use Illuminate\Support\Facades\Auth;
 
 class DemandController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return Demand::with('author', 'crop')->get();
+        $user = Auth::user();
+        if ($user->isVendor()) {
+            return  Demand::where('vendor_id', $user->id)->with('author', 'crop')->get();
+        }
+        $crop_id = $request->input('crop_id');
+        $demand = Demand::where('crop_id', $crop_id)->with('author', 'crop')->get();
+
+        return $demand;
     }
 
     public function create(Request $request)

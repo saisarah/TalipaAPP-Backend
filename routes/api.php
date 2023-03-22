@@ -79,10 +79,6 @@ Route::controller(VendorController::class)->group(function () {
     Route::get('/vendors', 'index');
 });
 
-Route::controller(DemandController::class)->group(function () {
-    Route::get('/demands', 'index');
-});
-
 Route::controller(QuestionController::class)->group(function () {
     Route::get('/questions', 'index');
     Route::post('/questions/{id}', 'show');
@@ -139,7 +135,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::controller(DemandController::class)->group(function () {
         Route::post('/demands', 'create')->middleware('vendor');
-        Route::post('/demands/{id}', 'show');
+        Route::get('/demands/{id}', 'show');
+        Route::get('/demands', 'index');
     });
 
     Route::controller(MessageController::class)->group(function () {
