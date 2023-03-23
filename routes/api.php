@@ -165,9 +165,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::any('/wallet/payment-received');
     });
 
-    Route::controller(VerifyPaymentController::class)->group(function () {
-        Route::get('/payment/{transaction}')->middleware('has_wallet');
-    });
+    Route::get('/payment/{transaction}', VerifyPaymentController::class)->middleware('has_wallet');
 
     Route::controller(AdminController::class)->group(function () {
         Route::post('/admins', 'createAdmin')->middleware('admin');
