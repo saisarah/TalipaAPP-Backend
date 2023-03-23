@@ -43,7 +43,6 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('/login/send-otp', 'sendOtp');
     Route::post('/login/verify-otp', 'verifyOtp');
     Route::post('/login', 'login');
-    Route::post('/register/send-otp', 'sendOtp');
     Route::post('/admin-login', 'loginAdmin');
 });
 
@@ -57,6 +56,7 @@ Route::controller(RegisterController::class)->group(function () {
     Route::post('/register/vendor', 'registerVendor');
     Route::post('/register/farmer', 'registerFarmer');
     Route::post('/register/validator', 'validator');
+    Route::post('/register/send-otp', 'sendOtp');
 });
 
 Route::controller(CropController::class)->group(function () {
