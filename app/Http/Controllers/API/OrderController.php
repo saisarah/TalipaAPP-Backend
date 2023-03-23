@@ -51,7 +51,13 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        return $order->load('post', 'buyer', 'post.author', 'post.thumbnail')->append('total');
+        $user = Auth::id();
+        $seller = $order->post->author_id;
+        if ($seller == $user || $user == $order->buyer_id) {
+            return $order->load('post', 'buyer', 'post.author', 'post.thumbnail')->append('total');
+        }
+
+        return abort(401, "Unauthorized Access");
     }
 
     public function create(Request $request, Post $post)
