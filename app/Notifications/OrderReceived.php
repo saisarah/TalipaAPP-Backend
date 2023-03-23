@@ -36,6 +36,11 @@ class OrderReceived extends Notification
         return [SmsChannel::class, 'database'];
     }
 
+    public function toSms()
+    {
+        return "You have a new order waiting for you. Head over to your dashboard to start processing it.";
+    }
+
     /**
      * Get the array representation of the notification.
      *
@@ -46,8 +51,8 @@ class OrderReceived extends Notification
     {
         return [
             'order_id' => $this->order->id,
-            'buyer' => $this->order->buyer,
-            'post' => $this->order->post
+            'avatar' => $this->order->buyer->profile_picture,
+            'name' => $this->order->buyer->fullname,
         ];
     }
 }
