@@ -8,6 +8,7 @@ use App\Http\Requests\Auth\VendorRegisterRequest;
 use App\Models\Farmer;
 use App\Models\User;
 use App\Models\Vendor;
+use App\Models\VendorCrop;
 use App\Services\Address\Address;
 use App\Services\SmsService\SmsOtp\RegisterOtp;
 use App\Services\SmsService\SmsOtp\SmsOtp;
@@ -84,16 +85,6 @@ class RegisterController extends Controller
         $user->vendor->authorization = $request->file('document')->store('vendors/authorization');
         $user->vendor->save();
 
-
-        // $user->farmer = new Farmer();
-        // $user->farmer->user_id = $user->id;
-        // $user->farmer->farm_area = $request->farm_area;
-        // $user->farmer->farm_type = $request->farm_type;
-        // $user->farmer->ownership_type = $request->ownership_type;
-        // $user->farmer->document_type = $request->document_type;
-        // $user->farmer->document = $request->file('document')->store('farmers/authorization');
-        // $user->farmer->save();
-
         $user->address =  new Address();
         $user->address->user_id = $user->id;
         $user->address->region = $request->region;
@@ -104,7 +95,15 @@ class RegisterController extends Controller
         $user->address->house_number = $request->house_number;
         $user->address->save();
 
+        foreach ($request->crops as $crop_ids) {
+            $user->crops = new VendorCrop();
+            $user->crops->vendor_id = $user->id;
+            $user->crops->crop_id = $crop_ids;
+            $user->crops->save();
+        }
+
         return $user;
+
     }
 
     public function validator(Request $request)
