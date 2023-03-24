@@ -158,12 +158,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::patch('/change-password', 'update');
     });
 
-    Route::post('/wallet/cash-in', CashInController::class)->middleware('has_wallet');
+    Route::post('/wallet/cash-in-paymongo', CashInController::class)->middleware('has_wallet');
     Route::post('/wallet/cash-in-paypal', CashInPaypalController::class)->middleware('has_wallet');
 
-    Route::controller(PaymentReceivedController::class)->group(function () {
-        Route::any('/wallet/payment-received');
-    });
+    // Route::controller(PaymentReceivedController::class)->group(function () {
+    //     Route::any('/wallet/payment-received');
+    // });
 
     Route::get('/payment/{id}', VerifyPaymentController::class)->middleware('has_wallet');
 

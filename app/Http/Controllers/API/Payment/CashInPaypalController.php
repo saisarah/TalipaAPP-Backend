@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API\Payment;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
+use PayPal;
+use App\Models\PaymentTransaction;
 
 class CashInPaypalController extends Controller
 {
@@ -14,11 +16,9 @@ class CashInPaypalController extends Controller
             'amount' => 'required|numeric|min:500',
             'return_url' => 'required|url'
         ]);
-        
-        $provider = new PayPalClient();
-        $provider->setApiCredentials(config('paypal'));
-        $paypalToken = $provider->getAccessToken();        
-        $response = $provider->createOrder([
+        $paypal = PayPal::setProvider();
+        $paypal->getAccessToken();
+        $paymentIntent = $paypal->createOrder([
             "intent" => "CAPTURE",
             "application_context" => [
                 "return_url" => $request->return_url,
@@ -32,7 +32,16 @@ class CashInPaypalController extends Controller
                     ]
                 ]
             ]
-        ]);        
-        return $response;
+        ]);
+
+        $id = $paymentIntent["id"];
+
+        PaymentTransaction::create([
+            'id' => "paypal_{$id}",
+            'user_id' => auth()->id(),
+            'amount' => $request->amount,
+        ]);
+
+        return $paymentIntent;
     }
 }
