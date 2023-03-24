@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Luigel\Paymongo\Facades\Paymongo;
+use Illuminate\Support\Str;
 
-class PaymongoTransaction extends Model
+class PaymentTransaction extends Model
 {
     use HasFactory;
 
@@ -48,7 +49,7 @@ class PaymongoTransaction extends Model
         DB::transaction(function() {
             $this->user->deposit($this->amount);
             $this->update([
-                'status' => PaymongoTransaction::STATUS_PAID
+                'status' => PaymentTransaction::STATUS_PAID
             ]);
         });
 
@@ -57,9 +58,13 @@ class PaymongoTransaction extends Model
 
     public function checkStatus($status)
     {
-        $paymentIntent = Paymongo::paymentIntent()->find($this->id);
-        Log::info("status",[$paymentIntent->status]);
-        return $paymentIntent->status === $status;
+        $id = Str::of($this->id);
+        if ($id->startsWith("paymongo")) {
+            $paymentIntent = Paymongo::paymentIntent()->find($id->remove("paymongo_"));
+            Log::info("status",[$paymentIntent->status]);
+            return $paymentIntent->status === $status;
+        }
+        return false;
     }
 
 

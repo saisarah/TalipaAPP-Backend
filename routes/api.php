@@ -16,6 +16,7 @@ use App\Http\Controllers\API\MessageController;
 use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\Payment\CashInController;
+use App\Http\Controllers\API\Payment\CashInPaypalController;
 use App\Http\Controllers\API\Payment\PaymentReceivedController;
 use App\Http\Controllers\API\Payment\VerifyPaymentController;
 use App\Http\Controllers\API\PostController;
@@ -157,15 +158,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::patch('/change-password', 'update');
     });
 
-    Route::controller(CashInController::class)->group(function () {
-        Route::post('/wallet/cash-in', CashInController::class)->middleware('has_wallet');
-    });
+    Route::post('/wallet/cash-in', CashInController::class)->middleware('has_wallet');
+    Route::post('/wallet/cash-in-paypal', CashInPaypalController::class)->middleware('has_wallet');
 
     Route::controller(PaymentReceivedController::class)->group(function () {
         Route::any('/wallet/payment-received');
     });
 
-    Route::get('/payment/{transaction}', VerifyPaymentController::class)->middleware('has_wallet');
+    Route::get('/payment/{id}', VerifyPaymentController::class)->middleware('has_wallet');
 
     Route::controller(AdminController::class)->group(function () {
         Route::post('/admins', 'createAdmin')->middleware('admin');

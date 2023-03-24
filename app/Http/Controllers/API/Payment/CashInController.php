@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\Payment;
 
 use App\Http\Controllers\Controller;
-use App\Models\PaymongoTransaction;
+use App\Models\PaymentTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Luigel\Paymongo\Facades\Paymongo;
@@ -19,7 +19,7 @@ class CashInController extends Controller
     public function __invoke(Request $request)
     {
         $this->validate($request, [
-            'amount' => 'required|numeric',
+            'amount' => 'required|numeric|min:500',
             'return_url' => 'required|url'
         ]);
 
@@ -35,8 +35,8 @@ class CashInController extends Controller
             'type' => 'gcash',
         ]);
 
-        PaymongoTransaction::create([
-            'id' => $paymentIntent->id,
+        PaymentTransaction::create([
+            'id' => "paymongo_{$paymentIntent->id}",
             'user_id' => auth()->id(),
             'amount' => $request->amount * .975,
         ]);
