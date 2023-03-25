@@ -56,6 +56,7 @@ class RegisterController extends Controller
         $user->address->barangay = $request->barangay;
         $user->address->street = $request->street;
         $user->address->house_number = $request->house_number;
+        $user->address->zip_code = $request->zip_code;
         $user->address->save();
 
         $user->crops = [];
@@ -104,6 +105,7 @@ class RegisterController extends Controller
         $user->address->barangay = $request->barangay;
         $user->address->street = $request->street;
         $user->address->house_number = $request->house_number;
+        $user->address->zip_code = $request->zip_code;
         $user->address->save();
 
         $user->crops = [];

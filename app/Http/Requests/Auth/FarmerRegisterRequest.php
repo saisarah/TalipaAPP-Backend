@@ -46,6 +46,7 @@ class FarmerRegisterRequest extends FormRequest
             'street' => ['required'],
             'house_number' => ['required'],
             'code' => ['required'],
+            'zip_code' => ['required', 'numeric', 'digits:4']
         ];
     }
 }
