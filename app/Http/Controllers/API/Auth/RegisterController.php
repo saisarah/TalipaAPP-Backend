@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\FarmerRegisterRequest;
 use App\Http\Requests\Auth\VendorRegisterRequest;
 use App\Models\Farmer;
+use App\Models\FarmerCrop;
 use App\Models\User;
 use App\Models\Vendor;
+use App\Models\VendorCrop;
 use App\Services\Address\Address;
 use App\Services\SmsService\SmsOtp\RegisterOtp;
 use App\Services\SmsService\SmsOtp\SmsOtp;
@@ -56,6 +58,16 @@ class RegisterController extends Controller
         $user->address->house_number = $request->house_number;
         $user->address->save();
 
+        $user->crops = [];
+        $i = 0;
+        foreach ($request->crops as $crop_ids) {
+            $user->crops[$i] = new FarmerCrop();
+            $user->crops[$i]->vendor_id = $user->id;
+            $user->crops[$i]->crop_id = $crop_ids;
+            $user->crops[$i]->save();
+            $i++;
+        }
+
         return $user;
     }
 
@@ -84,16 +96,6 @@ class RegisterController extends Controller
         $user->vendor->authorization = $request->file('document')->store('vendors/authorization');
         $user->vendor->save();
 
-
-        // $user->farmer = new Farmer();
-        // $user->farmer->user_id = $user->id;
-        // $user->farmer->farm_area = $request->farm_area;
-        // $user->farmer->farm_type = $request->farm_type;
-        // $user->farmer->ownership_type = $request->ownership_type;
-        // $user->farmer->document_type = $request->document_type;
-        // $user->farmer->document = $request->file('document')->store('farmers/authorization');
-        // $user->farmer->save();
-
         $user->address =  new Address();
         $user->address->user_id = $user->id;
         $user->address->region = $request->region;
@@ -104,7 +106,18 @@ class RegisterController extends Controller
         $user->address->house_number = $request->house_number;
         $user->address->save();
 
+        $user->crops = [];
+        $i = 0;
+        foreach ($request->crops as $crop_ids) {
+            $user->crops[$i] = new VendorCrop();
+            $user->crops[$i]->vendor_id = $user->id;
+            $user->crops[$i]->crop_id = $crop_ids;
+            $user->crops[$i]->save();
+            $i++;
+        }
+
         return $user;
+
     }
 
     public function validator(Request $request)

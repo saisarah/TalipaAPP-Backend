@@ -14,7 +14,13 @@ class UserController extends Controller
 {
     public function getCurrentUser()
     {
-        return Auth::user();
+        $user = Auth::user();
+        if ($user->isVendor()) {
+            $user->load('vendor', 'vendor.crops');
+        } elseif ($user->isFarmer()) {
+            $user->load('farmer', 'farmer.crops');
+        }
+        return $user;
     }
 
     public function show(User $user)
@@ -29,7 +35,7 @@ class UserController extends Controller
                 ->where('user_id', Auth::id())
                 ->where('status', PaymentTransaction::STATUS_PENDING)
                 ->get();
-            $pendingTransactions->each(fn($transaction) => $transaction->deposit());
+            $pendingTransactions->each(fn ($transaction) => $transaction->deposit());
         } catch (Exception $ex) {
             Log::error("Checking Pending Balance", [$ex->getMessage()]);
         }
