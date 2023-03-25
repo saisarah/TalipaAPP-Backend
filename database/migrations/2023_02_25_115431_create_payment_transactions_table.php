@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\PaymongoTransaction;
+use App\Models\PaymentTransaction;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,11 +14,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('paymongo_transactions', function (Blueprint $table) {
+        Schema::create('payment_transactions', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->foreignId('user_id');
-            $table->string('status')->default(PaymongoTransaction::STATUS_PENDING);
+            $table->string('status')->default(PaymentTransaction::STATUS_PENDING);
             $table->decimal('amount', 9,3);
+            $table->string('data')->nullable();
             $table->timestamps();
         });
     }

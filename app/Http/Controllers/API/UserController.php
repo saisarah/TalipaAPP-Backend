@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\PaymongoTransaction;
+use App\Models\PaymentTransaction;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -31,9 +31,9 @@ class UserController extends Controller
     public function showBalance()
     {
         try {
-            $pendingTransactions = PaymongoTransaction::query()
+            $pendingTransactions = PaymentTransaction::query()
                 ->where('user_id', Auth::id())
-                ->where('status', PaymongoTransaction::STATUS_PENDING)
+                ->where('status', PaymentTransaction::STATUS_PENDING)
                 ->get();
             $pendingTransactions->each(fn ($transaction) => $transaction->deposit());
         } catch (Exception $ex) {

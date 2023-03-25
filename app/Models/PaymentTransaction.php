@@ -9,8 +9,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Luigel\Paymongo\Facades\Paymongo;
+use Illuminate\Support\Str;
+use Srmklive\PayPal\Facades\PayPal;
 
-class PaymongoTransaction extends Model
+class PaymentTransaction extends Model
 {
     use HasFactory;
 
@@ -40,7 +42,7 @@ class PaymongoTransaction extends Model
     {
         if ($this->isPaid()) return;
 
-        if (!$this->checkStatus("succeeded")) {
+        if (!$this->checkStatus()) {
             Log::channel("wallet")->error("Payment Intent is still pending", [$this]);
             return;
         }
@@ -48,18 +50,29 @@ class PaymongoTransaction extends Model
         DB::transaction(function() {
             $this->user->deposit($this->amount);
             $this->update([
-                'status' => PaymongoTransaction::STATUS_PAID
+                'status' => PaymentTransaction::STATUS_PAID
             ]);
         });
 
         Log::channel('wallet')->info("Payment Deposited Successfully", [$this]);
     }
 
-    public function checkStatus($status)
+    public function checkStatus()
     {
-        $paymentIntent = Paymongo::paymentIntent()->find($this->id);
-        Log::info("status",[$paymentIntent->status]);
-        return $paymentIntent->status === $status;
+        $id = Str::of($this->id);
+        if ($id->startsWith("paymongo")) {
+            $paymentIntent = Paymongo::paymentIntent()->find($id->remove("paymongo_"));
+            return $paymentIntent->status === "succeeded";
+        }
+
+        if ($id->startsWith("paypal")) {
+            $paypal = PayPal::setProvider();
+            $paypal->getAccessToken();
+            $paymentIntent = $paypal->showOrderDetails($id->remove("paypal_"));
+            return $paymentIntent["status"] === "APPROVED"; 
+        }
+
+        return false;
     }
 
 
