@@ -25,4 +25,9 @@ class Farmer extends Model
     {
         return $this->hasMany(FarmerGroupMember::class, 'farmer_id', 'user_id')->where('membership_status', FarmerGroupMember::STATUS_INVITED);
     }
+
+    public function crops()
+    {
+        return $this->belongsToMany(Crop::class, 'farmer_crops', 'farmer_id', 'crop_id', 'user_id', 'id');
+    }
 }

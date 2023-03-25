@@ -15,4 +15,9 @@ class Vendor extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    public function crops()
+    {
+        return $this->belongsToMany(Crop::class, 'vendor_crops', 'vendor_id', 'crop_id', 'user_id', 'id');
+    }
 }

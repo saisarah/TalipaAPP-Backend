@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\FarmerRegisterRequest;
 use App\Http\Requests\Auth\VendorRegisterRequest;
 use App\Models\Farmer;
+use App\Models\FarmerCrop;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Models\VendorCrop;
@@ -57,6 +58,16 @@ class RegisterController extends Controller
         $user->address->house_number = $request->house_number;
         $user->address->save();
 
+        $user->crops = [];
+        $i = 0;
+        foreach ($request->crops as $crop_ids) {
+            $user->crops[$i] = new FarmerCrop();
+            $user->crops[$i]->vendor_id = $user->id;
+            $user->crops[$i]->crop_id = $crop_ids;
+            $user->crops[$i]->save();
+            $i++;
+        }
+
         return $user;
     }
 
@@ -95,11 +106,14 @@ class RegisterController extends Controller
         $user->address->house_number = $request->house_number;
         $user->address->save();
 
+        $user->crops = [];
+        $i = 0;
         foreach ($request->crops as $crop_ids) {
-            $user->crops = new VendorCrop();
-            $user->crops->vendor_id = $user->id;
-            $user->crops->crop_id = $crop_ids;
-            $user->crops->save();
+            $user->crops[$i] = new VendorCrop();
+            $user->crops[$i]->vendor_id = $user->id;
+            $user->crops[$i]->crop_id = $crop_ids;
+            $user->crops[$i]->save();
+            $i++;
         }
 
         return $user;
