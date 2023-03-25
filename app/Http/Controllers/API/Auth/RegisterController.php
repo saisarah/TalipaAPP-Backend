@@ -59,15 +59,7 @@ class RegisterController extends Controller
         $user->address->zip_code = $request->zip_code;
         $user->address->save();
 
-        $user->crops = [];
-        $i = 0;
-        foreach ($request->crops as $crop_ids) {
-            $user->crops[$i] = new FarmerCrop();
-            $user->crops[$i]->vendor_id = $user->id;
-            $user->crops[$i]->crop_id = $crop_ids;
-            $user->crops[$i]->save();
-            $i++;
-        }
+        $user->farmer->crops()->sync($request->crops);
 
         return $user;
     }
@@ -108,15 +100,7 @@ class RegisterController extends Controller
         $user->address->zip_code = $request->zip_code;
         $user->address->save();
 
-        $user->crops = [];
-        $i = 0;
-        foreach ($request->crops as $crop_ids) {
-            $user->crops[$i] = new VendorCrop();
-            $user->crops[$i]->vendor_id = $user->id;
-            $user->crops[$i]->crop_id = $crop_ids;
-            $user->crops[$i]->save();
-            $i++;
-        }
+        $user->vendor->crops()->sync($request->crops);
 
         return $user;
 
