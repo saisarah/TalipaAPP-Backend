@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('vendor_crops', function (Blueprint $table) {
             $table->unsignedBigInteger('vendor_id');
             $table->unsignedBigInteger('crop_id');
-            $table->timestamps();
             $table->foreign('vendor_id')->references('user_id')->on('vendors');
             $table->foreign('crop_id')->references('id')->on('crops');
         });
