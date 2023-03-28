@@ -9,6 +9,14 @@ class Farmer extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'status'
+    ];
+
+    const STATUS_APPROVED = 'approved';
+    const STATUS_PENDING = 'pending';
+    const STATUS_RESUBMIT = 'resubmit';
+
     protected $primaryKey = 'user_id';
 
     public function user()
