@@ -13,4 +13,18 @@ class VendorController extends Controller
     {
         return Vendor::all();
     }
+
+    public function approve(Vendor $vendor)
+    {
+        $user =  Vendor::where('user_id', $vendor->user_id)
+            ->where('status', Vendor::STATUS_PENDING)
+            ->first();
+        if ($user !== null) {
+            $user->update([
+                'status' => Vendor::STATUS_APPROVED
+            ]);
+            return $user;
+        }
+        return abort(400, "Invalid vendor id");
+    }
 }
