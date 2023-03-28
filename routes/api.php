@@ -74,7 +74,6 @@ Route::controller(AddressController::class)->group(function () {
 
 Route::controller(FarmerController::class)->group(function () {
     Route::get('/farmers', 'index');
-    Route::post('/farmers/{farmer}/approve', 'approve')->middleware('admin');
 });
 
 Route::controller(VendorController::class)->group(function () {
