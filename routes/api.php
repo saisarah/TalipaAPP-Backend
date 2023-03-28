@@ -139,6 +139,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/farmer-groups/{id}/accept', 'acceptInvitation')->middleware('farmer');
     });
 
+    Route::controller(VendorController::class)->group(function () {
+        Route::post('/vendors/{vendor}/approve', 'approve')->middleware('admin');
+    
+    });
+
     Route::controller(DemandController::class)->group(function () {
         Route::post('/demands', 'create')->middleware('vendor');
         Route::get('/demands/{id}', 'show');
