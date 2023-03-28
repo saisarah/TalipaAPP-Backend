@@ -74,6 +74,7 @@ Route::controller(AddressController::class)->group(function () {
 
 Route::controller(FarmerController::class)->group(function () {
     Route::get('/farmers', 'index');
+    Route::post('/farmers/{farmer}/approve', 'approve')->middleware('admin');
 });
 
 Route::controller(VendorController::class)->group(function () {
@@ -109,6 +110,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::controller(AddressController::class)->group(function () {
         Route::get('/user/address', 'index');
         Route::put('/user/address', 'update');
+    });
+
+    Route::controller(FarmerController::class)->group(function () {
+        Route::post('/farmers/{farmer}/approve', 'approve')->middleware('admin');
     });
 
     Route::controller(FarmerGroupController::class)->group(function () {
