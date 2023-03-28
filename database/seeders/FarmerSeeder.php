@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Farmer;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Crop;
 
 class FarmerSeeder extends Seeder
 {
@@ -15,8 +16,10 @@ class FarmerSeeder extends Seeder
      */
     public function run()
     {
+        $crops = Crop::all();
         Farmer::factory()
             ->count(100)
+            ->hasAttached($crops)
             ->create();
         
     }

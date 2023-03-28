@@ -6,6 +6,7 @@ use App\Models\Farmer;
 use App\Models\Message;
 use App\Models\User;
 use App\Models\Vendor;
+use App\Models\Crop;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -18,9 +19,10 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        $crops = Crop::all();
         $farmer = User::factory()
             ->farmer()
-            ->has(Farmer::factory())
+            ->has(Farmer::factory()->hasAttached($crops))
             ->create([
                 'firstname' => env('USER_FIRSTNAME', 'John'),
                 'lastname' => env('USER_LASTNAME', 'Doe'),
@@ -30,7 +32,7 @@ class UserSeeder extends Seeder
 
         $vendor = User::factory()
             ->vendor()
-            ->has(Vendor::factory())
+            ->has(Vendor::factory()->hasAttached($crops))
             ->create([
                 'firstname' => 'Sarah',
                 'lastname' => 'Oben',
