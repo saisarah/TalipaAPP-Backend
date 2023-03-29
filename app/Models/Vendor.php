@@ -28,4 +28,9 @@ class Vendor extends Model
     {
         return $this->belongsToMany(Crop::class, 'vendor_crops', 'vendor_id', 'crop_id', 'user_id', 'id');
     }
+
+    public function isPending(): bool
+    {
+        return $this->status === static::STATUS_PENDING;
+    }
 }
