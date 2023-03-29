@@ -195,7 +195,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\SmsServiceProvider::class,
-
+        App\Providers\TransportifyProvider::class,
     ],
 
     /*
@@ -213,6 +213,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'SmsOtp' => App\Services\SmsService\SmsOtp\SmsOtp::class,
         'Paymongo' => Luigel\Paymongo\Facades\Paymongo::class,
+        'Transportify' => App\Facades\Transportify::class,
     ])->toArray(),
 
 ];
