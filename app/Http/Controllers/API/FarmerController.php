@@ -15,7 +15,6 @@ class FarmerController extends Controller
 
     public function approve(Farmer $farmer)
     {
-        Farmer::where('user_id', $farmer->user_id)->first();
         if ($farmer->isPending()) {
             $farmer->update([
                 'status' => Farmer::STATUS_APPROVED
