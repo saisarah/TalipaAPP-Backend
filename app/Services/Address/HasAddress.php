@@ -12,6 +12,20 @@ trait HasAddress
         return $this->hasOne(Address::class, 'user_id', $foreign_key);
     }
 
+    public function shortAddress()
+    {
+        $address = $this->address;
+        if (!$address) return "";
+
+        return sprintf(
+            "%s %s, %s, %s",
+            $address->house_number,
+            $address->street,
+            $address->barangay,
+            $address->municipality,
+        );        
+    }
+
     public function completeAddress()
     {
         $address = $this->address;

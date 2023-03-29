@@ -2,6 +2,7 @@
 
 namespace App\Services\Transportify;
 
+use Exception;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
@@ -29,6 +30,20 @@ class Transportify
             fn() => $this->http()->get('/vehicle_types')->json(),
 
         );
+
+        return $result['data'];
+    }
+
+    public function getQuote($vehicle_id, ...$addresses)
+    {
+        $result = $this->http()->post('/deliveries/get_quote', [
+            'time_type' => 'now',
+            'vehicle_type_id' => $vehicle_id,
+            'locations' => collect($addresses)->map(fn($address) => compact('address'))
+        ])->json();
+
+        if (!array_key_exists('data', $result))
+            throw new Exception($result['message']);
 
         return $result['data'];
     }
