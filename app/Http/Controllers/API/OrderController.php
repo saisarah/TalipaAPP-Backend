@@ -46,17 +46,16 @@ class OrderController extends Controller
                     $order->post->append('location');
                 });
             return  $orders;
-        } else {
-            $orders = Order::with('post', 'post.author', 'post.crop', 'post.thumbnail', 'quantities')
-                ->where('order_status', Order::STATUS_COMPLETED)
-                ->latest()
-                ->get()
-                ->each(function (Order $order) {
-                    $order->append('total');
-                    $order->post->append('location');
-                });
-            return $orders;
         }
+        $orders = Order::with('post', 'post.author', 'post.crop', 'post.thumbnail', 'quantities')
+            ->where('order_status', Order::STATUS_COMPLETED)
+            ->latest()
+            ->get()
+            ->each(function (Order $order) {
+                $order->append('total');
+                $order->post->append('location');
+            });
+        return $orders;
     }
 
     public function show(Order $order)
