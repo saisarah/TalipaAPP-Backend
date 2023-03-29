@@ -49,4 +49,14 @@ class FarmerController extends Controller
         }
         return abort(400, "You are only allowed to rate Farmers you have transaction with");
     }
+
+    public function review(Request $request)
+    {
+        if ($request->has('latest'))
+        {
+            return FarmerReview::limit(5)->latest()->get();
+        }
+        return FarmerReview::all();
+
+    }
 }
