@@ -21,6 +21,7 @@ use App\Http\Controllers\API\Payment\PaymentReceivedController;
 use App\Http\Controllers\API\Payment\VerifyPaymentController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\QuestionController;
+use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\VendorController;
 use Illuminate\Support\Facades\Broadcast;
@@ -113,6 +114,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::controller(FarmerController::class)->group(function () {
         Route::post('/farmers/{farmer}/approve', 'approve')->middleware('admin');
+        Route::post('/farmers/{farmer}/rate', 'rate')->middleware('vendor');
+
     });
 
     Route::controller(FarmerGroupController::class)->group(function () {
