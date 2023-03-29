@@ -33,11 +33,11 @@ class FarmerController extends Controller
             'rate' => 'required|integer'
         ]);
 
-        $order =  $farmer->orders()
+        $hasOrder =  $farmer->orders()
             ->where('buyer_id', Auth::id())
             ->where('order_status', Order::STATUS_COMPLETED)
-            ->get();
-        if ($order !== null){
+            ->exists();
+        if ($hasOrder){
             $review = new FarmerReview();
             $review->vendor_id = Auth::id();
             $review->farmer_id = $farmer->user_id;
