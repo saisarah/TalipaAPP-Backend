@@ -21,6 +21,7 @@ use App\Http\Controllers\API\Payment\PaymentReceivedController;
 use App\Http\Controllers\API\Payment\VerifyPaymentController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\QuestionController;
+use App\Http\Controllers\API\TransportifyController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\VendorController;
 use Illuminate\Support\Facades\Broadcast;
@@ -175,5 +176,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/questions', 'create')->middleware('admin');
         Route::put('/questions/{id}', 'update')->middleware('admin');
         Route::delete('/questions/{id}', 'delete')->middleware('admin');
+    });
+
+    Route::controller(TransportifyController::class)->group(function () {
+        Route::get('/transportify/vehicles', 'vehicles');
     });
 });
