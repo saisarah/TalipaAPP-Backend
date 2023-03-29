@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class FarmerReview extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'rate',
+        'comment'
+    ];
 }
