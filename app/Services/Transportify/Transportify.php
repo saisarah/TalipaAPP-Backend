@@ -42,10 +42,11 @@ class Transportify
             'locations' => collect($addresses)->map(fn($address) => compact('address'))
         ])->json();
 
-        if (!array_key_exists('data', $result))
+        if (!array_key_exists('data', $result)) {
             throw new Exception($result['message']);
+        }
 
-        return $result['data'];
+        return $result['data'][0];
     }
 
     private function http()

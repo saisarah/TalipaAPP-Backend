@@ -17,6 +17,7 @@ return [
 
     'name' => 'TalipaAPP',
 
+    'transaction_fee' => .08,
     /*
     |--------------------------------------------------------------------------
     | Application Environment
