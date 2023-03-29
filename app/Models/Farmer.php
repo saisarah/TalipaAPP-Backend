@@ -38,4 +38,9 @@ class Farmer extends Model
     {
         return $this->belongsToMany(Crop::class, 'farmer_crops', 'farmer_id', 'crop_id', 'user_id', 'id');
     }
+
+    public function isPending(): bool
+    {
+        return $this->status === static::STATUS_PENDING;
+    }
 }
