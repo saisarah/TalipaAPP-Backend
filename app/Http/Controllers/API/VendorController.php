@@ -16,8 +16,6 @@ class VendorController extends Controller
 
     public function approve(Vendor $vendor)
     {
-        Vendor::where('user_id', $vendor->user_id)
-            ->first();
         if ($vendor->isPending()) {
             $vendor->update([
                 'status' => Vendor::STATUS_APPROVED
