@@ -15,16 +15,13 @@ class FarmerController extends Controller
 
     public function approve(Farmer $farmer)
     {
-        $user =  Farmer::where('user_id', $farmer->user_id)
-            ->where('status', Farmer::STATUS_PENDING)
-            ->first();
-        if ($user !== null) {
-            $user->update([
+        Farmer::where('user_id', $farmer->user_id)->first();
+        if ($farmer->isPending()) {
+            $farmer->update([
                 'status' => Farmer::STATUS_APPROVED
             ]);
-            return $user;
+            return $farmer;
         }
-
         return abort(400, "Invalid farmer id");
     }
 }
