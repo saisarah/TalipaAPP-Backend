@@ -43,4 +43,9 @@ class Farmer extends Model
     {
         return $this->status === static::STATUS_PENDING;
     }
+
+    public function orders()
+    {
+        return $this->hasManyThrough(Order::class, Post::class, 'author_id', 'post_id');
+    }
 }
