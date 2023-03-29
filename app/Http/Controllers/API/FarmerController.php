@@ -12,4 +12,15 @@ class FarmerController extends Controller
     {
         return Farmer::all();
     }
+
+    public function approve(Farmer $farmer)
+    {
+        if ($farmer->isPending()) {
+            $farmer->update([
+                'status' => Farmer::STATUS_APPROVED
+            ]);
+            return $farmer;
+        }
+        return abort(400, "Invalid farmer id");
+    }
 }

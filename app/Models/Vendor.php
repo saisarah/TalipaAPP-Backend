@@ -9,6 +9,14 @@ class Vendor extends Model
 {
 
     use HasFactory;
+    protected $fillable = [
+        'status'
+    ];
+
+    const STATUS_APPROVED = 'approved';
+    const STATUS_PENDING = 'pending';
+    const STATUS_RESUBMIT = 'resubmit';
+    
     protected $primaryKey = 'user_id';
 
     public function user()
@@ -19,5 +27,10 @@ class Vendor extends Model
     public function crops()
     {
         return $this->belongsToMany(Crop::class, 'vendor_crops', 'vendor_id', 'crop_id', 'user_id', 'id');
+    }
+
+    public function isPending(): bool
+    {
+        return $this->status === static::STATUS_PENDING;
     }
 }
