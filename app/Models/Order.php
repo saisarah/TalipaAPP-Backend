@@ -14,7 +14,13 @@ class Order extends Model
         'buyer_id',
         'payment_option',
         'delivery_option',
-        'order_status'
+        'order_status',
+        'address',
+        'address_note',
+    ];
+
+    protected $casts = [
+        'delivery_option' => 'array',
     ];
 
     const STATUS_PENDING = 'pending';

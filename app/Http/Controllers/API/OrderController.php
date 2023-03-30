@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Facades\Transportify;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderQuantity;
@@ -73,34 +74,41 @@ class OrderController extends Controller
     {
         $this->validate($request, [
             'quantities.*.quantity' => 'required|numeric',
+            'address' => 'required',
+            'vehicle_id' => 'required',
         ]);
 
         $buyer = auth()->user();
         $seller = $post->author;
 
+        $quote = Transportify::getQuote($request->vehicle_id, $seller->shortAddress(), $request->address);
         $quantities = collect($request->quantities);
         $subtotal = $post->calculateTotalPrice($quantities);
-        $fee = $subtotal * .08;
-        $delivery_fee = 200;
+        $fee = $subtotal * config('app.transaction_fee');
+        $delivery_fee = $quote['total_fees'];
         $total = $subtotal + $fee + $delivery_fee;
 
         if ($buyer->usableBalance() < $total) {
             abort(400, "You don't have enough balance");
         }
 
-        $order = DB::transaction(function () use ($buyer, $seller, $total, $post, $quantities) {
+        $order = DB::transaction(function () use ($buyer, $seller, $total, $post, $quantities, $request, $quote) {
             $buyer->wallet()->increment('locked', $total);
 
             $order = Order::create([
                 'post_id' => $post->id,
                 'payment_option' => 'TalipaAPP Wallet',
                 'buyer_id' => $buyer->id,
-                'delivery_option' => 'Tranportify',
-                'order_status' => 'pending'
+                'delivery_option' => $quote,
+                'order_status' => 'pending',
+                'address' => $request->address,
+                'address_note' => $request->address_note
             ]);
 
             $quantities = $quantities->map(function ($quantity) use ($order, $post) {
-                return $quantity + [
+                return [
+                    'quantity' => $quantity['quantity'],
+                    'variant' => $quantity['variant'],
                     'order_id' => $order->id,
                     'price' => $post->prices->firstWhere('variant', $quantity['variant'])->value
                 ];
