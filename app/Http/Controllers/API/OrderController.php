@@ -35,7 +35,7 @@ class OrderController extends Controller
                     $order->post->append('location');
                 });
             return  $orders;
-        } else {
+        } else if ($user->isVendor()) {
             $id = Auth::id();
             $orders = Order::with('post', 'post.author', 'post.crop', 'post.thumbnail', 'quantities')
                 ->where('buyer_id', $id)
@@ -48,6 +48,15 @@ class OrderController extends Controller
                 });
             return  $orders;
         }
+        $orders = Order::with('post', 'post.author', 'post.crop', 'post.thumbnail', 'quantities')
+            ->where('order_status', Order::STATUS_COMPLETED)
+            ->latest()
+            ->get()
+            ->each(function (Order $order) {
+                $order->append('total');
+                $order->post->append('location');
+            });
+        return $orders;
     }
 
     public function show(Order $order)

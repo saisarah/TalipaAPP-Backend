@@ -22,6 +22,7 @@ use App\Http\Controllers\API\Payment\VerifyPaymentController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\QuestionController;
 use App\Http\Controllers\API\TransportifyController;
+use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\VendorController;
 use Illuminate\Support\Facades\Broadcast;
@@ -112,6 +113,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/user/address', 'update');
     });
 
+    Route::controller(FarmerController::class)->group(function () {
+        Route::post('/farmers/{farmer}/approve', 'approve')->middleware('admin');
+        Route::post('/farmers/{farmer}/rate', 'rate')->middleware('vendor');
+
+    });
+
     Route::controller(FarmerGroupController::class)->group(function () {
         Route::get('/farmer-groups', 'index');
         Route::get('/farmer-groups/{id}', 'show');
@@ -133,6 +140,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/farmer-groups/{id}/join', 'join');
         Route::post('/farmer-groups/members/invite', 'invite')->middleware('farmer', 'has_group', 'president');
         Route::post('/farmer-groups/{id}/accept', 'acceptInvitation')->middleware('farmer');
+    });
+
+    Route::controller(VendorController::class)->group(function () {
+        Route::post('/vendors/{vendor}/approve', 'approve')->middleware('admin');
+    
     });
 
     Route::controller(DemandController::class)->group(function () {
