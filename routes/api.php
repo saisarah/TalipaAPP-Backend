@@ -15,19 +15,16 @@ use App\Http\Controllers\API\FarmerGroupPostController;
 use App\Http\Controllers\API\MessageController;
 use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\OrderController;
-use App\Http\Controllers\API\Payment\CashInController;
+use App\Http\Controllers\API\Payment\CashInPaymongoController;
 use App\Http\Controllers\API\Payment\CashInPaypalController;
-use App\Http\Controllers\API\Payment\PaymentReceivedController;
 use App\Http\Controllers\API\Payment\VerifyPaymentController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\QuestionController;
 use App\Http\Controllers\API\TransportifyController;
-use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\VendorController;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
-use Twilio\Rest\Api\V2010\Account\AddressContext;
 
 /*
 |--------------------------------------------------------------------------
@@ -172,7 +169,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::patch('/change-password', 'update');
     });
 
-    Route::post('/wallet/cash-in-paymongo', CashInController::class)->middleware('has_wallet');
+    Route::post('/wallet/cash-in-paymongo', CashInPaymongoController::class)->middleware('has_wallet');
     Route::post('/wallet/cash-in-paypal', CashInPaypalController::class)->middleware('has_wallet');
 
     // Route::controller(PaymentReceivedController::class)->group(function () {
