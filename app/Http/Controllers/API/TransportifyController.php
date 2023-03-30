@@ -45,7 +45,7 @@ class TransportifyController extends Controller
 
         $order = Order::where('delivery_status->id', $request->id)->first();
 
-        if ($order !== null) {
+        if ($request->has('id') && $order !== null) {
 
             $order->update([
                 'delivery_status' => $request->all()
