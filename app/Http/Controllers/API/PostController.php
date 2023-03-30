@@ -62,7 +62,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        return $post->load('author', 'attachments', 'prices', 'crop')->append('display_price');
+        return $post->load('author', 'author.address', 'attachments', 'prices', 'crop')->append('display_price');
     }
 
     public function getFromUser(User $user)
