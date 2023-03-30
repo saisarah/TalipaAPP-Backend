@@ -40,7 +40,9 @@ class TransportifyController extends Controller
     public function webhook(Request $request)
     {
         Log::channel('transportify')->info("Transportify", $request->all());
-        
+
+        Transportify::forwardWebhook($request->all());
+
         $order = Order::where('delivery_status->id', $request->id)->first();
 
         if ($order !== null) {
