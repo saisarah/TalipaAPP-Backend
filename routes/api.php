@@ -194,5 +194,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::controller(TransportifyController::class)->group(function () {
         Route::get('/transportify/vehicles', 'vehicles');
         Route::post('/transportify/get-quote', 'getQuote');
+        Route::post('/transportify/webhook', 'webhook')->withoutMiddleware('auth:sanctum');
     });
 });

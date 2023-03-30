@@ -62,6 +62,11 @@ return [
             'path' => storage_path('logs/wallet.log')
         ],
 
+        'transportify' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/transportify.log')
+        ],
+
         'sms' => [
             'driver' => 'single',
             'path' => storage_path('logs/sms.log')
