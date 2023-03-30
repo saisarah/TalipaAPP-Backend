@@ -51,13 +51,13 @@ class TransportifyController extends Controller
 
             if ($request->status === "delivery_in_progress") {
                 $order->update([
-                    'status' => Order::STATUS_SHIPPED
+                    'order_status' => Order::STATUS_SHIPPED
                 ]);
             }
 
             if ($request->status === "delivery_completed") {
                 $order->update([
-                    'status' => Order::STATUS_COMPLETED
+                    'order_status' => Order::STATUS_COMPLETED
                 ]);
             }
         }
