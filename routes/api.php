@@ -165,6 +165,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/posts/{post}/order', 'create');
         Route::delete('/orders/{id}', 'cancel');
         Route::post('/orders/{id}', 'handleOrder')->middleware('farmer');
+        Route::post('/orders/{order}/book-vehicle', 'bookVehicle')->middleware('farmer');
     });
 
     Route::controller(ChangePasswordController::class)->group(function () {

@@ -49,6 +49,15 @@ class Transportify
         return $result['data'][0];
     }
 
+    public function createDelivery($vehicle_id, ...$addresses)
+    {
+        return $this->http()->post('/deliveries', [
+            'vehicle_type_id' => $vehicle_id,
+            'time_type' => 'now',
+            'locations' => $addresses
+        ])->json();
+    }
+
     private function http()
     {
         return Http::baseUrl($this->baseurl)
