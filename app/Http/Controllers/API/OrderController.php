@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderQuantity;
 use App\Models\Post;
+use App\Notifications\OrderAccepted;
+use App\Notifications\OrderCancelled;
 use App\Notifications\OrderPlaced;
 use App\Notifications\OrderReceived;
 use App\Services\Wallet\Wallet;
@@ -138,6 +140,11 @@ class OrderController extends Controller
         if ($seller == $user || $user == $order->buyer_id) {
             $order->order_status = Order::STATUS_CANCELLED;
             $order->save();
+
+            if(auth()->user()->isFarmer()) {
+                $order->buyer->notify(new OrderCancelled($order));
+            }
+
             return $order;
         }
 
@@ -165,6 +172,9 @@ class OrderController extends Controller
             $buyer->transferMoney($seller, $new_amount);
             $seller->wallet()->increment('locked', $new_amount);
             $order->save();
+
+            $buyer->notify(new OrderAccepted($order));
+
             return $order;
         }
 
