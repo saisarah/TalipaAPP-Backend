@@ -4,9 +4,11 @@ namespace App\Http\Controllers\API;
 
 use App\Facades\Transportify;
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\Post;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class TransportifyController extends Controller
 {
@@ -33,5 +35,33 @@ class TransportifyController extends Controller
         } catch (Exception $ex) {
             abort(400, $ex->getMessage());
         }
+    }
+
+    public function webhook(Request $request)
+    {
+        Log::channel('transportify')->info("Transportify", $request->all());
+        
+        $order = Order::where('delivery_status->id', $request->id)->first();
+
+        if ($order !== null) {
+
+            $order->update([
+                'delivery_status' => $request->all()
+            ]);
+
+            if ($request->status === "delivery_in_progress") {
+                $order->update([
+                    'status' => Order::STATUS_SHIPPED
+                ]);
+            }
+
+            if ($request->status === "delivery_completed") {
+                $order->update([
+                    'status' => Order::STATUS_COMPLETED
+                ]);
+            }
+        }
+
+        return response()->noContent();
     }
 }

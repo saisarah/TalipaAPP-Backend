@@ -171,13 +171,19 @@ class OrderController extends Controller
         return abort(401, "Unauthorized Access");
     }
 
+    public function deliveryStatus(Order $order)
+    {
+        if ($order->isProcessing() || $order->isShipped()) {
+
+        }
+    }
+
     public function bookVehicle(Order $order)
     {
         if (!$order->isProcessing() && !is_null($order->delivery_id)) 
             abort(400, "This order is not processing");
 
         $vehicle_id = $order->delivery_option['vehicle_type_id'];
-        // return($order->delivery_option['vehicle_type_id']);
         $farmer = auth()->user();
         $farmerAddress = [
             'address' => $farmer->shortAddress(),
@@ -194,7 +200,7 @@ class OrderController extends Controller
         $delivery = Transportify::createDelivery($vehicle_id, $farmerAddress, $vendorAddress);
 
         $order->update([
-            'delivery_id' => $delivery['id']
+            'delivery_status' => $delivery
         ]);
 
         return $order;

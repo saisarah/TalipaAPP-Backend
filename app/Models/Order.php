@@ -12,7 +12,7 @@ class Order extends Model
     protected $fillable = [
         'post_id',
         'buyer_id',
-        'delivery_id',
+        'delivery_status',
         'payment_option',
         'delivery_option',
         'order_status',
@@ -22,6 +22,7 @@ class Order extends Model
 
     protected $casts = [
         'delivery_option' => 'array',
+        'delivery_status' => 'array',
     ];
 
     const STATUS_PENDING = 'pending';

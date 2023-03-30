@@ -58,6 +58,11 @@ class Transportify
         ])->json();
     }
 
+    public function findDelivery($id)
+    {
+        return $this->http()->get("/deliveries/$id")->json();
+    }
+
     private function http()
     {
         return Http::baseUrl($this->baseurl)
