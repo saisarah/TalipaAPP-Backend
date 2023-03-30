@@ -12,4 +12,6 @@ return [
         'baseurl' => 'https://api.deliveree.com/public_api/v1',
         'api_key' => env('TRANSPORTIFY_API_KEY'),
     ],
+
+    'forward_webhook_url' => env('TRANSPORTIFY_FORWARD_WEBHOOK_URL'),
 ];

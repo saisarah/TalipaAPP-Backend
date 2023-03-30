@@ -63,6 +63,15 @@ class Transportify
         return $this->http()->get("/deliveries/$id")->json();
     }
 
+    public function forwardWebhook($data)
+    {
+        try {
+            if (config('transportify.forward_webhook_url')) {
+                Http::retry(3)->post(config('transportify.forward_webhook_url'), $data);
+            }
+        } catch (Exception $ex) {}
+    }
+
     private function http()
     {
         return Http::baseUrl($this->baseurl)
