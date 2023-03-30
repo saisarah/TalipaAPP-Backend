@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Facades\Bux;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -73,7 +74,8 @@ class PaymentTransaction extends Model
         }
 
         if ($id->startsWith("bux")) {
-            return true;
+            $payment = Bux::find($id->remove("bux_"));
+            return $payment["status"] === "Paid";
         }
 
         return false;

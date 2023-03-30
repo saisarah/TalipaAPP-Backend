@@ -19,17 +19,17 @@ class Bux
         $this->endpoint = config('bux.endpoint');
     }
 
-    public function checkout($amount, $redirect_url)
+    public function checkout($amount, $redirect_url, $id)
     {
         $result = $this->http()->post("/open/checkout", [
-            'req_id' => str()->uuid(),
+            'req_id' => $id,
             'client_id'=> $this->clientId,
             'amount' => $amount,
             'description' => 'Cashin to Talipaapp',
             'notification_url' => $redirect_url,
             'redirect_url'=> $redirect_url,
             "enabled_channels" => [
-                "711_direct",
+                // "711_direct",
                 "grabpay",
                 "gcash"
             ]

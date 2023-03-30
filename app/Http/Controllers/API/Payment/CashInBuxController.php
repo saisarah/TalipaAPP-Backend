@@ -19,7 +19,9 @@ class CashInBuxController extends Controller
             'id' => 'required'
         ]);
 
-        $paymentIntent = Bux::checkout($request->amount, $request->return_url);
+        $paymentIntent = Bux::checkout($request->amount, $request->return_url, $request->id);
+
+        // Log::channel('wallet')->info('bux',$paymentIntent);
 
         PaymentTransaction::create([
             'id' => "bux_{$request->id}",
