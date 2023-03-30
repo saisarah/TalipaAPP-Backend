@@ -72,6 +72,10 @@ class PaymentTransaction extends Model
             return $paymentIntent["status"] === "APPROVED"; 
         }
 
+        if ($id->startsWith("bux")) {
+            return true;
+        }
+
         return false;
     }
 

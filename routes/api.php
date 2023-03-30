@@ -15,6 +15,7 @@ use App\Http\Controllers\API\FarmerGroupPostController;
 use App\Http\Controllers\API\MessageController;
 use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\OrderController;
+use App\Http\Controllers\API\Payment\CashInBuxController;
 use App\Http\Controllers\API\Payment\CashInPaymongoController;
 use App\Http\Controllers\API\Payment\CashInPaypalController;
 use App\Http\Controllers\API\Payment\VerifyPaymentController;
@@ -171,6 +172,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/wallet/cash-in-paymongo', CashInPaymongoController::class)->middleware('has_wallet');
     Route::post('/wallet/cash-in-paypal', CashInPaypalController::class)->middleware('has_wallet');
+    Route::post('/wallet/cash-in-bux', CashInBuxController::class)->middleware('has_wallet');
 
     // Route::controller(PaymentReceivedController::class)->group(function () {
     //     Route::any('/wallet/payment-received');

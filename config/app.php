@@ -215,6 +215,7 @@ return [
         'SmsOtp' => App\Services\SmsService\SmsOtp\SmsOtp::class,
         'Paymongo' => Luigel\Paymongo\Facades\Paymongo::class,
         'Transportify' => App\Facades\Transportify::class,
+        'Bux' => App\Facades\Bux::class,
     ])->toArray(),
 
 ];
