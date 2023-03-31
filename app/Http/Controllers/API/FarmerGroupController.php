@@ -123,4 +123,17 @@ class FarmerGroupController extends Controller
 
         return $group;
     }
+
+    public function showPendingGroup()
+    {
+        $user_id = Auth::id();
+        $group_member = FarmerGroupMember::where('farmer_id', $user_id)
+            ->where('membership_status', FarmerGroupMember::STATUS_PENDING)
+            ->first();
+
+        if ($group_member === null) {
+            return null;
+        }
+        return $group_member;
+    }
 }
