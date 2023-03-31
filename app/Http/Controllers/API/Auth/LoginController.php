@@ -58,6 +58,12 @@ class LoginController extends Controller
 
         $token = $user->createToken($request->server->get('HTTP_USER_AGENT'));
 
+        if ($user->isVendor()) {
+            $user->load('vendor', 'vendor.crops');
+        } elseif ($user->isFarmer()) {
+            $user->load('farmer', 'farmer.crops');
+        }
+
         return [
             'user' => $user,
             'token' => $token->plainTextToken,
