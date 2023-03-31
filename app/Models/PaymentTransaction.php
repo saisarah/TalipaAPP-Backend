@@ -62,24 +62,22 @@ class PaymentTransaction extends Model
     {
         $id = Str::of($this->id);
         if ($id->startsWith("paymongo")) {
-            $paymentIntent = Paymongo::paymentIntent()->find($id->remove("paymongo_"));
+            $paymentIntent = Paymongo::paymentIntent()->find($id->remove("paymongo_")->toString());
             return $paymentIntent->status === "succeeded";
         }
 
         if ($id->startsWith("paypal")) {
             $paypal = PayPal::setProvider();
             $paypal->getAccessToken();
-            $paymentIntent = $paypal->showOrderDetails($id->remove("paypal_"));
+            $paymentIntent = $paypal->showOrderDetails($id->remove("paypal_")->toString());
             return $paymentIntent["status"] === "APPROVED"; 
         }
 
         if ($id->startsWith("bux")) {
-            $payment = Bux::find($id->remove("bux_"));
+            $payment = Bux::find($id->remove("bux_")->toString());
             return $payment["status"] === "Paid";
         }
 
         return false;
     }
-
-
 }

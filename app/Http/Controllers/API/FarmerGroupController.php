@@ -26,7 +26,7 @@ class FarmerGroupController extends Controller
         $id = Auth::id();
         $group = FarmerGroupMember::where('farmer_id', $id)->first();
         if ($group == null) {
-            abort(400, 'Join group first');
+            return null;
         }
         $group_id = $group->farmer_group_id;
         $curGroup = FarmerGroupMember::where('farmer_group_id', $group_id)->first();
@@ -97,7 +97,8 @@ class FarmerGroupController extends Controller
     {
         $id = Auth::id();
         $groups = FarmerGroupMember::where('farmer_id', $id)
-            ->where('membership_status', FarmerGroupMember::STATUS_INVITED)->get();
+            ->where('membership_status', FarmerGroupMember::STATUS_INVITED)
+            ->get();
 
         return $groups;
     }

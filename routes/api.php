@@ -119,13 +119,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::controller(FarmerGroupController::class)->group(function () {
         Route::get('/farmer-groups', 'index');
-        Route::get('/farmer-groups/{id}', 'show');
         Route::get('/farmer-group', 'getCurrentGroup');
         Route::post('/farmer-groups', 'create')->middleware('farmer');
         Route::post('/farmer-groups/members/{id}/accept', 'approved')->middleware('farmer', 'has_group', 'president');
         Route::get('/farmer-groups/invitations', 'invitation')->middleware('farmer');
         Route::get('/farmer-groups/pending-members', 'pendingRequest')->middleware('farmer', 'has_group', 'president');
         Route::get('/farmer-groups/invited-members', 'invitedMembers')->middleware('farmer', 'has_group', 'president');
+        Route::get('/farmer-groups/{id}', 'show');
     });
 
 
