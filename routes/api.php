@@ -138,6 +138,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::controller(FarmerGroupMemberController::class)->group(function () {
         Route::post('/farmer-groups/{id}/join', 'join');
+        Route::post('/farmer-groups/{id}/cancel', 'cancel');
         Route::post('/farmer-groups/members/invite', 'invite')->middleware('farmer', 'has_group', 'president');
         Route::post('/farmer-groups/{id}/accept', 'acceptInvitation')->middleware('farmer');
     });

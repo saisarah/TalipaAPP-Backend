@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Farmer;
 use App\Models\FarmerGroup;
 use App\Models\FarmerGroupMember;
 use Illuminate\Http\Request;
@@ -24,13 +23,16 @@ class FarmerGroupController extends Controller
     public function getCurrentGroup()
     {
         $id = Auth::id();
-        $group = FarmerGroupMember::where('farmer_id', $id)->first();
-        if ($group == null) {
+        $group_member = FarmerGroupMember::query()
+            ->where('farmer_id', $id)
+            ->where('membership_status', FarmerGroupMember::STATUS_APPROVED)
+            ->first();
+
+        if ($group_member == null) {
             return null;
         }
-        $group_id = $group->farmer_group_id;
-        $curGroup = FarmerGroupMember::where('farmer_group_id', $group_id)->first();
-        return $curGroup;
+
+        return FarmerGroup::find($group_member->farmer_group_id);
     }
 
     public function create(Request $request)
@@ -126,14 +128,16 @@ class FarmerGroupController extends Controller
 
     public function showPendingGroup()
     {
-        $user_id = Auth::id();
-        $group_member = FarmerGroupMember::where('farmer_id', $user_id)
+        $id = Auth::id();
+        $group_member = FarmerGroupMember::query()
+            ->where('farmer_id', $id)
             ->where('membership_status', FarmerGroupMember::STATUS_PENDING)
             ->first();
 
-        if ($group_member === null) {
+        if ($group_member == null) {
             return null;
         }
-        return $group_member;
+
+        return FarmerGroup::find($group_member->farmer_group_id);
     }
 }

@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class FarmerGroupMemberController extends Controller
 {
+
+    public function cancel($id)
+    {
+        
+    }
+
     public function join($id)
     {
         $user = Auth::user();
