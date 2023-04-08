@@ -28,6 +28,11 @@ class UserController extends Controller
         return $user;
     }
 
+    public function thread(User $user)
+    {
+        return Auth::user()->thread($user)->load('users');
+    }
+
     public function showBalance()
     {
         try {
