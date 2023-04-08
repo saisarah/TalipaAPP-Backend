@@ -105,6 +105,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/user/balance', 'showBalance')->middleware('has_wallet');
         Route::get('/user/address/complete', 'showCompleteAddress');
         Route::get('/users/{user}', 'show');
+        Route::get('/users/{user}/thread', 'thread');
     });
 
     Route::controller(AddressController::class)->group(function () {
