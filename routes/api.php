@@ -21,6 +21,7 @@ use App\Http\Controllers\API\Payment\CashInPaypalController;
 use App\Http\Controllers\API\Payment\VerifyPaymentController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\QuestionController;
+use App\Http\Controllers\API\ThreadController;
 use App\Http\Controllers\API\TransportifyController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\VendorController;
@@ -154,10 +155,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/demands', 'index');
     });
 
-    Route::controller(MessageController::class)->group(function () {
-        Route::get('/messages', 'index');
-        Route::get('/messages/{id}', 'show');
-        Route::post('/messages/{id}', 'create');
+    Route::controller(ThreadController::class)->group(function() {
+        Route::get('/threads', 'index');
+        Route::get('/threads/{thread}', 'show');
+        Route::get('/threads/{thread}/messages', 'messages');
+        Route::post('/threads/{thread}/messages', 'sendMessage'); 
     });
 
     Route::controller(OrderController::class)->group(function () {
