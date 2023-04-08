@@ -104,6 +104,34 @@ class User extends Authenticatable
         return $this->morphMany(Post::class, 'author');
     }
 
+    public function threads()
+    {
+        return $this->belongsToMany(Thread::class);
+    }
+
+    public function sendMessage(User $user, string $message)
+    {
+        return $this->thread($user)
+            ->sendMessage(
+                sender: $this, 
+                message: $message
+            );
+    }
+
+    public function thread(User $user)
+    {
+        return $this->threads()
+            ->where('type', 'direct')
+            ->whereHas('users', function ($q) use($user){
+                $q->where('user_id', $user->id);
+            })
+            ->firstOr(function () use ($user) {
+                $thread = Thread::create();
+                $thread->users()->attach([$this->id, $user->id]);
+                return $thread;
+            });
+    }
+
     public static function generateUserName($firstname)
     {
         $firstname = explode(" ", $firstname)[0];

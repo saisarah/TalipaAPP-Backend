@@ -17,6 +17,8 @@ return [
 
     'name' => 'TalipaAPP',
 
+    'version' => 0.1,
+
     'transaction_fee' => .08,
     /*
     |--------------------------------------------------------------------------
@@ -216,6 +218,7 @@ return [
         'Paymongo' => Luigel\Paymongo\Facades\Paymongo::class,
         'Transportify' => App\Facades\Transportify::class,
         'Bux' => App\Facades\Bux::class,
+        'Thread' => App\Models\Thread::class,
     ])->toArray(),
 
 ];

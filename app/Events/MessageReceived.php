@@ -3,6 +3,7 @@
 namespace App\Events;
 
 use App\Models\Message;
+use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -34,6 +35,9 @@ class MessageReceived implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel("users.{$this->message->receiver_id}");
+        return $this->message->thread->users->map(function(User $user){
+            return new PrivateChannel("users.{$user->id}");
+        })->toArray();
+        // return new PrivateChannel("users.{$this->message->receiver_id}");
     }
 }

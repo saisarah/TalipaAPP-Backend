@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Events\MessageReceived;
 use App\Http\Controllers\Controller;
-use App\Models\Message;
 use App\Models\Thread;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class MessageController extends Controller
+class ThreadController extends Controller
 {
     public function index()
     {
@@ -18,17 +15,23 @@ class MessageController extends Controller
             ->threads()
             ->whereHas('messages')
             ->with('users')
+            ->latest()
             ->get();
 
-        return $threads;
+        return $threads;        
     }
 
     public function show(Thread $thread)
     {
+        return $thread->load('users');
+    }
+
+    public function messages(Thread $thread)
+    {
         return $thread->messages;
     }
 
-    public function create(Request $request, Thread $thread)
+    public function sendMessage(Thread $thread, Request $request)
     {
         $this->validate($request, [
             'content' => 'required'
@@ -38,9 +41,7 @@ class MessageController extends Controller
             sender: Auth::user(),
             message: $request->content
         );
-
-        MessageReceived::dispatch($message);
-
+        
         return $message;
     }
 }
