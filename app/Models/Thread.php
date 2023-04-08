@@ -18,7 +18,7 @@ class Thread extends Model
 
     public function messages() : HasMany
     {
-        return $this->hasMany(Message::class);
+        return $this->hasMany(Message::class)->latest();
     }
 
     public function sendMessage(User $sender, string $message) : Message

@@ -25,7 +25,8 @@ class MessageReceived implements ShouldBroadcast
      */
     public function __construct(Message $message)
     {
-        $this->message = $message;        
+        $this->dontBroadcastToCurrentUser();
+        $this->message = $message;
     }
 
     /**
