@@ -15,7 +15,8 @@ class ThreadController extends Controller
             ->threads()
             ->whereHas('messages')
             ->with('users')
-            ->latest()
+            ->withCount('unreadMessages')
+            ->latest('updated_at')
             ->get();
 
         return $threads;        
@@ -23,7 +24,7 @@ class ThreadController extends Controller
 
     public function show(Thread $thread)
     {
-        return $thread->load('users');
+        return $thread->load('users')->loadCount('unreadMessages');
     }
 
     public function messages(Thread $thread)
@@ -43,5 +44,12 @@ class ThreadController extends Controller
         );
         
         return $message;
+    }
+
+    public function readMessages(Thread $thread)
+    {
+        return $thread->readMessages()
+            ->load('users')
+            ->loadCount('unreadMessages');
     }
 }
