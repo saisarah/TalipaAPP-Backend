@@ -161,6 +161,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/threads/{thread}', 'show');
         Route::get('/threads/{thread}/messages', 'messages');
         Route::post('/threads/{thread}/messages', 'sendMessage'); 
+        Route::patch('/threads/{thread}/read', 'readMessages');
     });
 
     Route::controller(OrderController::class)->group(function () {
