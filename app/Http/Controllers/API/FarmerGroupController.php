@@ -87,16 +87,10 @@ class FarmerGroupController extends Controller
 
     public function invitation()
     {
-        $id = Auth::id();
-        $groups = FarmerGroupMember::where('farmer_id', $id)
-            ->where('membership_status', FarmerGroupMember::STATUS_INVITED)
-            ->get();
-
-        return $groups;
+        return Auth::user()->groupInvitations->load('president.user');
     }
 
     public function pendingRequest()
-
     {
         $user = Auth::user();
         $id = $user->farmer->member->farmer_group_id;
