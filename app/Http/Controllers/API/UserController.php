@@ -23,6 +23,21 @@ class UserController extends Controller
         return $user;
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        return User::query()
+            ->select('id','firstname','lastname', 'profile_picture','contact_number', 'user_type')
+            ->whereRaw("CONCAT(firstname, ' ', lastname) LIKE ?", ["%$query%"])
+            ->when($request->has('type'), function ($q) use ($request){
+                $q->where('user_type', $request->type);
+            })
+            ->orWhere('contact_number', $query)
+            ->limit(15)
+            ->get();
+    }
+
     public function show(User $user)
     {
         return $user;
