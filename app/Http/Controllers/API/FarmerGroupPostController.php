@@ -16,16 +16,16 @@ class FarmerGroupPostController extends Controller
         $id = Auth::id();
         $group = FarmerGroupMember::where('farmer_id', $id)->first();
         $group_id = $group->farmer_group_id;
-        $group_posts = FarmerGroupPost::where('farmer_group_id', $group_id)->get();
+        $group_posts = FarmerGroupPost::with('author')->where('farmer_group_id', $group_id)->latest()->get();
         return $group_posts;
     }
 
     public function create(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required',
+            // 'title' => 'required',
             'description' => 'required',
-            'tags' => 'required',
+            // 'tags' => 'required',
             'images' => 'nullable|array',
             'images.*' => 'image',
         ]);
@@ -36,14 +36,14 @@ class FarmerGroupPostController extends Controller
         $discussion = new FarmerGroupPost();
         $discussion->farmer_id = Auth::id();
         $discussion->farmer_group_id = $group->farmer_group_id;
-        $discussion->title = $request->title;
+        $discussion->title = $request->title ?? "N/A";
         $discussion->description = $request->description;
-        $discussion->tags = $request->tags;
+        $discussion->tags = $request->tags ?? "N/A";
         $discussion->save();
 
         $discussion->images()->createMany(array_map(fn ($image) => ([
             'image' => $image->store("farmers/" . auth()->id() . "/group-posts", "public"),
-        ]), $request->images));
+        ]), $request->images ?? []));
 
         return $discussion;
     }
