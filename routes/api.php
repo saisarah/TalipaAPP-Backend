@@ -134,8 +134,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 
     Route::controller(FarmerGroupPostController::class)->group(function () {
-        Route::get('/farmer-group-posts', 'index');
-        Route::post('/farmer-group-posts', 'create')->middleware('has_group');
+        Route::get('/farmer-group/posts', 'index')->middleware('has_group');
+        Route::post('/farmer-group/posts', 'create')->middleware('has_group');
     });
 
     Route::controller(FarmerGroupMemberController::class)->group(function () {

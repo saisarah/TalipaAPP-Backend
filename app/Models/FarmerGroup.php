@@ -25,14 +25,24 @@ class FarmerGroup extends Model
     const STATUS_PENDING = 'pending';
 
 
+    // public function members()
+    // {
+    //     return $this->hasMany(FarmerGroupMember::class)->where('membership_status', 'approved');
+    // }
     public function members()
     {
-        return $this->hasMany(FarmerGroupMember::class)->where('membership_status', 'approved');
+        return $this->belongsToMany(User::class, 'farmer_group_members', 'farmer_group_id', 'farmer_id')
+            ->where('membership_status', FarmerGroupMember::STATUS_APPROVED);
     }
 
+    // public function pendings()
+    // {
+    //     return $this->hasMany(FarmerGroupMember::class)->where('membership_status', 'pending');
+    // }
     public function pendings()
     {
-        return $this->hasMany(FarmerGroupMember::class)->where('membership_status', 'pending');
+        return $this->belongsToMany(User::class, 'farmer_group_members', 'farmer_group_id', 'farmer_id')
+            ->where('membership_status', FarmerGroupMember::STATUS_PENDING);
     }
 
     public function invites()

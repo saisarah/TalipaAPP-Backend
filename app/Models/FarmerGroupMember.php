@@ -24,6 +24,11 @@ class FarmerGroupMember extends Model
         return $this->belongsTo(FarmerGroup::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'farmer_id');
+    }
+
     public function isApproved(): bool
     {
         return $this->membership_status === static::STATUS_APPROVED;

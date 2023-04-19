@@ -15,9 +15,6 @@ class FarmerGroupPostController extends Controller
     {
         $id = Auth::id();
         $group = FarmerGroupMember::where('farmer_id', $id)->first();
-        if ($group == null) {
-            abort(400, "Join Group to view Discussions");
-        }
         $group_id = $group->farmer_group_id;
         $group_posts = FarmerGroupPost::where('farmer_group_id', $group_id)->get();
         return $group_posts;

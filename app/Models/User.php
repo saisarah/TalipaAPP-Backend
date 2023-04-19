@@ -109,6 +109,14 @@ class User extends Authenticatable
         return $this->belongsToMany(Thread::class);
     }
 
+    public function groups()
+    {
+        return $this->belongsToMany(FarmerGroup::class, 'farmer_group_members', 'farmer_id')
+            ->where('membership_status', 'approved')
+            ->withPivot('membership_status', 'role');
+        // return $this->hasOneThrough(FarmerGroup::class, FarmerGroupMember::class, 'id', 'id');
+    }
+
     public function sendMessage(User $user, string $message)
     {
         return $this->thread($user)

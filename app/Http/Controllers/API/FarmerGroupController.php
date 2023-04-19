@@ -12,7 +12,7 @@ class FarmerGroupController extends Controller
 {
     public function index()
     {
-        return FarmerGroup::all();
+        return FarmerGroup::withCount('members')->get();
     }
 
     public function show($id)
@@ -22,17 +22,7 @@ class FarmerGroupController extends Controller
 
     public function getCurrentGroup()
     {
-        $id = Auth::id();
-        $group_member = FarmerGroupMember::query()
-            ->where('farmer_id', $id)
-            ->where('membership_status', FarmerGroupMember::STATUS_APPROVED)
-            ->first();
-
-        if ($group_member == null) {
-            return null;
-        }
-
-        return FarmerGroup::find($group_member->farmer_group_id);
+        return Auth::user()->groups()->withCount('pendings')->first();
     }
 
     public function create(Request $request)
@@ -110,8 +100,11 @@ class FarmerGroupController extends Controller
     {
         $user = Auth::user();
         $id = $user->farmer->member->farmer_group_id;
-        $group = FarmerGroupMember::where('farmer_group_id', $id)
-            ->where('membership_status', FarmerGroupMember::STATUS_PENDING)->get();
+        $group = FarmerGroupMember::query()
+            ->with('user', 'user.address')
+            ->where('farmer_group_id', $id)
+            ->where('membership_status', FarmerGroupMember::STATUS_PENDING)
+            ->get();
 
         return $group;
     }
@@ -120,7 +113,9 @@ class FarmerGroupController extends Controller
     {
         $user = Auth::user();
         $id = $user->farmer->member->farmer_group_id;
-        $group = FarmerGroupMember::where('farmer_group_id', $id)
+        $group = FarmerGroupMember::query()
+            ->with('user')
+            ->where('farmer_group_id', $id)
             ->where('membership_status', FarmerGroupMember::STATUS_INVITED)->get();
 
         return $group;
