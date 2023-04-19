@@ -28,12 +28,9 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-        ])->members()->create([
-            'farmer_id' => '1',
-            'role' => 'president',
-            'membership_status' => 'approved'
+        ])->setPresident(1)
+        ->setImageUrl("https://res.cloudinary.com/djasbri35/image/upload/v1681878418/talipaapp/farmer-group/bonena_ll36wr.jpg");
 
-        ]);
         FarmerGroup::create([
             'name' => 'KASAMNE',
             'Address' => 'Caballero, 3132 Palayan City',
@@ -44,12 +41,9 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-        ])->members()->create([
-            'farmer_id' => '11',
-            'role' => 'president',
-            'membership_status' => 'approved'
+        ])->setPresident(11)
+        ->setImageUrl("https://res.cloudinary.com/djasbri35/image/upload/v1681878416/talipaapp/farmer-group/kasamne_uifhbs.jpg");
 
-        ]);
         FarmerGroup::create([
             'name' => 'Agrizkaya Cooperative Federation (AGCOFED) ',
             'Address' => 'National Highway, Bambang City, 3702 Nueva Vizcaya, Philippines',
@@ -61,12 +55,9 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-        ])->members()->create([
-            'farmer_id' => '3',
-            'role' => 'president',
-            'membership_status' => 'approved'
+        ])->setPresident(3)
+        ->setImageUrl("https://res.cloudinary.com/djasbri35/image/upload/v1681878415/talipaapp/farmer-group/agrizakaya_katvsj.jpg");
 
-        ]);
         FarmerGroup::create([
             'name' => 'Kafdeco Kasibu Farmers Development Cooperative',
             'Address' => 'National Highway, Kasibu, 3703 Nueva Vizcaya, Philippines',
@@ -78,12 +69,9 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-        ])->members()->create([
-            'farmer_id' => '4',
-            'role' => 'president',
-            'membership_status' => 'approved'
+        ])->setPresident(4)
+        ->setImageUrl("https://res.cloudinary.com/djasbri35/image/upload/v1681878414/talipaapp/farmer-group/kafdeco_xjyo3q.jpg");
 
-        ]);
         FarmerGroup::create([
             'name' => 'Sentrong Pamilihan ng Produktong Agrikultura sa Quezon Federation (SPAQ) Inc',
             'Address' => 'Maharlika highway Brgy. Sampaloc 2, Sariaya Quezon',
@@ -95,12 +83,9 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-        ])->members()->create([
-            'farmer_id' => '5',
-            'role' => 'president',
-            'membership_status' => 'approved'
+        ])->setPresident(5)
+        ->setImageUrl("https://res.cloudinary.com/djasbri35/image/upload/v1681878415/talipaapp/farmer-group/sentrong_pamilihan_gz1rje.jpg");
 
-        ]);
         FarmerGroup::create([
             'name' => 'Bikolanas Agriculture Cooperative',
             'Address' => 'Block 11 Lot 50-51, Mahogany Street, Villa Karangahan Subdivision, San Felipe, Naga City, Naga City, Philippines',
@@ -111,12 +96,9 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-        ])->members()->create([
-            'farmer_id' => '6',
-            'role' => 'president',
-            'membership_status' => 'approved'
+        ])->setPresident(6)
+        ->setImageUrl("https://res.cloudinary.com/djasbri35/image/upload/v1681878417/talipaapp/farmer-group/Bikolanas_ycqau8.jpg");
 
-        ]);
         FarmerGroup::create([
             'name' => 'Talisayon Multi-Purpose Cooperative Tamuco',
             'Address' => 'De Lara St, 4602 Talisay, Philippines',
@@ -128,12 +110,9 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-        ])->members()->create([
-            'farmer_id' => '7',
-            'role' => 'president',
-            'membership_status' => 'approved'
+        ])->setPresident(7)
+        ->setImageUrl("https://res.cloudinary.com/djasbri35/image/upload/v1681878416/talipaapp/farmer-group/talisayon_dfkysn.png");
 
-        ]);
         FarmerGroup::create([
             'name' => 'Agri-Preneur Farmers and Producers Association, Inc',
             'Address' => 'Libmanan, Camarines Sur ',
@@ -144,12 +123,9 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-        ])->members()->create([
-            'farmer_id' => '8',
-            'role' => 'president',
-            'membership_status' => 'approved'
+        ])->setPresident(8)
+        ->setImageUrl("https://res.cloudinary.com/djasbri35/image/upload/v1681878414/talipaapp/farmer-group/agri-preneur_euxugn.jpg");
 
-        ]);
         FarmerGroup::create([
             'name' => 'Greeners cooperative',
             'Address' => 'GIFTA/Purok 2, Bambang, Philippines, 37 02',
@@ -160,12 +136,9 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-        ])->members()->create([
-            'farmer_id' => '9',
-            'role' => 'president',
-            'membership_status' => 'approved'
+        ])->setPresident(9)
+        ->setImageUrl("https://res.cloudinary.com/djasbri35/image/upload/v1681878418/talipaapp/farmer-group/greeners_fkmr42.jpg");
 
-        ]);
         FarmerGroup::create([
             'name' => 'Federation of Free Farmers',
             'Address' => '30-F, 6th Avenue, Brgy. Socorro, Cubao, Quezon City, Philippines.',
@@ -176,11 +149,7 @@ class FarmerGroupSeeder extends Seeder
             'year_founded' => 'NA',
             'status' => 'Verified',
             'authorization' => 'NA',
-        ])->members()->create([
-            'farmer_id' => '10',
-            'role' => 'president',
-            'membership_status' => 'approved'
-
-        ]);
+        ])->setPresident(10)
+        ->setImageUrl("https://res.cloudinary.com/djasbri35/image/upload/v1681878418/talipaapp/farmer-group/federation_of_free_farmers_tvnvhb.jpg");
     }
 }
