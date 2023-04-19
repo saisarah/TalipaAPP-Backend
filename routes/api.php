@@ -63,7 +63,7 @@ Route::controller(RegisterController::class)->group(function () {
 
 Route::controller(CropController::class)->group(function () {
     Route::get('/crops', 'index');
-    Route::post('/crops', 'create');
+    Route::post('/crops', 'create')->middleware('admin');
     Route::get('/crops/demands', 'demands');
 });
 
