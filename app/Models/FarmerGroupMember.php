@@ -10,7 +10,9 @@ class FarmerGroupMember extends Model
     use HasFactory;
 
     protected $fillable = [
-        'membership_status'
+        'membership_status',
+        'farmer_id',
+        'role',
     ];
 
     const STATUS_APPROVED = 'approved';

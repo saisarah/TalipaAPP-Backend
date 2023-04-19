@@ -9,6 +9,9 @@ class FarmerGroup extends Model
 {
     use HasFactory;
 
+    const STATUS_VERIFIED = 'verified';
+    const STATUS_PENDING = 'pending';
+
     protected $fillable = [
         'name',
         'address',
@@ -21,8 +24,9 @@ class FarmerGroup extends Model
         'status'
     ];
 
-    const STATUS_VERIFIED = 'verified';
-    const STATUS_PENDING = 'pending';
+    protected $with = ['image'];
+    protected $appends = ['image_url'];
+    protected $hidden = ['image'];
 
 
     // public function members()
@@ -45,6 +49,23 @@ class FarmerGroup extends Model
             ->where('membership_status', FarmerGroupMember::STATUS_PENDING);
     }
 
+    public function setPresident($farmer_id)
+    {
+        $this->president()->updateOrCreate(
+            ['role' => 'president'],
+            [
+                'farmer_id' => $farmer_id,
+                'membership_status' => FarmerGroupMember::STATUS_APPROVED
+            ]
+        );
+        return $this;
+    }
+
+    public function setImageUrl($url)
+    {
+        return $this->image->storeUrl($url);
+    }
+
     public function invites()
     {
         return $this->hasMany(FarmerGroupMember::class)->where('membership_status', 'invited');
@@ -53,5 +74,18 @@ class FarmerGroup extends Model
     public function president()
     {
         return $this->hasOne(FarmerGroupMember::class)->where('role', 'president');
+    }
+
+    public function image()
+    {
+        return $this->morphOne(File::class, 'fileable')->withDefault([
+            'source' => 'https://res.cloudinary.com/djasbri35/image/upload/v1625929593/assets/error_ay6j96.jpg',
+            'source_type' => 'url'
+        ]);
+    }
+
+    public function getImageUrlAttribute()
+    {
+        return $this->image->url;
     }
 }
