@@ -130,4 +130,20 @@ class FarmerGroupController extends Controller
 
         return FarmerGroup::find($group_member->farmer_group_id);
     }
+
+    public function cancel($id)
+    {
+        $user = Auth::user();
+        $group_id = $user->farmer->member->farmer_group_id;
+        $invitation = FarmerGroupMember::where('farmer_id', $id)
+            ->where('farmer_group_id', $group_id)
+            ->where('membership_status', FarmerGroupMember::STATUS_INVITED)
+            ->first();
+
+        if ($invitation !== null) {
+            $invitation->delete();
+            return "The invitation sent to the user has been cancelled.";
+        }
+        return abort(400, "Unable to cancel invitation: No pending invitation found for the current user and group.");
+    }
 }

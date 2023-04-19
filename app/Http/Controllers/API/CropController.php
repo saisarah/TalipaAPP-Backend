@@ -24,4 +24,16 @@ class CropController extends Controller
             ])
             ->get();
     }
+
+    public function create(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        $crop = new Crop();
+        $crop->name = $request->name;
+        $crop->image = 'none';
+        $crop->save();
+    }
 }

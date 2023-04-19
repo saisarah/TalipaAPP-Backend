@@ -63,6 +63,7 @@ Route::controller(RegisterController::class)->group(function () {
 
 Route::controller(CropController::class)->group(function () {
     Route::get('/crops', 'index');
+    Route::post('/crops', 'create');
     Route::get('/crops/demands', 'demands');
 });
 
@@ -130,6 +131,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/farmer-groups/invited-members', 'invitedMembers')->middleware('farmer', 'has_group', 'president');
         Route::get('/farmer-groups/{id}', 'show');
         Route::get('/farmer-group/pending', 'showPendingGroup')->middleware('farmer');
+        Route::delete('/farmer-groups/members/{id}/cancel', 'cancel')->middleware('farmer', 'president');
 
     });
 
@@ -141,7 +143,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::controller(FarmerGroupMemberController::class)->group(function () {
         Route::post('/farmer-groups/{id}/join', 'join');
-        Route::post('/farmer-groups/{id}/cancel', 'cancel');
+        Route::delete('/farmer-groups/{id}/cancel', 'cancel')->middleware('farmer');
         Route::post('/farmer-groups/members/invite', 'invite')->middleware('farmer', 'has_group', 'president');
         Route::post('/farmer-groups/{id}/accept', 'acceptInvitation')->middleware('farmer');
     });
