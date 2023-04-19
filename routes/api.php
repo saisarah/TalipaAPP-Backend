@@ -130,6 +130,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/farmer-groups/invited-members', 'invitedMembers')->middleware('farmer', 'has_group', 'president');
         Route::get('/farmer-groups/{id}', 'show');
         Route::get('/farmer-group/pending', 'showPendingGroup')->middleware('farmer');
+        Route::delete('/farmer-groups/members/{id}/cancel', 'cancel')->middleware('farmer', 'president');
 
     });
 
