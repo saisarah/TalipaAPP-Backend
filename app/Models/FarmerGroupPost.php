@@ -19,4 +19,9 @@ class FarmerGroupPost extends Model
     {
         return $this->hasMany(FarmerGroupPostImage::class);
     }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'farmer_id');
+    }
 }
