@@ -21,6 +21,7 @@ class FarmerGroupMemberController extends Controller
             ->first();
         if ($group !== null) {
             $group->delete();
+            return "Your request to join the group has been cancelled";
         }
         return abort(400, "Unable to cancel request: No pending request to join this group found for the current user.");
     }
