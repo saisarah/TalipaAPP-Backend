@@ -110,7 +110,8 @@ class FarmerGroupController extends Controller
         $group = FarmerGroupMember::query()
             ->with('user')
             ->where('farmer_group_id', $id)
-            ->where('membership_status', FarmerGroupMember::STATUS_INVITED)->get();
+            ->where('membership_status', FarmerGroupMember::STATUS_INVITED)
+            ->get();
 
         return $group;
     }

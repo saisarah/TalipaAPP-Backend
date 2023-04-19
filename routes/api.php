@@ -101,6 +101,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::controller(UserController::class)->group(function () {
         Route::get('/user', 'getCurrentUser');
+        Route::get('/users/search', 'search');
         Route::get('/user/transactions', 'transactions');
         Route::get('/user/balance', 'showBalance')->middleware('has_wallet');
         Route::get('/user/address/complete', 'showCompleteAddress');
