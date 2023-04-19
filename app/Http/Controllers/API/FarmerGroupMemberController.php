@@ -14,7 +14,15 @@ class FarmerGroupMemberController extends Controller
 
     public function cancel($id)
     {
-        
+        $user = Auth::user();
+        $group = FarmerGroupMember::where('farmer_id', $user->id)
+            ->where('farmer_group_id', $id)
+            ->where('membership_status', FarmerGroupMember::STATUS_PENDING)
+            ->first();
+        if ($group !== null) {
+            $group->delete();
+        }
+        return abort(400, "Unable to cancel request: No pending request to join this group found for the current user.");
     }
 
     public function join($id)
@@ -94,7 +102,7 @@ class FarmerGroupMemberController extends Controller
         $invite = $user->farmer->invites;
         $farmerGroupIds = $invite->pluck('id')->toArray();
         FarmerGroupMember::whereIn('id', $farmerGroupIds)->delete();
-        
+
         return $group;
     }
 }
