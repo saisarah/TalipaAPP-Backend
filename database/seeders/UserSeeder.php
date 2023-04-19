@@ -40,17 +40,8 @@ class UserSeeder extends Seeder
                 'contact_number' => '9876543210',
             ]);
 
-        Message::create([
-            'sender_id' => $farmer->id,
-            'receiver_id' => $vendor->id,
-            'content' => 'Hello'
-        ]);
-
-        Message::create([
-            'sender_id' => $vendor->id,
-            'receiver_id' => $farmer->id,
-            'content' => 'Hi'
-        ]);
+        $farmer->sendMessage($vendor, "Hi");
+        $vendor->sendMessage($farmer, "Hello");
 
         $farmer->activateWallet()->deposit(10000);
         $vendor->activateWallet()->deposit(10000);
