@@ -29,16 +29,6 @@ class AdminController extends Controller
         $user->admin->role = $request->role;
         $user->admin->save();
 
-        $user->address =  new Address();
-        $user->address->user_id = $user->id;
-        $user->address->region = $request->region;
-        $user->address->province = $request->province;
-        $user->address->municipality = $request->municipality;
-        $user->address->barangay = $request->barangay;
-        $user->address->street = $request->street;
-        $user->address->house_number = $request->house_number;
-        $user->address->save();
-
         return $user;
     }
 }
