@@ -108,7 +108,7 @@ class FarmerGroupController extends Controller
         $user = Auth::user();
         $id = $user->farmer->member->farmer_group_id;
         $group = FarmerGroupMember::query()
-            ->with('user')
+            ->with('user', 'user.address')
             ->where('farmer_group_id', $id)
             ->where('membership_status', FarmerGroupMember::STATUS_INVITED)
             ->get();
