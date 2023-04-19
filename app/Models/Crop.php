@@ -10,6 +10,11 @@ class Crop extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'image'
+    ];
+
     private static ?Collection $crops = null;
 
     public static function getRandomCrop()
