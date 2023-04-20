@@ -36,4 +36,17 @@ class CropController extends Controller
         $crop->image = 'none';
         $crop->save();
     }
+
+    public function update(Request $request, $id)
+    {
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        Crop::where('id', $id)
+            ->update([
+                'name' => $request->name
+            ]);
+        return "Crop updated successfully!";
+    }
 }
