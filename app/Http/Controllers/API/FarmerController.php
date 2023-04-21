@@ -38,9 +38,10 @@ class FarmerController extends Controller
             ->where('order_status', Order::STATUS_COMPLETED)
             ->exists();
         if ($hasOrder) {
-            $review = new FarmerReview();
-            $review->vendor_id = Auth::id();
-            $review->farmer_id = $farmer->user_id;
+            $review = FarmerReview::firstOrNew([
+                'vendor_id' => Auth::id(),
+                'farmer_id' => $farmer->user_id
+            ]);
             $review->rate = $request->rate;
             $review->comment = $request->comment;
             $review->save();
@@ -48,6 +49,11 @@ class FarmerController extends Controller
             return $review;
         }
         return abort(400, "You are only allowed to rate Farmers you have transaction with");
+    }
+
+    public function showRate(Farmer $farmer)
+    {
+        return $farmer->reviewBy(Auth::user());
     }
 
     public function review(Farmer $farmer, Request $request)

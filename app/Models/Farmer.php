@@ -48,4 +48,16 @@ class Farmer extends Model
     {
         return $this->hasManyThrough(Order::class, Post::class, 'author_id', 'post_id');
     }
+
+    public function reviewBy(User $user)
+    {
+        return $this->hasOne(FarmerReview::class, 'farmer_id', 'user_id')
+            ->where('vendor_id', $user->id)
+            ->firstOr(function () {
+                return new FarmerReview([
+                    'rate' => 0,
+                    'comment' => ''
+                ]);
+            });
+    }
 }
