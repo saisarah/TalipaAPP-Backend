@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('users.{id}', function (User $user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('farmers', function (User $user) {
+    return $user->isFarmer();
+});

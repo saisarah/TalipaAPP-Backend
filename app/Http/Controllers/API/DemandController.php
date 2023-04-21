@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\DemandsUpdated;
 use App\Http\Controllers\Controller;
 use App\Models\Crop;
 use App\Models\Demand;
@@ -39,6 +40,7 @@ class DemandController extends Controller
         $demand->crop_id = $request->crop_id;
         $demand->save();
 
+        event(new DemandsUpdated());
         return $demand;
     }
 
