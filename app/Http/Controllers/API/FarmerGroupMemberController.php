@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\FarmerGroupInvitationSent;
+use App\Events\FarmerGroupRequestSubmitted;
 use App\Http\Controllers\Controller;
 use App\Models\Farmer;
 use App\Models\FarmerGroup;
@@ -35,12 +37,15 @@ class FarmerGroupMemberController extends Controller
             return abort(400, "You have reached the maximum number of joining group");
         }
 
+        $farmer_group = FarmerGroup::find($id);
         $joinGroup = new FarmerGroupMember();
         $joinGroup->farmer_group_id = $id;
         $joinGroup->farmer_id = Auth::id();
         $joinGroup->role = FarmerGroupMember::ROLE_MEMBER;
         $joinGroup->membership_status = FarmerGroupMember::STATUS_PENDING;
         $joinGroup->save();
+
+        event(new FarmerGroupRequestSubmitted($farmer_group));
 
         return $joinGroup;
     }
@@ -79,6 +84,8 @@ class FarmerGroupMemberController extends Controller
         $invite->role = FarmerGroupMember::ROLE_MEMBER;
         $invite->membership_status = FarmerGroupMember::STATUS_INVITED;
         $invite->save();
+
+        event(new FarmerGroupInvitationSent($request->farmer_id));
 
         return "Invitation sent sucessfully";
     }
