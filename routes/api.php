@@ -133,16 +133,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/farmer-groups/{id}', 'show');
         Route::get('/farmer-group/pending', 'showPendingGroup')->middleware('farmer');
         Route::delete('/farmer-groups/members/{id}/cancel', 'cancel')->middleware('farmer', 'president');
-
     });
 
 
     Route::controller(FarmerGroupPostController::class)->group(function () {
         Route::get('/farmer-group/posts', 'index')->middleware('has_group');
         Route::post('/farmer-group/posts', 'create')->middleware('has_group');
-        Route::post('/farmer-group-posts/{id}/comments', 'createComment')->middleware('has_group');
-        Route::post('/farmer-group-posts/{id}', 'show')->middleware('farmer','has_group');
-
+        Route::post('/farmer-group-posts/{id}/comments', 'createComment')->middleware('farmer', 'has_group');
+        Route::post('/farmer-group-posts/{id}', 'show')->middleware('farmer', 'has_group');
     });
 
     Route::controller(FarmerGroupMemberController::class)->group(function () {
@@ -154,7 +152,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::controller(VendorController::class)->group(function () {
         Route::post('/vendors/{vendor}/approve', 'approve')->middleware('admin');
-    
     });
 
     Route::controller(DemandController::class)->group(function () {
@@ -163,11 +160,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/demands', 'index');
     });
 
-    Route::controller(ThreadController::class)->group(function() {
+    Route::controller(ThreadController::class)->group(function () {
         Route::get('/threads', 'index');
         Route::get('/threads/{thread}', 'show');
         Route::get('/threads/{thread}/messages', 'messages');
-        Route::post('/threads/{thread}/messages', 'sendMessage'); 
+        Route::post('/threads/{thread}/messages', 'sendMessage');
         Route::patch('/threads/{thread}/read', 'readMessages');
     });
 
