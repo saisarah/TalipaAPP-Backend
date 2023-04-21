@@ -146,6 +146,17 @@ class User extends Authenticatable
             });
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(FarmerReview::class, 'farmer_id', 'id')
+            ->where('rate', '>', 0);
+    }
+
+    public function getRateAttribute()
+    {
+        return round($this->reviews()->average('rate') ?? 0, 1);
+    }
+
     public static function generateUserName($firstname)
     {
         $firstname = explode(" ", $firstname)[0];
