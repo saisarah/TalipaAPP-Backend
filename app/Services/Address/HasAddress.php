@@ -42,6 +42,19 @@ trait HasAddress
         );
     }
 
+    public function transportifyAddress()
+    {
+        $address = $this->address;
+        if (!$address) return "";
+
+        return sprintf(
+            "%s, %s, %s",
+            $address->barangay,
+            $address->municipality,
+            $address->province
+        );        
+    }
+
     public function cityAddress()
     {
         $address = $this->address;

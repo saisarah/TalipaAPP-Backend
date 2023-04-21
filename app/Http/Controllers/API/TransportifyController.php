@@ -25,7 +25,7 @@ class TransportifyController extends Controller
             'vehicle_id' => 'required|numeric',
         ]);
         $post = Post::find($request->post_id);
-        $farmer_address = $post->author->shortAddress();
+        $farmer_address = $post->author->transportifyAddress();
 
         $vehicle_id = $request->vehicle_id;
         $address = $request->address;
