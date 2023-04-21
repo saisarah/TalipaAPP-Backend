@@ -11,6 +11,8 @@ class FarmerReview extends Model
 
     protected $fillable = [
         'rate',
-        'comment'
+        'comment',
+        'vendor_id',
+        'farmer_id',
     ];
 }
