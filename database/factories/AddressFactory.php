@@ -20,13 +20,13 @@ class AddressFactory extends Factory
     public function definition()
     {
         $address = app()->make(AddressService::class);
-        $region = $address->getRegions()->random();
-        $province = $address->getProvinces($region->region_name)->random();
-        $municipality = $address->getCities($region->region_name, $province->province_name)->random();
-        $barangay = $address->getBarangays($region->region_name, $province->province_name, $municipality->city_name)->random();
+        $region = "National Capital Region (NCR)";
+        $province = $address->getProvinces($region)->random();
+        $municipality = $address->getCities($region, $province->province_name)->random();
+        $barangay = $address->getBarangays($region, $province->province_name, $municipality->city_name)->random();
 
         return [
-            'region' => $region->region_name,
+            'region' => $region,
             'province' => $province->province_name,
             'municipality' => $municipality->city_name,
             'barangay' => $barangay->brgy_name,
