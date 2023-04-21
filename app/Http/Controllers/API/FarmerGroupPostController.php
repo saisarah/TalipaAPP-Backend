@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\FarmerGroup;
 use App\Models\FarmerGroupMember;
 use App\Models\FarmerGroupPost;
+use App\Models\FarmerGroupPostComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,6 +45,20 @@ class FarmerGroupPostController extends Controller
             'image' => $image->store("farmers/" . auth()->id() . "/group-posts", "public"),
         ]), $request->images ?? []));
 
+        return $discussion;
+    }
+
+    public function createComment(Request $request, $id)
+    {
+        $this->validate($request, [
+            'content' => 'required',
+        ]);
+    
+        $discussion = new FarmerGroupPostComment();
+        $discussion->farmer_group_post_id = $id;
+        $discussion->farmer_id = Auth::id();
+        $discussion->content = $request->content;
+        $discussion->save();
         return $discussion;
     }
 }
