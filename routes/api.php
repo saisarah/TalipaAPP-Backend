@@ -119,6 +119,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::controller(FarmerController::class)->group(function () {
         Route::post('/farmers/{farmer}/approve', 'approve')->middleware('admin');
         Route::post('/farmers/{farmer}/rate', 'rate')->middleware('vendor');
+        Route::get('/farmers/{farmer}/rate', 'showRate')->middleware('vendor');
         Route::get('/farmers/{farmer}/reviews', 'review');
     });
 

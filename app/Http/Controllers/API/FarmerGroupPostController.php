@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\FarmerGroupPostCreated;
 use App\Http\Controllers\Controller;
 use App\Models\FarmerGroupMember;
 use App\Models\FarmerGroupPost;
@@ -41,9 +42,11 @@ class FarmerGroupPostController extends Controller
         $discussion->tags = $request->tags ?? "N/A";
         $discussion->save();
 
-        $discussion->images()->createMany(array_map(fn ($image) => ([
-            'image' => $image->store("farmers/" . auth()->id() . "/group-posts", "public"),
-        ]), $request->images ?? []));
+        foreach($request->images ?? [] as $image) {
+            $discussion->attachImage($image);
+        }
+
+        event(new FarmerGroupPostCreated($group->farmer_group_id));
 
         return $discussion;
     }

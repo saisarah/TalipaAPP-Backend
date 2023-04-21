@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\FarmerGroupRequestApproved;
 use App\Http\Controllers\Controller;
 use App\Models\FarmerGroup;
 use App\Models\FarmerGroupMember;
@@ -79,9 +80,12 @@ class FarmerGroupController extends Controller
             $member->update([
                 'membership_status' => FarmerGroupMember::STATUS_APPROVED
             ]);
+
+            event(new FarmerGroupRequestApproved($id));
+
             return  $member;
         }
-
+        
         return abort(400, "Invalid farmer");
     }
 
