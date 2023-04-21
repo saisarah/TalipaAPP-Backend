@@ -80,10 +80,7 @@ class FarmerGroupPostController extends Controller
 
     public function comments($id)
     {
-        // $group = FarmerGroupMember::where('farmer_id', Auth::id())->first();
-        // $group_id = $group->farmer_group_id;
-        // $post = FarmerGroupPost::where('farmer_group_id', $group_id)->get();
-        $comment = FarmerGroupPostComment::where('farmer_group_post_id', $id)->get();
+        $comment = FarmerGroupPostComment::with('user')->where('farmer_group_post_id', $id)->get();
         return $comment;
     }
 }
