@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Models\Message;
 use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -12,21 +11,18 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class MessageReceived implements ShouldBroadcast
+class FarmerGroupRequestApproved implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-
-    public Message $message;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Message $message)
+    public function __construct(private $user_id)
     {
-        $this->dontBroadcastToCurrentUser();
-        $this->message = $message;
+        //
     }
 
     /**
@@ -36,8 +32,6 @@ class MessageReceived implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return $this->message->thread->users->map(function(User $user){
-            return new PrivateChannel("users.{$user->id}");
-        })->toArray();
+        return new PrivateChannel("users.{$this->user_id}");
     }
 }
