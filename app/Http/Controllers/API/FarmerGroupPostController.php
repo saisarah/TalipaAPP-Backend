@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\FarmerGroup;
 use App\Models\FarmerGroupMember;
 use App\Models\FarmerGroupPost;
+use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,9 +43,9 @@ class FarmerGroupPostController extends Controller
         $discussion->tags = $request->tags ?? "N/A";
         $discussion->save();
 
-        $discussion->images()->createMany(array_map(fn ($image) => ([
-            'image' => $image->store("farmers/" . auth()->id() . "/group-posts", "public"),
-        ]), $request->images ?? []));
+        foreach($request->images ?? [] as $image) {
+            $discussion->attachImage($image);
+        }
 
         event(new FarmerGroupPostCreated($group->farmer_group_id));
 
