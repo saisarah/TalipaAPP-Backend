@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Events\FarmerGroupPostCreated;
+use App\Events\FarmerGroupPostsCommentCreated;
 use App\Http\Controllers\Controller;
 use App\Models\FarmerGroupMember;
 use App\Models\FarmerGroupPost;
@@ -18,7 +19,7 @@ class FarmerGroupPostController extends Controller
         $id = Auth::id();
         $group = FarmerGroupMember::where('farmer_id', $id)->first();
         $group_id = $group->farmer_group_id;
-        $group_posts = FarmerGroupPost::with('author')->where('farmer_group_id', $group_id)->latest()->get();
+        $group_posts = FarmerGroupPost::where('farmer_group_id', $group_id)->latest()->get();
         return $group_posts;
     }
 
@@ -63,6 +64,9 @@ class FarmerGroupPostController extends Controller
         $discussion->farmer_id = Auth::id();
         $discussion->content = $request->content;
         $discussion->save();
+
+        event(new FarmerGroupPostsCommentCreated($id));
+
         return $discussion;
     }
 

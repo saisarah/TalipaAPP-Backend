@@ -25,3 +25,7 @@ Broadcast::channel('farmers', function (User $user) {
 Broadcast::channel('farmer-groups.{id}', function (User $user, $id) {
     return $user->groups()->where('farmer_group_id', $id)->exists();
 });
+
+Broadcast::channel('farmer-group-posts.{id}', function (User $user, $id) {
+    return true; //Change this
+});
