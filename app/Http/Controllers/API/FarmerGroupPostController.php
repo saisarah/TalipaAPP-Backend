@@ -53,12 +53,25 @@ class FarmerGroupPostController extends Controller
         $this->validate($request, [
             'content' => 'required',
         ]);
-    
+
         $discussion = new FarmerGroupPostComment();
         $discussion->farmer_group_post_id = $id;
         $discussion->farmer_id = Auth::id();
         $discussion->content = $request->content;
         $discussion->save();
         return $discussion;
+    }
+
+    public function show($id)
+    {
+        $group = FarmerGroupMember::where('farmer_id', Auth::id())->first();
+        $group_id = $group->farmer_group_id;
+        $post = FarmerGroupPost::where('id', $id)
+            ->where('farmer_group_id', $group_id)->first();
+
+        if ($post == null) {
+            return abort(400, "Invalid Group discussion");
+        }
+        return $post;
     }
 }

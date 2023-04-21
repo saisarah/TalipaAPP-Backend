@@ -141,6 +141,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/farmer-group/posts', 'index')->middleware('has_group');
         Route::post('/farmer-group/posts', 'create')->middleware('has_group');
         Route::post('/farmer-group-posts/{id}/comments', 'createComment')->middleware('has_group');
+        Route::post('/farmer-group-posts/{id}', 'show')->middleware('farmer','has_group');
 
     });
 
