@@ -99,5 +99,6 @@ class FarmerGroupPostController extends Controller
         FarmerGroupPostLike::where('farmer_group_post_id', $id)
             ->where('farmer_id', Auth::id())
             ->delete();
+        return response()->noContent();
     }
 }
