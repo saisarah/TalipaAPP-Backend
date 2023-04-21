@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\FarmerGroupMember;
 use App\Models\FarmerGroupPost;
 use App\Models\FarmerGroupPostComment;
+use App\Models\FarmerGroupPostLike;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,7 +43,7 @@ class FarmerGroupPostController extends Controller
         $discussion->tags = $request->tags ?? "N/A";
         $discussion->save();
 
-        foreach($request->images ?? [] as $image) {
+        foreach ($request->images ?? [] as $image) {
             $discussion->attachImage($image);
         }
 
@@ -82,5 +83,22 @@ class FarmerGroupPostController extends Controller
     {
         $comment = FarmerGroupPostComment::with('user')->where('farmer_group_post_id', $id)->get();
         return $comment;
+    }
+
+    public function like($id)
+    {
+        $like = new FarmerGroupPostLike();
+        $like->farmer_group_post_id = $id;
+        $like->farmer_id = Auth::id();
+        $like->save();
+        return $like;
+    }
+
+    public function unlike($id)
+    {
+        FarmerGroupPostLike::where('farmer_group_post_id', $id)
+            ->where('farmer_id', Auth::id())
+            ->delete();
+        return response()->noContent();
     }
 }
