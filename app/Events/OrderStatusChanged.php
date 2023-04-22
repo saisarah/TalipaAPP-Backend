@@ -11,7 +11,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class OrderStatusChanged
+class OrderStatusChanged implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,7 +20,7 @@ class OrderStatusChanged
      *
      * @return void
      */
-    public function __construct(private Order $order)
+    public function __construct(private $order_id)
     {
         //
     }
@@ -32,6 +32,6 @@ class OrderStatusChanged
      */
     public function broadcastOn()
     {
-        return new PrivateChannel("orders.{$this->order}");
+        return new PrivateChannel("orders.{$this->order_id}");
     }
 }

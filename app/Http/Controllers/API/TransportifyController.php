@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\OrderStatusChanged;
 use App\Facades\Transportify;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Post;
+use App\Notifications\OrderCompleted;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -51,6 +53,8 @@ class TransportifyController extends Controller
                 'delivery_status' => $request->all()
             ]);
 
+            event(new OrderStatusChanged($order->id));
+
             if ($request->status === "delivery_in_progress") {
                 $order->update([
                     'order_status' => Order::STATUS_SHIPPED
@@ -61,6 +65,9 @@ class TransportifyController extends Controller
                 $order->update([
                     'order_status' => Order::STATUS_COMPLETED
                 ]);
+                $order->post->author->wallet()->decrement('locked', $order->delivery_option?->total_fees ?? 0);
+                $order->post->author->notify(new OrderCompleted($order));
+                $order->buyer->notify(new OrderCompleted($order));
             }
         }
 
