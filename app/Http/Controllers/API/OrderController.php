@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\OrderStatusChanged;
 use App\Facades\Transportify;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
@@ -145,6 +146,8 @@ class OrderController extends Controller
                 $order->buyer->notify(new OrderCancelled($order));
             }
 
+            event(new OrderStatusChanged($order->id));
+
             return $order;
         }
 
@@ -175,6 +178,8 @@ class OrderController extends Controller
 
             $buyer->notify(new OrderAccepted($order));
 
+            event(new OrderStatusChanged($order->id));
+
             return $order;
         }
 
@@ -196,7 +201,7 @@ class OrderController extends Controller
         $vehicle_id = $order->delivery_option['vehicle_type_id'];
         $farmer = auth()->user();
         $farmerAddress = [
-            'address' => $farmer->shortAddress(),
+            'address' => $farmer->transportifyAddress(),
             'is_payer' => true,
             'recipient_name' => $farmer->fullname,
             'recipient_phone' => "+63{$farmer->contact_number}"
@@ -212,6 +217,8 @@ class OrderController extends Controller
         $order->update([
             'delivery_status' => $delivery
         ]);
+
+        event(new OrderStatusChanged($order->id));
 
         return $order;
     }
