@@ -83,7 +83,7 @@ class OrderController extends Controller
         $buyer = auth()->user();
         $seller = $post->author;
 
-        $quote = Transportify::getQuote($request->vehicle_id, $seller->shortAddress(), $request->address);
+        $quote = Transportify::getQuote($request->vehicle_id, $seller->transportifyAddress(), $request->address);
         $quantities = collect($request->quantities);
         $subtotal = $post->calculateTotalPrice($quantities);
         $fee = $subtotal * config('app.transaction_fee');

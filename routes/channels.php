@@ -29,3 +29,7 @@ Broadcast::channel('farmer-groups.{id}', function (User $user, $id) {
 Broadcast::channel('farmer-group-posts.{id}', function (User $user, $id) {
     return true; //Change this
 });
+
+Broadcast::channel('orders.{id}', function (User $user, $id) {
+    return true; //Change this
+});
