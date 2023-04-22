@@ -15,7 +15,7 @@ class FarmerGroupPost extends Model
         'tags'
     ];
 
-    protected $with = ['images'];
+    protected $with = ['author', 'images', 'likers'];
 
     protected $hidden = ['images'];
 
@@ -42,5 +42,10 @@ class FarmerGroupPost extends Model
     public function author()
     {
         return $this->belongsTo(User::class, 'farmer_id');
+    }
+
+    public function likers()
+    {
+        return $this->hasMany(FarmerGroupPostLike::class, 'farmer_group_post_id');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Events\FarmerGroupPostCreated;
+use App\Events\FarmerGroupPostsCommentCreated;
 use App\Http\Controllers\Controller;
 use App\Models\FarmerGroupMember;
 use App\Models\FarmerGroupPost;
@@ -18,7 +19,7 @@ class FarmerGroupPostController extends Controller
         $id = Auth::id();
         $group = FarmerGroupMember::where('farmer_id', $id)->first();
         $group_id = $group->farmer_group_id;
-        $group_posts = FarmerGroupPost::with('author')->where('farmer_group_id', $group_id)->latest()->get();
+        $group_posts = FarmerGroupPost::where('farmer_group_id', $group_id)->latest()->get();
         return $group_posts;
     }
 
@@ -63,6 +64,9 @@ class FarmerGroupPostController extends Controller
         $discussion->farmer_id = Auth::id();
         $discussion->content = $request->content;
         $discussion->save();
+
+        event(new FarmerGroupPostsCommentCreated($id));
+
         return $discussion;
     }
 
@@ -87,11 +91,16 @@ class FarmerGroupPostController extends Controller
 
     public function like($id)
     {
+        FarmerGroupPostLike::where('farmer_group_post_id', $id)
+            ->where('farmer_id', Auth::id())
+            ->delete();
+
         $like = new FarmerGroupPostLike();
         $like->farmer_group_post_id = $id;
         $like->farmer_id = Auth::id();
         $like->save();
-        return $like;
+
+        return FarmerGroupPost::find($id)->likers;
     }
 
     public function unlike($id)
@@ -99,6 +108,7 @@ class FarmerGroupPostController extends Controller
         FarmerGroupPostLike::where('farmer_group_post_id', $id)
             ->where('farmer_id', Auth::id())
             ->delete();
-        return response()->noContent();
+
+        return FarmerGroupPost::find($id)->likers;
     }
 }
