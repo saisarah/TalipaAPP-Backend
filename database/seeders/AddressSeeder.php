@@ -16,7 +16,7 @@ class AddressSeeder extends Seeder
      */
     public function run()
     {
-        $users = User::all();
+        $users = User::where('user_type', 'farmer')->where('id', '<', 50)->get();
         $users->each(function(User $user) {
             $user->address()->update(Address::factory()->make()->toArray());
         });
