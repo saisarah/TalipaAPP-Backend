@@ -91,11 +91,16 @@ class FarmerGroupPostController extends Controller
 
     public function like($id)
     {
+        FarmerGroupPostLike::where('farmer_group_post_id', $id)
+            ->where('farmer_id', Auth::id())
+            ->delete();
+
         $like = new FarmerGroupPostLike();
         $like->farmer_group_post_id = $id;
         $like->farmer_id = Auth::id();
         $like->save();
-        return $like;
+
+        return FarmerGroupPost::find($id)->likers;
     }
 
     public function unlike($id)
@@ -103,6 +108,7 @@ class FarmerGroupPostController extends Controller
         FarmerGroupPostLike::where('farmer_group_post_id', $id)
             ->where('farmer_id', Auth::id())
             ->delete();
-        return response()->noContent();
+
+        return FarmerGroupPost::find($id)->likers;
     }
 }
