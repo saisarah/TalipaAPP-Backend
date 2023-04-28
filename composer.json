@@ -14,7 +14,8 @@
         "luigel/laravel-paymongo": "^2.3",
         "pusher/pusher-php-server": "^7.2",
         "srmklive/paypal": "~3.0",
-        "twilio/sdk": "^6.43"
+        "twilio/sdk": "^6.43",
+        "web-token/jwt-framework": "^3.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

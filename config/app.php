@@ -221,4 +221,9 @@ return [
         'Thread' => App\Models\Thread::class,
     ])->toArray(),
 
+    'jitsi' => [
+        'apiKey' => 'vpaas-magic-cookie-7a745c1e9fdc4357bd854cddb713a42d/e08cb9',
+        'appId' => 'vpaas-magic-cookie-7a745c1e9fdc4357bd854cddb713a42d',
+    ]
+
 ];
