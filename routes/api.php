@@ -12,6 +12,7 @@ use App\Http\Controllers\API\FarmerController;
 use App\Http\Controllers\API\FarmerGroupController;
 use App\Http\Controllers\API\FarmerGroupMemberController;
 use App\Http\Controllers\API\FarmerGroupPostController;
+use App\Http\Controllers\API\JitsiController;
 use App\Http\Controllers\API\MessageController;
 use App\Http\Controllers\API\NotificationController;
 use App\Http\Controllers\API\OrderController;
@@ -211,4 +212,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/transportify/get-quote', 'getQuote');
         Route::post('/transportify/webhook', 'webhook')->withoutMiddleware('auth:sanctum');
     });
+
+    Route::post('/jitsi/{user}', [JitsiController::class, 'meet']);
 });

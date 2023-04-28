@@ -20,7 +20,7 @@ class Jitsi
         private string $apiKey,
         private string $appId
     ) {
-        $keyFile = storage_path('jitsi/rsa-private.ks');
+        $keyFile = storage_path('app/jitsi/rsa-private.key');
         $algorithm = new AlgorithmManager([
             new RS256()
         ]);
@@ -66,5 +66,7 @@ class Jitsi
 
         $serializer = new CompactSerializer();
         $token = $serializer->serialize($jws, 0);
+
+        return $token;
     }
 }
